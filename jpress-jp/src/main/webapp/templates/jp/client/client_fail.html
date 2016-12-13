@@ -1,0 +1,39 @@
+
+<#include "_inc/_layout.html"/> 
+<#macro title>
+<title>提交失败</title>
+</#macro>
+<#macro css>
+</#macro>
+<#macro css_import>
+<link href="${CTPATH}/client/css/weui.css" rel="stylesheet">
+</#macro> 
+<#macro script>
+	<script type="text/javascript">
+	</script>
+</#macro>
+<@layout >
+<div class="nwrapper index_main">
+  	<div class=" weui_tab_bd">	
+	
+		<div class="weui_msg">
+	      <div class="weui_icon_area"><i class="weui_icon_msg weui_icon_warn"></i></div>
+	      <div class="weui_text_area">
+	        <h2 class="weui_msg_title">操作失败</h2>
+	        <p><small></small></p>
+	      </div>
+	      <div class="weui_opr_area">
+	        <p class="weui_btn_area"> 
+	          <a href="${CPATH}/clientWechat/index" class="weui_btn weui_btn_primary">跳转首页</a>
+	       
+	        </p>
+	      </div>
+	     
+	    </div>
+	
+    </div>
+
+   <#include "_inc/_footer.html"/> 
+
+</div>
+</@layout>

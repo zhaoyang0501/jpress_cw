@@ -1,0 +1,59 @@
+<#include "_inc/_layout.html"/> 
+<#macro title>
+ <title>往来账务</title>
+</#macro>
+<@layout active_id = p>
+<div class="nwrapper index_main">
+<form action="${CPATH}/account/client_comAccount?p=${p!}"   method="post">
+    <div class="index_top">
+	    <a href="#" class="ac_tl">${company!}</a>
+		<input style="float: left; margin: 0.49rem 0.2rem;padding: 0.12rem;width: 2.5rem;border-radius: 0.1rem;" type="month" name="mdate" id="start_input">
+	    <input style="float: left; padding: 0.15rem; margin: 0.5rem 0px;font-size:.3rem;background: #00b9fe ;" value="发送" type="submit">  
+    </div>
+ </form>   
+<div class="ac_box">
+
+    <div class="ac_box_top">
+        <span>往来名称</span>
+        <span>期末余额</span>
+        <span>风险提醒</span>
+    </div>
+       <#if chlist??>
+	       <#list chlist as x>
+    <div class="ac_box_c">
+        <span>${x.subName!}</span>
+        
+        <#if x.subCode=="2202">
+          			<#if x.fourc ?? && x.fourc !="0">
+          				<span>${(x.fourc)!}</span>
+          			<#else>
+          				<span style="color:red">${(x.fourd)!}</span>
+          			</#if>
+        <#else>
+	            <#if x.fourd ??  && x.fourd !="0">
+	            	<span>${(x.fourd)!}</span>
+	            <#else>
+	            	<span style="color:red">${(x.fourc)!}</span>
+	            </#if>
+         </#if>
+         <span style="color:red">
+        <#if x.fourd ?? && x.fourd !="0">
+           	<#if ((x.fourd)?number) gte 100000>
+           		请注意及时核销
+           	</#if>     	
+         </#if>
+          <#if x.fourc ?? && x.fourc !="0">
+           	<#if ((x.fourc)?number) gte 100000>
+           		请注意及时核销
+           	</#if>
+          </#if>
+        </span>
+    </div>
+    </#list>
+	   </#if>   
+</div>
+
+  <#include "_inc/_footer.html"/> 
+
+</div>
+</@layout>

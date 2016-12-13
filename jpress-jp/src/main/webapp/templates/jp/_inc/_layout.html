@@ -1,0 +1,40 @@
+<#macro script_import>
+</#macro> 
+<#macro script>
+</#macro> 
+<#macro css_import>
+</#macro> 
+<#macro css>
+</#macro> 
+<#macro title>
+</#macro>
+<#macro layout>
+<!doctype html>
+<html manifest="app.manifest">
+	<head>
+		<meta charset="utf-8">
+		
+		 <@title/>
+		<meta name="description" content="">
+		<meta name="Keywords" content="">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-touch-fullscreen" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+		<meta name="format-detection" content="telephone=no,email=no">	
+		<link href="${CTPATH}/css/global_m.css" rel="stylesheet">
+		<link href="${CTPATH}/css/swiper.min.css" rel="stylesheet">
+				<script src="${CTPATH}/js/jquery-1.8.3.min.js"></script>
+		<script src="${CTPATH}/js/base.js"></script>
+		<script src="${CTPATH}/js/swiper.jquery.min.js"></script>
+	<@css/>
+	</head>
+	
+	<body>
+	
+	  <#nested>
+	  <@script/>
+	</body>
+</html>
+</#macro> 
+

@@ -1,0 +1,166 @@
+<#macro script_import>
+</#macro> 
+<#macro script>
+</#macro> 
+<#macro css_import>
+</#macro> 
+<#macro css>
+</#macro>
+<#macro layout nav_active="">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>${WEB_TITLE!WEB_NAME!} ${WEB_SUBTITLE!}</title>
+	<meta name="keywords" content="${META_KEYWORDS!}">
+	<meta name="description" content="${META_DESCRIPTION!}">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="renderer" content="webkit">
+    <link rel="stylesheet" href="${CTPATH}/assets/css/public.css">
+    <@css_import />
+  	<style type="text/css">
+  		.nav_a >.active{ color: #ffffff; background: #c80100;}
+  		<@css />
+  	</style>
+</head>
+<body>
+<!--top-->
+<div class="main top">
+    <div class="cont">
+        <div class="top_l">你好，欢迎来到云之眼</div>
+        <div class="top_r">
+            <a href="${CPATH}/user/login">登录</a>｜<a href="${CPATH}/user/center">个人中心</a>
+        </div>
+    </div>
+</div>
+<!--/top-->
+
+<!--head-->
+<div class="main head">
+    <div class="cont">
+        <a href="${CPATH}/" class="logo"><img src="${CTPATH}/assets/img/index_03.png" width="116" height="72"> </a>
+        <div class="search">
+            <form class="search_box" action="${CPATH}/s" method="get">
+                <input type="text" class="search_input" name="k" value="${keyword!}">
+                <input type="hidden"  name="m" value="product">
+                <button type="submit" class="search_buttom">搜 索</button>
+            </form>
+            <p>
+            <#if OPTION('eyeself_hot_keywrod') ??>
+            	<#list OPTION('eyeself_hot_keywrod')?split("|") as key>  
+	                <a href="${CPATH}/s?k=${key!}&m=product">${key!}</a> <#if key_has_next>|</#if>
+	            </#list> 
+            </#if>
+        </div>
+    </div>
+</div>
+<!--/head-->
+
+<!--nav-->
+<div class="main nav">
+    <div class="cont">
+        <div class="nav_class"><img src="${CTPATH}/assets/img/index_07.png" width="17" height="14">所有分类
+	        <div class="nav_class_box ${nav_active!}">
+	            
+	            <!-- nav -->
+	            <@jp.taxonomys module="product" type="category" asTree="true">
+	            <#if taxonomys ?? >
+		       	<#list taxonomys as taxonomy>
+		       	 <div class="nav_class_box_title">
+		            <img  src="${taxonomy.icon!CTPATH+'/assets/img/i01.png'}" class="nav_class_img">
+		            <img  src="${taxonomy.icon!CTPATH+'/assets/img/i02.png'}" class="nav_class_img">${taxonomy.title!}<em class="nav_class_box_jt"></em>
+		            <#if taxonomy.childList ?? >
+		            <div class="nav_class_morebox">
+		            	<#list taxonomy.childList as taxonomy1>
+		            	<a href="${taxonomy1.url!}" target="_blank">${taxonomy1.title!}<!--<em class="nav_class_box_jt"></em>--></a>
+		            	 <#if taxonomy1.childList ?? >
+		            	<p>	
+		            		<#list taxonomy1.childList as taxonomy2>
+		            		<a href="${taxonomy2.url!}" target="_blank">${taxonomy2.title!}</a>
+		            		</#list>
+		            	</p>
+		            	</#if>
+		                </#list>
+		            </div>
+		            </#if>
+	           	 </div>
+		       	</#list>
+		       	</#if>
+		       	</@jp.taxonomys>
+	            <!-- /nav -->
+	            
+	        </div>
+        </div>
+        <div class="nav_a">
+            <a href="${CPATH}/">首页</a>
+            
+            <@jp.menus activeClass="active">
+		    <#list menus as menu>
+		         <a  href="${menu.url!}" class="${menu.activeClass!}" target="_blank"> ${menu.title!}</a>
+		    </#list>
+			</@jp.menus>
+
+        </div>
+
+
+    </div>
+</div>
+<!--/nav-->
+
+<!-- content -->
+<#nested>
+<!-- /content -->
+
+<!--footer-->
+<div class="main footer_top">
+    <div class="cont">
+    <a href="" class="logo_footer"><img src="${CTPATH}/assets/img/index_88.png" width="235" height="247"> </a>
+        <div class="footer_top_box"><span>新手入门</span>
+            <a href="">注册新用户</a>
+            <a href="">找买家</a>
+            <a href="">新手学堂</a>
+        </div>
+        <div class="footer_top_box"><span>会员服务</span>
+            <a href="">找公司</a>
+            <a href="">找产品</a>
+            <a href="">供应信息</a>
+            <a href="">采购信息</a>
+        </div>
+        <div class="footer_top_box"><span>常见问题</span>
+            <a href="">专场采购</a>
+            <a href="">专场采购</a>
+        </div>
+        <div class="footer_top_box"><span>支付方式</span>
+            <a href="">如何续费</a>
+            <a href="">短信收费</a>
+            <a href="">返回顶端</a>
+        </div>
+    </div>
+</div>
+<div class="main footer">
+    <div class="cont">
+        <p>
+            <a href="">网站首页</a>|<a href="">客户建议</a>|<a href="">版权隐私</a>|<a href="">使用协议</a>|<a href="">联系方式</a>|<a href="">关于我们</a>|<a href="">网站地图</a><a href="">排名推广</a>|<a href="">广告服务</a>|<a href="">网站留言</a>
+        </p>
+<p>(c)2008-201515044238号 鲁经营性2015-0007</p>
+    </div>
+</div>
+<!--/footer-->
+<div class="fiex_up">
+    <img src="${CTPATH}/assets/img/index_56.png" width="116" height="188">
+    <a href="#"><img src="${CTPATH}/assets/img/index_63.png" width="51" height="51"> </a>
+</div>
+
+<script src="${CTPATH}/assets/js/jquery.min.js"></script>
+<script src="${CTPATH}/assets/js/jquery.hammer-full.min.js"></script>
+<script src="${CPATH}/static/plugins/jquery/jquery.form.min.js"></script>
+<script src="${CTPATH}/assets/js/plugin.js"> </script>
+<script src="${CTPATH}/assets/js/lrtk.js"></script> 
+<script src="${CTPATH}/assets/js/base.js"></script>
+<@script_import />
+<script>
+	<@script />
+</script>
+</body>
+</html>
+</#macro>

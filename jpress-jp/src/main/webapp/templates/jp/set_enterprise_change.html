@@ -1,0 +1,75 @@
+<#include "/WEB-INF/admin/_inc/_layout.html"/> 
+<#macro css>
+.jjbs-border-bottom {
+    border-bottom: 1px solid #e4eaec;
+}
+.jjbs-padleft30 {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.jjbs-left {
+    float: left;
+}
+.jjbs-border-bottom {
+    border-bottom: 1px solid #e4eaec;
+}
+.jjbs-padleft30 {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.jjbs-manage-ico {
+    float: right;
+    margin-top: 10px;
+    padding-right: 30px;
+}
+.btn-icon, .btn.icon {
+    padding: 4px;
+}
+.jjbs-h5-color h5 {
+    margin-bottom: 11px;
+    margin-top: 11px;
+    font-size:16px;
+}
+.jjbs-h5-color h4 {
+    margin-bottom: 11px;
+}
+</#macro>
+<@layout active_id=p child_active_id=c>
+<section class="content-header">
+	<h1>
+		公司
+	</h1>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+<div class="box">
+  <div class=" box-body page-content page-content-table jjbs-h5-color">
+
+            <ul class="list-unstyled">
+                <li class="clearfix jjbs-border-bottom">
+                    <div class="jjbs-left jjbs-padleft30">
+                    	<h4>变更名称&nbsp;&nbsp;<a   href="${CPATH}/admin/data/set_enterprise_change_am?setOrdersId=${(setOrdersId)!}&c=${c!}&p=${p!}">添加变更</a></h4>
+                	</div>
+                </li>
+                <#if secList ??>
+	                <#list secList as x>
+	                <li class="clearfix jjbs-border-bottom">
+	                    <div class="jjbs-left jjbs-padleft30"><h5>${x.changeTitle!} </h5></div>
+	                    <div class="jjbs-manage-ico">
+	                        <span class="btn btn-pure btn-icon layer-add jjbs-layer-add" data-title="修改变更" data-toggle="list-editable">
+	                        	<a href="${CPATH}/admin/data/set_enterprise_change_am?setOrdersId=${(x.setOrdersId)!}&id=${x.id!}&c=${c!}&p=${p!}"> <i class="fa fa-edit fa-2x"></i> </a>
+	                        </span>
+	                        <span class="btn btn-pure btn-icon" data-tag="list-delete"><a href="${CPATH}/admin/data/set_enterprise_change_delete?id=${x.id!}&c=${c!}&p=${p!}"><i class="fa fa-trash fa-2x"></i> </a></span>
+	                    </div>
+	                </li>
+	                </#list>
+                </#if>
+            </ul>
+    </div>
+	<!-- /.row -->
+	</div>
+</section>
+<!-- /.content -->
+</@layout>

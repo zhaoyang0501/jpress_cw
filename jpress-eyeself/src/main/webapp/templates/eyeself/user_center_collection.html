@@ -1,0 +1,50 @@
+<#include "_inc/_layout.html"/> 
+<#macro script>
+$(function(){
+		$('.edu').selectlist({
+			zIndex: 10,
+			width: 290,
+			height: 43
+		});		
+	})
+
+</#macro>
+<@layout>
+<!--cont-->
+<div class="main">
+	<div class="cont list bus_list">
+
+		<div class="goods_list_top">
+			当前位置：<a href="">首页</a>&nbsp;>&nbsp;<span>我的搜藏 </span></a>
+		</div>
+
+		<#include "_inc/_user_menu.html"/> 
+		
+		<div class="per_r">
+
+			<div class="per_rbox">
+				<div class="per_rbox_top">我的搜藏</div>
+				<div class="p_psbox">
+					
+					<p style="width: 60%;">企业名称</p>
+					<p style="width: 25%;">创建时间</p>
+					<p style="width: 14%;">详情</p>
+					
+					<@jp.userContentPage module="companyConlection">
+					<#list page.getList() as content>
+					<span style="width: 60%;">${content.userObject.company!}</span> 
+					<span style="width: 25%;">${content.created!}</span> 
+					<span style="width: 14%;"><a href="${CPATH}/company/detail/${content.userObject.id!}" target="_blank">详情</a></span>
+					</#list>
+					</@jp.userContentPage>
+
+				</div>
+
+			</div>
+		</div>
+
+		<div class="clear"></div>
+	</div>
+</div>
+<!--/cont-->
+</@layout>

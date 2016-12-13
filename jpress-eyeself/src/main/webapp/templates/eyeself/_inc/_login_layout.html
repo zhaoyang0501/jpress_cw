@@ -1,0 +1,60 @@
+<#macro script_import>
+</#macro> 
+<#macro script>
+</#macro> 
+<#macro css_import>
+</#macro> 
+<#macro css>
+</#macro>
+<#macro layout nav_active="">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>企业</title>
+    <link rel="stylesheet" href="${CTPATH}/assets/css/public.css">
+    <@css_import />
+  	<style type="text/css">
+  		<@css />
+  	</style>
+</head>
+<body class="login">
+<!--top-->
+<div class="main top">
+    <div class="cont">
+    <a href="${CPATH}" class="login_logo">
+    <img src="${CTPATH}/assets/img/dl_03.png" width="258" height="44"></a>
+        <div class="top_l">你好，欢迎来到云之眼</div>
+       
+    </div>
+</div>
+<!--/top-->
+
+<!-- content -->
+<#nested>
+<!-- /content -->
+
+<!--footer-->
+<div class="main footer">
+    <div class="cont">
+        <p>
+            <a href="${CPATH}">网站首页</a>|<a href="">客户建议</a>|<a href="">版权隐私</a>|<a href="">使用协议</a>|<a href="">联系方式</a>|<a href="">关于我们</a>|<a href="">网站地图</a>|<a href="">排名推广</a>|<a href="">广告服务</a>|<a href="">网站留言</a>
+        </p>
+<p>(c)2008-201515044238号 鲁经营性2015-0007</p>
+    </div>
+</div>
+<!--/footer-->
+<div class="fiex_up">
+    <img src="${CTPATH}/assets/img/index_56.png" width="116" height="188">
+    <a href="#"><img src="${CTPATH}/assets/img/index_63.png" width="51" height="51"> </a>
+</div>
+<script src="${CTPATH}/assets/js/jquery.min.js"></script>
+<script src="${CPATH}/static/plugins/jquery/jquery.form.min.js"></script>
+<script src="${CTPATH}/assets/js/base.js"></script>
+<@script_import />
+<script>
+	<@script />
+</script>
+</body>
+</html>
+</#macro>

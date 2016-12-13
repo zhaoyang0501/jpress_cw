@@ -1,0 +1,185 @@
+<#include "/WEB-INF/admin/_inc/_layout.html"/> 
+
+<#macro script>
+	
+
+  function doSubmit(url){
+		
+	 	$(".form").ajaxSubmit({
+			type : "post", //提交方式  
+			dataType : "json", //数据类型  
+		beforeSubmit : function(){
+	            var sb =	sblank();
+            	if(false==sb){
+            		return false;
+            	}
+	            	
+	           //#################
+				},
+			success : function(data) { //提交成功的回调函数 
+				if(data.errorCode == 0){
+					if(url !=null && ''!=url){
+						location.href=url;
+					}else{
+						location.reload();
+					}
+				}else{
+					alert(data.message);
+				}
+			},
+			error : function() {
+				alert("信息提交错误");
+			}
+		});
+	 }
+	 
+	 function sblank(){
+	 	 var $input =$("input[name^='setUserType.']");
+		  for(var i=0;i<$input.length;i++){
+		    
+		     	if($input.eq(i).val().trim().length==0){	
+				       		alert("提交不能为空");
+	//			       console.log("提交不能为空");
+			 			return false;
+			 		
+				 }     
+		      
+		  }
+	 }
+	 
+$('[data-toggle="datepicker"]').datepicker({ 
+  format: 'yyyy-mm-dd',
+   language: 'zh-CN'
+  });
+  $('[data-toggle="mdatepicker"]').datepicker({ 
+  format: 'yyyy-mm',
+   language: 'zh-CN'
+  });
+</#macro>
+
+<#macro script_import>
+	<script src="${CTPATH}/js/datepicker.min.js"></script>
+	<script src="${CTPATH}/js/datepicker.zh-CN.js"></script>
+</#macro> 
+
+<#macro css_import>
+	<link href="${CTPATH}/css/datepicker.min.css" rel="stylesheet">
+</#macro> 
+
+
+<#macro css>
+	.jp-top7{
+		display: block;
+	    margin-top: 7px;
+    }
+</#macro>
+
+
+
+<@layout active_id=p child_active_id=c>
+<section class="content-header">
+	<h1>
+		拟定合同
+	</h1>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+
+	<form class="form" action="${CPATH}/admin/orders/orders_status_contacted?flag='0'&c=${c!}&p=${p!}"   method="post">
+	<div class="box box-solid">
+		<div class="box-header with-border">
+			<h3 class="box-title" > 拟定合同</h3>
+		</div>
+		<!-- /.box-header -->
+		<div class="box-body no-padding">
+			<!-- Custom Tabs -->
+			<div class="nav-tabs-custom">
+				
+				<div class="tab-content">
+					<div class="tab-pane active form-horizontal" id="tab_1">
+						<input type="hidden" name="contract.orders_enterprise_id" value=${id!}>
+						<input type="hidden" name="userId" value=${(balance.userId)}>
+						<input type="hidden"  name="contract.balanceId" value=${(balance.id)}>
+		                <div class="form-group">
+		                  	 <label class="col-sm-3 control-label">合同金额</label>
+			                  <div class="col-sm-8">
+			       
+			                   	 <input class="form-control"    type="text" name="contract.contract_amount"  value="${(contract.contract_amount)!}"/>
+			                  </div>
+		                </div>
+		                <div class="form-group">
+		                  <label  class="col-sm-3 control-label">合同日期</label>
+		                  <div class="col-sm-8">
+		                    	<input class="form-control" data-toggle="datepicker"  type="text" name="contract.contract_date" value="${(contract.contract_date)!}"/>
+		                  </div>
+		                </div>
+		                <div class="form-group">
+		                  <label for="_uname"  class="col-sm-3 control-label">合同期限</label>
+		                  <div class="col-sm-8">
+		                    	<input class="form-control"  data-toggle="datepicker"  type="text" name="contract.contract_deadline" value="${(contract.contract_deadline)!}"/>
+		                  </div>
+		                </div>
+		                <div class="form-group">
+		                  <label  class="col-sm-3 control-label">已缴金额</label>
+		                  <div class="col-sm-8"><span class="jp-top7">${(balance.amount)!}</span></div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-3 control-label">已缴月份</label>
+			                  <div class="col-sm-8">
+			                    	<input class="form-control"  data-toggle="datepicker" type="text" name="contract.month_balance" value="${(contract.month_balance)!}"/>
+			                  </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-3 control-label">应缴金额</label>
+			                  	<div class="col-sm-8">
+			                    	<input class="form-control"   type="text" name="contract.should_pay" value="${(contract.should_pay)!}"/>
+			                   </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-3 control-label">应缴月份</label>
+			                  <div class="col-sm-8">
+			                    	<input  class="form-control"   data-toggle="datepicker"   type="text" name="contract.month_should_pay" value="${(contract.month_should_pay)!}"/>
+			                  </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-3 control-label">备注</label>
+			                  <div class="col-sm-8">
+			                    	<input  class="form-control"    type="text" name="contract.remark" value="${(contract.remark)!}"/>
+			                  </div>
+		                </div>
+		                
+		                
+		                <div class="form-group">
+		                  	 <label class="col-sm-3 control-label">订单状态</label>
+			                  	<div class="col-sm-8 jp-common-pad ">
+			                  		
+										<span class="jp-top7">
+												<input 	type="radio" name="contract.pay_status" <#if (contract.pay_status)?? && (contract.pay_status)=="0"> checked="checked" </#if> value="0">一次性付清
+												<input 	type="radio" name="contract.pay_status" <#if (contract.pay_status)?? && (contract.pay_status)=="1"> checked="checked" </#if> value="1">季付
+												<input 	type="radio" name="contract.pay_status" <#if (contract.pay_status)?? && (contract.pay_status)=="2"> checked="checked" </#if> value="2">半年付
+												<input 	type="radio" name="contract.pay_status" <#if (contract.pay_status)?? && (contract.pay_status)=="3"> checked="checked" </#if> value="3">年付
+										</span>
+										
+								</div>
+		                </div>
+		                <div class="form-group">
+				               <div class="col-sm-8 col-sm-offset-3">
+								 		<button type="button" class="modify-close btn btn-primary"  onclick="doSubmit('${CPATH}/admin/orders/orders_list?status=${status!}&c=${c!}&p=${p!}')">提交</button>	
+							 </div>
+				 		</div>
+	              </div>
+	              
+				</div>
+				<!-- /.tab-content -->
+			</div>
+			<!-- nav-tabs-custom -->
+		</div>
+	</div>
+    </form>
+		
+	<!-- /.row -->
+</section>
+<!-- /.content -->
+</@layout>

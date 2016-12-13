@@ -1,0 +1,102 @@
+<#include "/WEB-INF/admin/_inc/_layout.html"/> 
+
+<#macro script>
+	
+
+  function doSubmit(url){
+		
+	 	$(".form").ajaxSubmit({
+			type : "post", //提交方式  
+			dataType : "json", //数据类型  
+		beforeSubmit : function(){
+	            var sb =	sblank();
+            	if(false==sb){
+            		return false;
+            	}
+	            	
+	           //#################
+				},
+			success : function(data) { //提交成功的回调函数 
+				if(data.errorCode == 0){
+					if(url !=null && ''!=url){
+						location.href=url;
+					}else{
+						location.reload();
+					}
+				}else{
+					alert(data.message);
+				}
+			},
+			error : function() {
+				alert("信息提交错误");
+			}
+		});
+	 }
+	 
+	 function sblank(){
+	 	 var $input =$("input[name^='setUserType.']");
+		  for(var i=0;i<$input.length;i++){
+		    
+		     	if($input.eq(i).val().trim().length==0){	
+				       		alert("提交不能为空");
+	//			       console.log("提交不能为空");
+			 			return false;
+			 		
+				 }     
+		      
+		  }
+	 }
+
+</#macro>
+
+<@layout active_id=p child_active_id=c>
+<section class="content-header">
+	<h1>
+		用户类型
+	</h1>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+
+	<form class="form" action="${CPATH}/admin/data/set_userType_am?c=${c!}&p=${p!}"   method="post">
+	<div class="box box-solid">
+		<div class="box-header with-border">
+			<h3 class="box-title" > <#if id??>修改用户类型<#else>添加用户类型</#if></h3>
+		</div>
+		<!-- /.box-header -->
+		<div class="box-body no-padding">
+			<!-- Custom Tabs -->
+			<div class="nav-tabs-custom">
+				
+				<div class="tab-content">
+					<div class="tab-pane active form-horizontal" id="tab_1">
+		                <div class="form-group">
+		                  	 <label class="col-sm-3 control-label">类型名称</label>
+			                  <div class="col-sm-8">
+			                   	 <input class="form-control"   type="text" name="setUsertype.userType"  value="${(su.userType)!}"/>
+			                  </div>
+		                </div>
+		                <#if id??>
+		                <input class="form-control"   type="hidden" name="id"  value="${(su.id)!}"/>
+		                </#if>
+		                <div class="form-group">
+				              <div class="col-sm-8  col-sm-offset-3">
+								 	<button type="button" class="modify-close btn btn-primary"  onclick="doSubmit('${CPATH}/admin/data/set_userType?c=${c!}&p=${p!}')">提交</button>	
+							 	</div>
+						 </div>
+	              </div>
+	              
+				</div>
+				<!-- /.tab-content -->
+			</div>
+			<!-- nav-tabs-custom -->
+		</div>
+	</div>
+    </form>
+		
+	<!-- /.row -->
+</section>
+<!-- /.content -->
+</@layout>

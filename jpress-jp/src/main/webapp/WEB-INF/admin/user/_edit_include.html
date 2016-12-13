@@ -1,0 +1,189 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+	<h1>个人资料</h1>
+</section>
+<!-- Main content -->
+<section class="content">
+	<form action="${CPATH}/admin/tuser/save" method="post" id="form" enctype="multipart/form-data">
+	<input type="hidden" name="user.id" value="${(user.id)!}">
+	<div class="col-xs-12 ">
+		<div class="row">
+			<h4 class="jp-set-pad jp-set-title">姓名</h4>
+			<ul class="list-unstyled">
+			<#if (user.username)??>
+			<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">登录账号</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+							<input class="form-control input-md" type="text" name="user.username" value="${(user.username)!}"/>
+						</div>
+					</div>
+					<div class="clr"></div>
+			</li>
+			<#else>
+			<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">登录账号</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+							<input class="form-control input-md" type="text" name="user.username" value="${(user.username)!}"/>
+						</div>
+					</div>
+					<div class="clr"></div>
+			</li>
+			<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">登录电话</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+							<input class="form-control input-md" type="text" name="user.mobile" value="${(user.mobile)!}"/>
+						</div>
+					</div>
+					<div class="clr"></div>
+			</li>
+			</#if>
+			<#if trole?? && "administrator"==trole>
+			<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">用户类型</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+						 <select id="selectType" name="user.role" class="gs_seb gs_seb2 form-control input-md">
+				            	<option <#if (user.role)?? &&  (user.role)=="小规模纳税人"> selected = "selected"</#if> value="小规模纳税人">小规模纳税人</option>
+				            	<option <#if (user.role)?? &&  (user.role)=="一般纳税人"> selected = "selected"</#if> value="一般纳税人">一般纳税人</option>
+				            	<option <#if (user.role)?? &&  (user.role)=="会计经理"> selected = "selected"</#if> value="会计经理">会计经理</option>
+				            	<option <#if (user.role)?? &&  (user.role)=="外勤经理"> selected = "selected"</#if> value="外勤经理">外勤经理</option>
+				            	<option <#if (user.role)?? &&  (user.role)=="内务经理"> selected = "selected"</#if> value="内务经理">内务经理</option>
+				            	<option <#if (user.role)?? &&  (user.role)=="代理部经理"> selected = "selected"</#if> value="代理部经理">代理部经理</option>
+				        </select>
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">设置密码</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+							<input class="form-control input-md" type="password" name="user.password"  value="${(user.password)!}"/>
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				<#else>
+				<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">用户类型</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+						 <select id="selectType" name="user.role" class="gs_seb gs_seb2 form-control input-md">
+				            	<option <#if (user.role)?? &&  (user.role)=="小规模纳税人"> selected = "selected"</#if> value="小规模纳税人">小规模纳税人</option>
+				            	<option <#if (user.role)?? &&  (user.role)=="一般纳税人"> selected = "selected"</#if> value="一般纳税人">一般纳税人</option>
+				           </select>
+				           
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				</#if>
+			<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">法定代表人</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+							<input class="form-control input-md" type="text" name="meta:stockholder" value="${(user.metadata('stockholder'))!}"/>
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+			<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">经营范围</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+							<input class="form-control input-md" type="text" name="meta:bscope" value="${(user.metadata('bscope'))!}"/>
+							
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+			
+			<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">法人状态</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+							<input 	type="radio" name="meta:corporate" <#if (user.metadata('corporate'))?? && (user.metadata('corporate'))=="1"> checked="checked" </#if>value="1">是
+							<input  type="radio" name="meta:corporate"   <#if (user.metadata('corporate'))?? && (user.metadata('corporate'))=="0"> checked="checked" </#if> value="0">否
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">状态</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+							<input 	type="radio" name="meta:user_status" <#if (user.metadata('user_status'))?? && (user.metadata('user_status'))=="1"> checked="checked" </#if>value="1">开通
+							<input  type="radio" name="meta:user_status"  <#if (user.metadata('user_status'))?? && (user.metadata('user_status'))=="0"> checked="checked" </#if> value="0">关闭
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">公司名称 (必填)</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+							<input class="form-control input-md" type="text" name="user.company" value="${(user.company)!}">
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+			</ul>
+			
+		</div>
+		<div class="row">
+			<h4 class="jp-set-pad jp-set-title">联系信息</h4>
+			<ul class="list-unstyled">
+
+				<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">电子邮件 (必填)</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+							<input class="form-control input-md" type="text" name="user.email" value="${(user.email)!}">
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">联系人</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+							<input class="form-control input-md" type="text" name="meta:contact" value="${(user.metadata('contact'))!}">
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">联系电话</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+							<input class="form-control input-md" type="text" name="meta:pcontact" value="${(user.metadata('pcontact'))!}">
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">联系地址</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+							<input class="form-control input-md" type="text" name="meta:addrcontact" value="${(user.metadata('addrcontact'))!}">
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-12">
+			<button type="button" onclick="doSubmit()" class="btn btn-primary">保存更改</button>
+		</div>
+		</div>
+	</form>
+</section>
+
+
+

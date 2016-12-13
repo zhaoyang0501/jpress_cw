@@ -1,0 +1,188 @@
+<#include "_inc/_layout.html"/> 
+<@layout> 
+<!--cont-->
+<div class="main">
+<div class="cont list cs_list">
+
+    <div class="goods_list_top">
+    当前位置：<a href="">首页</a>&nbsp;>&nbsp;<span>收费标准    </span></a>
+    </div>
+
+    
+    <div class="goods_list_topbox">
+    	<div class="goods_list_topbox_class"><span>选择城市</span>
+        	<p>
+        	<a href="${CPATH}/fee">不限</a>
+        	<@jp.taxonomys module="fee" type="city">
+        	<#list taxonomys as taxonomy>
+        	<a href="${taxonomy.url!}">${taxonomy.title!}</a>
+        	</#list>
+        	</@jp.taxonomys>
+        	</p>
+    	</div>
+	</div>
+    
+    
+
+    <form class="cs_list_topbox">
+    <input type="text" class="goods_list_input" placeholder="填写您想要查询的项目内容或名称">
+    <input type="submit" class="goods_list_bt" value="搜 索">
+    <input type="reset" class="goods_list_bt" value="重  置">
+    </form>
+     <@jp.contentPage pageSize="2000" > 
+		<div class="p_psbox p_psbox2">
+            <p style=" width:10%;">编码</p>
+            <p style=" width:10%;">地区</p>
+            <p style=" width:25%;">项目名称</p>
+            <p style=" width:30.9%;">内容</p>
+            <p style=" width:14%;">单位</p>
+            <p style=" width:10%;">价格</p>
+
+           <style>.p_psbox td{  border-bottom:1px solid #ebebeb; text-align:center; font-size:12px; color:#333333;border-left:1px solid #ebebeb;line-height:20px; padding:10px 0; }
+		   .p_psbox table,.p_psbox tbody{ width:100%; height:auto; display:block; float:left;}
+		   .p_psbox tr{ width:100%; height:auto; display:block; float:left; display:none;}
+		   .p_psbox tr:nth-child(1),.p_psbox tr:nth-child(2),.p_psbox tr:nth-child(3),.p_psbox tr:nth-child(4),.p_psbox tr:nth-child(5),.p_psbox tr:nth-child(6),.p_psbox tr:nth-child(7),.p_psbox tr:nth-child(8),.p_psbox tr:nth-child(9),.p_psbox tr:nth-child(10){ display:block;}
+		   .zc_box .login_box_main_dlbt {
+    font-weight: normal;}
+</style>
+
+
+
+           <table>
+           <tbody id="content">
+           
+	        <#list page.getList() as content>
+            <tr class="content_index+1">
+	        <td style=" width:100px;">${content.metadata('codeNumber')!}</td>
+            <td style=" width:100px;">${content.getTaxonomyAsString('city')!}</td>
+            <td style=" width:250px;">${content.title!}</td>
+            <td style=" width:270px; padding:10px 10px;">${content.summary!}</td>
+            <td style=" width:250px;">${content.metadata('unit')!}</td>
+            <td style=" width:100px;">${content.price!}</td>
+            </tr>
+		    </#list>
+            
+            </tbody>
+            </table>
+            
+          
+    
+            
+          </div>
+          
+	   	 </@jp.contentPage>
+    </div>
+</div>
+
+<div class="tan_bj" ></div>
+
+<div class="login_box zc_box" id="dlbox" style="top:auto; bottom:100px; position:fixed; margin-top:0;">
+			<form action="/user/register" method="post" id="rform">	
+            <div class="login_box_top">
+            登 录
+            </div>
+            <div class="login_box_main">
+                <div class="zc_box_main_input">
+                    <span>手机号码</span><input type="text" placeholder="" name="mobile" id="mobile">
+                </div>
+                <div class="zc_box_main_input">
+                    <span>登录密码</span><input type="password" placeholder="" name="password">
+
+                </div>
+
+                <a href="javascript:;" onclick="" class="login_box_main_dlbt" id="dlbox_dlbt">登&nbsp;录</a>
+                <div class="login_box_main_zcbt" style="width: 200px;margin: -10px 0 10px 262px;float: left;"  id="dlbox_zcbt">立即注册</div>
+            </div>
+            </form>
+        </div>
+        
+        
+<div class="login_box zc_box" id="zcbox" style="top:auto; bottom:20px; position:fixed; margin-top:0;">
+			<form action="/user/register" method="post" id="rform">	
+            <div class="login_box_top">
+            注 册
+            </div>
+            <div class="login_box_main">
+                <div class="zc_box_main_input">
+                    <span>手机号码</span><input type="text" placeholder="" name="mobile" id="mobile">
+                    <em>请填写手机号码</em>
+                </div>
+                <div class="zc_box_main_input">
+                    <span>登录密码</span><input type="password" placeholder="" name="password">
+                    <em>6-16个字符，区分大小写</em>
+                </div>
+                <div class="zc_box_main_input">
+                    <span>重复密码</span><input type="password" placeholder="" name="confirm_password">
+                    <em>请再次填写密码</em>
+                </div>
+                
+                <div class="zc_box_main_input zc_box_main_yzm">
+                    <span>验证码</span><input type="text" name="mobile_code" placeholder=""><a href="javascript:;" onclick="doGetVcode()">免费获取验证码</a>
+                    <em>请查收手机短信，并填写短信中的验证码</em>
+                </div>
+                
+                <div class="login_box_main_msg zc_box_main_msg">
+                	<div class="login_box_main_msgl"><img src="/templates/eyeself/assets/img/d_12.png" class="zc_box_main_msg01"><img src="/templates/eyeself/assets/img/d_092.png" class="zc_box_main_msg02">同意<span>“服务条款”和用户须知</span></div>
+                </div>
+                <a href="javascript:;" onclick="" class="login_box_main_dlbt" id="zcbox_zcbt">立即注册</a>
+                <div class="login_box_main_zcbt" style="width: 200px;margin: -10px 0 10px 262px;float: left;" id="zcbox_dlbt">登&nbsp;录</div>
+            </div>
+            </form>
+        </div>
+        
+        
+        
+          <script src="/templates/eyeself/assets/js/jquery.min.js"></script>
+            
+            <script type="text/javascript">  
+			$(document).ready(function(){ 
+			 
+			 	var shifuodenglu = 0;  //是否登录
+				var range = 200;             //距下边界长度/单位px     
+				var num = 10;  
+				var totalheight = 0;   
+				$(window).scroll(function(){  
+					var srollPos = $(window).scrollTop();    //滚动条距顶部距离(页面超出窗口的高度)  
+					
+					totalheight = parseFloat($(window).height()) + parseFloat(srollPos); 
+
+					if(($(document).height()-range) <= totalheight && shifuodenglu != 0) { 
+						$("#dlbox,.tan_bj,#zcbox").css("display","none");
+						$(".p_psbox tr:nth-child("+num+")").css("display","block");
+						num++;  
+					}else if(($(document).height()-range) <= totalheight && shifuodenglu == 0){
+						$("#dlbox,.tan_bj").fadeIn();
+						console.log("1");
+					}  
+				}); 
+				
+				
+				
+				$("#dlbox_dlbt").click(function(){
+						shifuodenglu = 1; 
+						$("#dlbox,.tan_bj").fadeOut();
+						console.log("2");
+					});
+					
+					$("#dlbox_zcbt").click(function(){
+						$("#dlbox").fadeOut();
+						$("#zcbox").fadeIn();
+						console.log("3");
+					});
+					
+					$("#zcbox_zcbt").click(function(){
+						shifuodenglu = 1; 
+						$("#zcbox,.tan_bj").fadeOut();
+						console.log("4");
+					});
+					
+					$("#zcbox_dlbt").click(function(){
+						$("#zcbox").fadeOut();
+						$("#dlbox").fadeIn();
+						console.log("5");
+					}); 
+				
+			});  
+			</script>  
+<!--/cont-->
+</@layout>

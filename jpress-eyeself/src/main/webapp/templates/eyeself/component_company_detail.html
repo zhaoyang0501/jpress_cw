@@ -1,0 +1,75 @@
+<#include "_inc/_layout.html"/>
+<title>${user.company!}--${WEB_TITLE!WEB_NAME!} ${WEB_SUBTITLE!}</title>
+<@layout> 
+
+<!--cont-->
+<div class="main">
+<div class="cont post">
+
+    <img src="${CPATH}${user.metadata('company_thumbnail')!}" width="1136" class="bus_post_top">
+    
+    <div class="bus_post_l">
+    	<div class="bus_post_l_logo">
+        <img src="${CPATH}${user.metadata('company_icon')!}" ></div>
+        <span>${user.company!}</span>
+        <p><i>类型</i><#if user.metadata('company_type') = 'factory'>厂商</#if><#if user.metadata('company_type') = 'sp'>服务商</#if><#if user.metadata('company_type') = 'dealer'>服务商</#if><br/>
+        <i>官网</i><a href="http://${user.site!}" target="_blank">${user.site!}</a><br/>
+        <i>联系电话</i>${user.metadata('company_phone')!}<br/>
+        <i>联系地址</i>${user.metadata('company_address')!}
+        <br/>
+        <#if user.qq??><i>在线联系</i><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=${(user.qq)!}&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:${(user.qq)!}:41" alt="点击这里给我发消息" title="点击这里给我发消息"></a></#if>
+        
+        </p>
+    <em>${user.metadata('company_des')!}</em>
+    
+     <!--
+     	作者：admin@icecn.net
+     	时间：2016-11-22
+     	描述：
+     <#if user.metadata('company_thumbnail') ??>
+       <img src="${CPATH}${user.metadata('company_thumbnail')!}" width="200" height="235">
+     </#if>-->
+    </div>
+    
+    <div class="bus_post_r">
+    
+    	<div class="bus_post_rtop">
+        推荐产品
+        </div>
+        
+        <@jp.userProductPage pagesize="12">
+        <div class="bus_post_rbox">
+        
+       <#list page.getList() as content>
+       	<li>
+        <a href="${content.url!}"><img src="${content.image!}" width="190" height="165"></a>
+        <p>${content.title!}</p>
+        <em>${content.metadata('product_name')!}</em>
+        </a>
+        </li>
+        </#list>
+        
+    	</div>
+    	 <@pagination>
+	         <div class="list_page">
+		     <div class="goods_list_tagr">
+		     		<#list pages as pItem>
+			             <a href="${pItem.url!}" >${pItem.text!}</a>
+			        </#list>
+		            <a href="" class="">></a>
+		            <em>共${page.totalPage!}页，到</em>
+		            <input type="tel">
+		            <em>页</em>
+		            <a href="" class="active">确定</a>
+			   </div>
+			   </div>
+   				</div>
+      	</@pagination>
+   	   </@jp.userProductPage>
+    </div>
+    
+</div>
+</div>
+<!--/cont-->
+
+</@layout>

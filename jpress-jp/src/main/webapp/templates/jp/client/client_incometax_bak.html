@@ -1,0 +1,38 @@
+<#include "_inc/_layout.html"/> 
+<#macro title>
+ <title>测算收入统计</title>
+</#macro>
+<@layout >
+<div class="nwrapper index_main"  style="font-size:.3rem" >
+    <div class="tp_box" >
+        
+	
+	 
+	  <#if map??>
+		      <#list map.keySet() as testKey>
+		  ####@   ${ (map.get(testKey).month)!"0"}<br/>
+		  ##@##   ${ (map.get(testKey).month)?substring(5,7)!"0"}<br/>
+		      		<#if ((map.get(testKey).month)?substring(5,7))=="12">
+		      				${(map.get(testKey).seasonIncome)!"0"}
+		      		</#if>
+		      		<#if ((map.get(testKey).month)?substring(5,7))=="09">
+		      				${(map.get(testKey).seasonIncome)!"0"}
+		      		</#if>
+		      		<#if ((map.get(testKey).month)?substring(5,7))=="06">
+		      				${(map.get(testKey).seasonIncome)!"0"}
+		      		</#if>
+		      		<#if ((map.get(testKey).month)?substring(5,7))=="03">
+		      				${(map.get(testKey).seasonIncome)!"0"}
+		      		</#if>
+		      		<#if ((map.get(testKey).yearMajor)?? && (map.get(testKey).yearMajor !="") && (map.get(testKey).yearIncome)?? && (map.get(testKey).yearIncome !=""))  >
+		      			${((map.get(testKey).yearIncome)?number)/((map.get(testKey).yearMajor)?number)}
+      				<#else>
+	      					0
+      				
+		      		</#if>
+		   
+		      </#list>
+		</#if>
+    </div>    
+</div>
+</@layout>

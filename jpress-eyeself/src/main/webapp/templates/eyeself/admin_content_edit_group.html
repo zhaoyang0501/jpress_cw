@@ -1,0 +1,56 @@
+<section class="content-header">
+	<h1>组织基本设置</h1>
+</section>
+<!-- Main content -->
+<section class="content" style="z-index: 9999">
+	<form action="${CPATH}/admin/content/save" id="form" method="post">
+		<input type="hidden" name="content.module" value="${(content.module)!m!}"> <input type="hidden" id="content_id" name="content.id" value="${(content.id)!}">
+		<input type="hidden" name="content.status" value="normal" id="content_status"> <input type="hidden" name="content.created" value="${(content.created)!}">
+		<input type="hidden" id="content_slug" name="content.slug" value="${(content.slug)!}"> <input type="hidden" name="ucode" value="${ucode}">
+		<div class="row">
+			<!-- /.col -->
+			<div class="col-md-9">
+				<div class="nav-tabs-custom well ">
+					<div class="tab-content">
+						<div class="tab-pane active form-horizontal">
+							<div class="media">
+								<a class="media-left" href="javascript:;" onclick="doSelectThumbnail()"><img id="thumbnail" alt="200x100"
+									src="${(content.thumbnail)!CPATH+'/static/jpress/admin/image/nogroup.jpg'}" data-holder-rendered="true" style="width: 200px; height: 100px;"> </a> <input
+									type="hidden" name="content.thumbnail" value="${(content.thumbnail)!}" id="content_thumbnail">
+								<div class="media-body">
+									<div class="form-group">
+										<label class="col-sm-2 control-label">组织名称</label>
+										<div class="col-sm-4">
+											<input name="content.title" class="form-control" id="title" value="${(content.title)!}" type="text" placeholder="在此输入组织名称">
+										</div>
+										<label class="col-sm-2 control-label">组织性质</label>
+										<div class="col-sm-4">
+											<input name="meta:group_nature" class="form-control" value="${(content.metadata('group_nature'))!}" type="text" placeholder="在此输入组织性质">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="vice-director" class="col-sm-2 control-label">详细地址</label>
+										<div class="col-sm-10">
+											<input name="meta:group_address" class="form-control" value="${(content.metadata('group_address'))!}" type="text" placeholder="在此输入组织详细地址">
+										</div>
+									</div>
+								</div>
+							</div>
+							<label>组织简介</label>
+							<div class="box box-solid">
+								<div class="box-body no-padding">
+									<textarea id="textarea" class="myTextEditor" name="content.text">${(content.text)!}</textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<#include "_admin_inc/_group_box.html" />
+			</div>
+			<!-- /.col -->
+			<div class="col-md-3"><#include "_admin_inc/_action_box.html" /> <#if module ??> <#list module.taxonomyTypes! as taxonomyType > <#if taxonomyType.formType ==
+				"select"> <#include "_admin_inc/_select_box.html" /> <#else> <#include "_admin_inc/_input_box.html" /> </#if> </#list> </#if></div>
+		</div>
+		<!-- /.row -->
+	</form>
+</section>

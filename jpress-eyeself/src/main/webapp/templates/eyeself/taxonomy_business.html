@@ -1,0 +1,92 @@
+<#include "_inc/_layout.html"/> 
+<@layout> 
+<!--cont-->
+<div class="main">
+<div class="cont list cs_list">
+
+    <div class="goods_list_top">
+    当前位置：<a href="">首页</a>&nbsp;>&nbsp;<span>商机</span></a>
+    </div>
+
+    <div class="bo_l">
+    <div class="goods_list_topbox">
+    	<div class="goods_list_topbox_class"><span>选择城市</span>
+        	<p><a href="${CPATH}/business">不限</a>
+        	 <@jp.taxonomys module="business" type="city" >
+        	<#list taxonomys as taxonomy>
+        	<a href="${taxonomy.url!}" class="${taxonomy.activeClass!}">${taxonomy.title!}</a>
+        	</#list>
+        	</@jp.taxonomys>
+        	</p>
+    	</div>
+	</div>
+    
+	<div class="goods_list_tag">
+    	<div class="goods_list_tagl">
+            <@jp.taxonomys module="business" type="category" >
+        	<#list taxonomys as taxonomy>
+        	<a href="${taxonomy.url!}" class="${taxonomy.activeClass!}">${taxonomy.title!}</a>
+        	</#list>
+        	</@jp.taxonomys>
+    	</div>
+    </div>
+    
+	<div class="p_psbox p_psbox2">
+            <p style=" width:10%;">类别</p>
+            <p style=" width:40%;">标题</p>
+            <p style=" width:30%;">公司名称</p>
+            <p style=" width:19.6%;">发布时间</p>
+            
+              <@jp.contentPage > 
+    		 <#list page.getList() as content>
+            <span style=" width:10%;">${content.getTaxonomyAsString('category')!}</span>
+            <span style=" width:40%;"><a href="${content.url!}">${content.title!}</a></span>
+            <span style=" width:30%;">上海华壹生物科技有限公司</span>
+            <span style=" width:19.5%;">${content.created!}</span>
+             </#list>
+			 <@pagination>
+			         <div class="list_page">
+				     <div class="goods_list_tagr">
+				     		<#list pages as pItem>
+					             <a href="${pItem.url!}" >${pItem.text!}</a>
+					        </#list>
+				            <a href="" class="">></a>
+				            <em>共${page.totalPage!}页，到</em>
+				            <input type="tel">
+				            <em>页</em>
+				            <a href="" class="active">确定</a>
+					   </div>
+					   </div>
+			   	    </@pagination>
+			 </@jp.contentPage>
+            </div>
+            
+   </div>
+   
+   <div class="bo_r">
+       
+   <div class="goods_post_mainbox_top"><span>推荐阅读</span></div>
+   
+   <div class="bo_r_box">
+    <@jp.contents  module="business" count="10" orderBy="view_count"> 
+		    <#list contents as content> 
+		    <#if content?is_first >
+			<a href="${content.url!}" class="bo_r_box01"><em>${content_index + 1}</em>
+			<Span>${content.title!}</Span>
+			<p>${content.summary!} ... <i>查看全文</i></p>
+			</a>
+			<#else>
+			  <a href="${content.url!}" ><em>${content_index!}</em><Span>${content.title!}</Span></a>
+			</#if>
+        	</#list> 
+	 </@jp.contents>
+   
+   </div>
+   
+   </div>
+   
+</div>
+    
+</div>
+<!--/cont-->
+</@layout>

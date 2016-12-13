@@ -1,0 +1,148 @@
+<#include "_inc/_layout.html"/> 
+<#macro title>
+ <title>单据上传</title>
+</#macro>
+<#macro css>
+ <style type="text/css">
+ .du_tc_box p a.dright {
+    background: #00b9fe none repeat scroll 0 0;
+    color: #ffffff;
+    display: block;
+    float: right;
+    font-size: 0.32rem;
+    height: 0.9rem;
+    line-height: 0.9rem;
+    margin: 1rem 0.2rem 0;
+    text-align: center;
+    width: 3rem;
+}
+
+ .du_tc_box p a input{   
+    height: 0.9rem;
+    left: 0.3rem;
+    opacity: 0;
+    position: absolute;
+    width: 3rem;
+    }
+ </style>
+</#macro>
+<#macro script>
+<script type="text/javascript">
+$(function(){
+	$("#capture").change(function(){
+		$picture = $("#capture").val();
+		$(".form").ajaxSubmit({
+			type : "post", //提交方式  
+			dataType : "json", //数据类型  
+			success : function(data) { //提交成功的回调函数 	
+				var $path = "${CPATH}";
+				$path += data.data.path;
+	//			$path =$path.replace("\\/g", "/");
+				$path="'"+$path+"'";
+				
+			$(".userAvator").attr("src",data.message);		
+				html="";
+				html +='<div class="index_box_img"><div class="index_box_addmain"  onclick="picture('+data.data.id+','+$path+')" >';
+				html +='<img src=${CPATH}'+data.message+'></div><p>'+data.data.flag+'</p></div>';
+				$(".index_box_img").eq(0).before(html);
+					
+	//			 $.toast("上传成功");
+			},
+			error : function() {
+//				$.toast("上传失败", "cancel");
+			}
+		});
+	})
+	
+})
+
+
+function picture( pid,purl){
+		$(".index_box").hide();
+	/*	 
+	*/
+		var str="";
+		str+='<form id="modfypic" action="${CPATH}/account/client_modifyBill?pid='+pid+'" method="post" enctype="multipart/form-data" >';
+	str+='<div class="index_tc_box du_tc_box"><span><img class="picBig" src="'+purl+'"/></span>';
+	
+	str+='<p><a>修改文件<input  type="file" onchange="modfy('+pid+')" name="bill" accept="image/*"   capture="camera" multiple></a>';
+	str+='<a class="dright" onclick="picdelete('+pid+')">删除</a></p>';
+	str+='</div></form>';
+	
+	$(".SECOND").html(str);
+	}
+
+function picdelete(pid){
+	$.ajax( {  
+		      url:'${CPATH}/account/client_deleteBill',// 跳转到 action  
+		      data:{"pid":pid},  
+		     type:'post',   
+		     dataType:'json',  
+		     success:function(data) {  
+		      	alert(data.message);
+		      	location.reload();
+		      },  
+		      error : function() {  
+		           // view("异常！");  
+		           alert("异常！");  
+		      }  
+		 });
+}
+
+function modfy(pid){
+	$("#modfypic").ajaxSubmit({
+		type : "post", //提交方式  
+		dataType : "json", //数据类型  
+		success : function(result) { //提交成功的回调函数 	
+			var path = "${CPATH}";
+			path += result.data.path;
+			$(".picBig").attr("src",path);		
+//			 $.toast("上传成功");
+		},
+		error : function() {
+//			$.toast("上传失败", "cancel");
+		alert("上传失败");
+		}
+		
+	});
+}
+
+
+	</script>
+</#macro>
+<@layout active_id = p>
+<div class="nwrapper index_main">
+    <div class="index_top">
+    <a href="">单据列表</a>
+    </div>
+    <form class="form" action="${CPATH}/account/client_uploadBill?userId=${userId!}"   method="post" enctype="multipart/form-data" >
+    <div class="index_box">
+    	<div class="index_box_add">
+	    	<div class="index_box_addmain">
+	    		<input class="weui_panel_ft avatorBtn"  type="file" name="image" accept="image/*" id="capture" capture="camera" multiple/><span>+</span>
+	    	</div>
+    	<p>添加新单据</p>
+    </div>
+    <#if page??>
+    <#list page.getList() as x>
+        <div class="index_box_img"><div onclick="picture('${(x.id)}','${CPATH}${(x.path)!}')" class="index_box_addmain"><img src="${CPATH}${x.path!}"></div><p>${x.flag!}</p></div>
+      <#else>
+      <div class="index_box_img"></div>
+      </#list>
+      </#if>
+      
+       
+        
+	<#if page??> 
+		<#include "_inc/_paginate.html" /> 
+		<@paginate currentPage=page.pageNumber totalPage=page.totalPage actionUrl="?userId=${userId!}&page="/> 
+	</#if>
+		
+       </div>
+</form>
+   <div class="SECOND"></div>
+
+  <#include "_inc/_footer.html"/> 
+
+</div>
+</@layout>

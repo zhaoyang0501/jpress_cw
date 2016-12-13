@@ -1,0 +1,43 @@
+
+<div class="box box-solid">
+	<div class="box-header with-border">
+		<h3 class="box-title">基本设置</h3>
+
+		<div class="box-tools">
+			<button type="button" class="btn btn-box-tool" data-widget="collapse">
+				<i class="fa fa-minus"></i>
+			</button>
+		</div>
+	</div>
+	<!-- /.box-header -->
+	<div class="box-body no-padding">
+		<!-- Custom Tabs -->
+		<div class="nav-tabs-custom">
+			<div class="tab-content">
+				<div class="tab-pane active form-horizontal" >
+                <div class="form-group">
+                  <label for="codeNumber" class="col-sm-1 control-label">编码</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="meta:codeNumber" id="codeNumber"  value="${(content.metadata('codeNumber'))!}">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="vice-director" class="col-sm-1 control-label">价格</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="vice-director" name="content.price" value="${(content.price)!}">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="meta:address" class="col-sm-1 control-label">单位</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="meta:address" name="meta:unit" value="${(content.metadata('unit'))!}">
+                  </div>
+                </div>
+				</div>
+				
+			</div>
+			<!-- /.tab-content -->
+		</div>
+		<!-- nav-tabs-custom -->
+	</div>
+</div>

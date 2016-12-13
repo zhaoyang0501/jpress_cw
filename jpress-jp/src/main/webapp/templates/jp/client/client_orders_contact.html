@@ -1,0 +1,70 @@
+
+<#include "_inc/_layout.html"/> 
+<#macro title>
+<title>我要下单</title>
+</#macro>
+<#macro css>
+</#macro>
+<#macro script>
+	<script type="text/javascript">
+function doSubmit(url){
+	 	$("#form").ajaxSubmit({
+			type : "post", //提交方式  
+			dataType : "json", //数据类型  
+		beforeSubmit : function(){
+	         
+	           //#################
+				},
+			success : function(data) { //提交成功的回调函数 
+				if(data.errorCode == 0){
+					if(url !=null && ''!=url){
+						location.href=url;
+					}else{
+						location.reload();
+					}
+				}else{
+					alert(data.message);
+				}
+			},
+			error : function() {
+				alert("信息提交错误");
+			}
+		});
+	 }
+	
+</script>
+</#macro>
+<@layout >
+<div class="nwrapper index_main">
+<form  id="form" action="${CPATH}/orders/client_orders_contact" method="post">
+<input type="hidden" name="flag" value="${flag!}"/>
+<input type="hidden" name="setOrdersId" value="${setOrdersId!}"/>
+    <div class="index_top">
+        <a href="" class="ns_tl">联系人信息</a>
+        <a href="" class="ns_tr"><img src="${CTPATH}/client/img/xyb'_03.png"> 在线咨询</a>
+    </div>
+
+     <div class="it">
+        <div class="it_p"><i>联系人</i><input type="text" name="ordersEnterprise.contactName" class="co_l" placeholder="请输入联系人"/></div>
+        <div class="it_p"><i>QQ或微信</i><input type="text" name="ordersEnterprise.link_tool" class="co_l" placeholder="请输入QQ或微信号"/></div>
+        <div class="it_p"><i>邮箱</i><input type="text" name="ordersEnterprise.email" class="co_l" placeholder="请输入邮箱"/></div>
+        <div class="it_p"><i>联系手机号</i><input type="text" name="ordersEnterprise.mobile" class="co_l" placeholder="请输入手机号码"/></div>
+        <div class="clear"></div>
+    </div>
+
+    <div class="ns_box2">
+        需求描述
+    </div>
+
+    <div class="ns_box3">
+        <textarea name="ordersEnterprise.content"></textarea>
+    </div>
+
+    <div class="it">
+        <div class="clear"></div>
+        <button type="button" onclick="doSubmit('${CPATH}/orders/client_success')" class="co_bt co_bt4"><img src="${CTPATH}/client/img/gwc.png"> 购买下单</button>
+    </div>
+</form>
+   <#include "_inc/_footer.html"/> 
+</div>
+</@layout>

@@ -1,0 +1,285 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+	<h1>个人资料</h1>
+</section>
+<!-- Main content -->
+<section class="content">
+	<form action="${CPATH}/admin/user/save" method="post" id="form" enctype="multipart/form-data">
+	<input type="hidden" name="user.id" value="${(user.id)!}">
+	<div class="col-xs-12 ">
+		<div class="row">
+			<h4 class="jp-set-pad jp-set-title">姓名</h4>
+			<ul class="list-unstyled">
+				<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">用户名 (必填)</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+							<input class="form-control input-md" type="text" name="user.username" value="${(user.username)!}">
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+
+				<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">昵称 (必填)</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+							<input class="form-control input-md" type="text" name="user.nickname" value="${(user.nickname)!}">
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+			</ul>
+			
+		</div>
+		<div class="row">
+			<h4 class="jp-set-pad jp-set-title">联系信息</h4>
+			<ul class="list-unstyled">
+
+				<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">电子邮件 (必填)</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+							<input class="form-control input-md" type="text" name="user.email" value="${(user.email)!}">
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+
+				<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">电话</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+							<input class="form-control input-md" type="text" name="user.mobile" value="${(user.mobile)!}">
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+
+				<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">QQ</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+							<input class="form-control input-md" type="text" name="user.qq" value="${(user.qq)!}">
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+
+			</ul>
+			
+		</div>
+		<div class="row">
+			<h4 class="jp-set-pad jp-set-title">签名</h4>
+			<ul class="list-unstyled">
+				<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">个人签名</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-7  ">
+							<div class="form-group">
+								<textarea class="form-control" rows="4" name="user.signature">${(user.signature)!}</textarea>
+								<p>分享关于您的一些心情和公开信息。</p>
+							</div>
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				
+				<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad jp-set-info">
+						头像
+					</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-7 ">
+							<#if (user.avatar) ??>
+							<img alt="" src="${CPATH}${(user.avatar)!}" class="jp-grids-photos img-responsive">
+							<br />
+							</#if>
+							<input class="form-control input-md" type="text" name="user.avatar" value="${(user.avatar)!}">
+							<input name="user.avatar" type="file">
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				
+			</ul>
+		</div>
+		
+		
+		
+		<div class="row">
+			<h4 class="jp-set-pad jp-set-title">企业信息</h4>
+			<ul class="list-unstyled">
+			
+				<li class="jp-set-pad">
+					<div class="col-sm-3 ">
+						<div class="jp-set-info ">是否是自营企业</div>
+					</div>
+					<div class="col-sm-9  jp-set-title-line">
+						<div class="col-sm-6 jp-table-distance-top ">
+						<label>
+							<input type="checkbox" name="meta:zyqy" value="true" ${METADATA_CHECKED(user,'zyqy')}> <span class="jp-set-info"> 是自营企业 </span></label>
+							<input type="checkbox" name="meta:zyqy" value=""  checked="checked" style="display: none;">
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+
+				<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">企业名称</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+							<input class="form-control input-md" type="text" name="user.company" value="${(user.company)!}">
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				
+				<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">企业类型</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+							  <select name="meta:company_type">
+					            <option value="factory" ${METADATA_SELECTED(user,'company_type','factory')!}>厂家</option>
+					            <option value="dealer" ${METADATA_SELECTED(user,'company_type','dealer')!}>经销商</option>
+					            <option value="sp" ${METADATA_SELECTED(user,'company_type','sp')!}>服务商</option>
+					          </select>
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+
+				<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">电话</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+							<input class="form-control input-md" type="text" name="meta:company_phone" value="${(user.metadata('company_phone'))!}">
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+
+				<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">咨询QQ</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+							<input class="form-control input-md" type="text" name="user.qq" value="${(user.qq)!}">
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+
+				<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">地址</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+							<input class="form-control input-md" type="text" name="meta:company_address" value="${(user.metadata('company_address'))!}">
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				
+				<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">官网</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+							<input class="form-control input-md" type="text" name="user.site" value="${(user.site)!}">
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				
+				<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">主营业务</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+							<input class="form-control input-md" type="text" name="meta:company_main_business" value="${(user.metadata('company_main_business'))!}">
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				
+				<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad jp-set-info">
+						公司封面
+					</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-7 ">
+							<#if (user.metadata('company_thumbnail')) ??>
+							<img alt="" src="${CPATH}${(user.metadata('company_thumbnail'))!}" style="max-width: 400px;">
+							<br />
+							</#if>
+							<input class="form-control input-md" type="text" name="meta:company_thumbnail" value="${(user.metadata('company_thumbnail'))!}">
+							<input name="meta:company_thumbnail" type="file">
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				
+				<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad jp-set-info">
+						公司图标
+					</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-7 ">
+							<#if (user.metadata('company_icon'))  ??>
+							<img alt="" src="${CPATH}${(user.metadata('company_icon'))!}" style="max-width: 400px;">
+							<br />
+							</#if>
+							<input class="form-control input-md" type="text" name="meta:company_icon" value="${(user.metadata('company_icon'))!}">
+							<input name="meta:company_icon" type="file">
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				
+				<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">企业简介</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-7  ">
+							<div class="form-group">
+								<textarea class="form-control" rows="4" name="meta:company_des">${(user.metadata('company_des'))!}</textarea>
+								<p>分享关于您的一些心情和公开信息。</p>
+							</div>
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				
+				
+			</ul>
+			
+		</div>
+		
+		
+		
+		<div class="row">
+			<h4 class="jp-set-pad jp-set-title">密码</h4>
+			<ul class="list-unstyled">
+				<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">密码</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-7  ">
+							<div class="form-group">
+								<input class="form-control input-md" class="pull-left" id="password" name="user.password" autocomplete="off" spellcheck="false"  type="password" >
+								<input type="password" style="height: 1px;width: 1px;opacity:0;"><!-- 防止密码被自动填充 -->
+							</div>
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+			</ul>
+		</div>
+		
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-12">
+			<button type="button" onclick="doSubmit()" class="btn btn-primary">保存更改</button>
+		</div>
+		</div>
+	</form>
+</section>
+
+
+

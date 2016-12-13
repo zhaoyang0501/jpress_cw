@@ -1,0 +1,222 @@
+<#include "_inc/_layout.html"/> 
+<#macro title>
+ <title>工商注册</title>
+</#macro>
+<#macro script_import>
+</#macro>
+<#macro script>
+<script type="text/javascript">
+
+
+
+	function doSubmit(url){
+	 	$("#form").ajaxSubmit({
+			type : "post", //提交方式  
+			dataType : "json", //数据类型  
+		beforeSubmit : function(){
+	           
+	           //#################
+				},
+			success : function(data) { //提交成功的回调函数 
+				if(data.errorCode == 0){
+					if(url !=null && ''!=url){
+						location.href=url;
+					}else{
+						location.reload();
+					}
+				}else{
+					alert(data.message);
+				}
+			},
+			error : function() {
+				alert("信息提交错误");
+			}
+		});
+}
+	
+	
+	$(function(){
+		$(".addEnterprise").click(function(){
+			var html = "";
+			html +='<div class="it_p"><i>企业名称</i><input class="enterprise"  name="enterpriseName"  type="text" placeholder="至少输入三个，确保注册成功"></div>';
+			
+			$(".addetp").before(html);
+		})
+		
+		$(".addstock").click(function(){
+			var html = "";
+			html +='<div class="it">';
+			html +='<div class="it_p"><i>企业股东</i><input name="stockholder"  type="text" placeholder="请输入"></div>';
+			html +='<div class="it_p"><i>股东身份证</i><input name="stockholderId"  type="text" placeholder="请输入"></div>';
+			html +='<div class="it_p"><i>认缴比例</i><input name="stockRate"  type="text" placeholder="请输入"></div>';
+			html +='<div class="it_p"><i>占股</i><input name="stockNum"  type="text" placeholder="请输入"></div>';
+			html +='<input type="hidden" name="status" value="0"/>';
+			html +='</div>';
+			
+			$(".addstockdiv").before(html);
+		})
+	})
+	
+ $(".identity").change(function(){
+		//	   $img = $(this).index(".img");
+        var  resultFile = $(".identity")[0].files[0];
+        if (resultFile) {
+            var reader = new FileReader();
+            reader.readAsDataURL(resultFile);
+            reader.onload = function (e) {
+                var urlData = this.result;
+				$(".newidentity").css("display","block");
+                $(".newidentity").attr("src",urlData);
+                $(".jp-identity").css("display","none");
+            };
+        }
+    })
+ $(".house").change(function(){
+			
+        var  resultFile = $(".house")[0].files[0];
+        if (resultFile) {
+            var reader = new FileReader();
+            reader.readAsDataURL(resultFile);
+            reader.onload = function (e) {
+                var urlData = this.result;
+				$(".newhouse").css("display","block");
+                $(".newhouse").attr("src",urlData);
+                $(".jp-house").css("display","none");
+            };
+        }
+    })
+ $(".property").change(function(){ 
+        var  resultFile = $(".property")[0].files[0];
+        if (resultFile) {
+            var reader = new FileReader();
+            reader.readAsDataURL(resultFile);
+            reader.onload = function (e) {
+                var urlData = this.result;
+				$(".newproperty").css("display","block");
+                $(".newproperty").attr("src",urlData);
+                $(".jp-property").css("display","none");
+            };
+        }
+    })
+	
+</script>
+
+</#macro>
+<#macro  css>
+<style type="text/css">
+.jp-loadfile{
+ height: 0.8rem;
+    left: 0;
+    margin: 0 10% 0.2rem;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    width: 80%;
+}
+.newidentity,.newhouse,.newproperty{
+    height: 0.8rem;
+    width: 80%;
+    margin: 0 10% 0.2rem;
+    }
+</style>
+</#macro>
+<@layout active_id = p>
+<div class="nwrapper ">
+    <div class="index_top">
+        <a href="#">企业信息</a>
+    </div>
+
+<form id="form" action="${CPATH}/orders/client_enterprise_register"  enctype="multipart/form-data"  method="post">
+ 	<input type="hidden" name="flag" value="${flag!}" />
+ 	<input type="hidden" name="setOrdersId" value="${setOrdersId!}" />
+ <div class="it">
+
+     <div class="it_p"><i>企业名称</i><input class="enterprise"  name="enterpriseName"  type="text" placeholder="至少输入三个，确保注册成功"></div>
+     <div class="it_p  addetp"><i>&nbsp;</i><img src="${CTPATH}/client/img/gszc_03.png" class="gs_ad addEnterprise"> </div>
+
+     <div class="it_p"><i>注册地址</i>
+     	<select id="" name="district" class="gs_seb">
+            <option value="">请选择区域</option>
+            <option value="云岩区">云岩区</option>
+            <option value="南明区">南明区</option>
+            <option value="观山湖区">观山湖区</option>
+            <option value="高新区">高新区</option>
+            <option value="白云区">白云区</option>
+            <option value="乌当区">乌当区</option>
+            <option value="小河区">小河区</option>
+            <option value="花溪区">花溪区</option>
+        </select>
+     	<select id="s_province" name="city" class="gs_seb"><option>贵州省贵阳市</option></select>
+
+     </div>
+
+     <div class="it_p"><i>地址详情</i><input class="address" type="text" name="address"  placeholder="请输入" /></div>
+
+     <div class="it_p"><i>经营范围</i><input  class="bscope" type="text" name="bscope" /></div>
+
+ </div>
+
+    <div class="it_hx"></div>
+
+
+    <div class="it">
+
+        <div class="it_p"><i>企业法人</i><input name="stockholder"  type="text" placeholder="请输入"></div>
+        <div class="it_p"><i>法人身份证</i><input name="stockholderId"  type="text" placeholder="请输入"></div>
+        <div class="it_p"><i>认缴比例</i><input name="stockRate"  type="text" placeholder="请输入"></div>
+        <div class="it_p"><i>占股</i><input name="stockNum"  type="text" placeholder="请输入"></div>
+		<input type="hidden" name="status" value="1"/>
+
+    </div>
+
+    <div class="it_hx"></div>
+
+
+    <div class="it">
+
+        <div class="it_p"><i>企业股东</i><input name="stockholder"  type="text" placeholder="请输入"></div>
+        <div class="it_p"><i>股东身份证</i><input name="stockholderId"  type="text" placeholder="请输入"></div>
+        <div class="it_p"><i>认缴比例</i><input name="stockRate"  type="text" placeholder="请输入"></div>
+        <div class="it_p"><i>占股</i><input name="stockNum"  type="text" placeholder="请输入"></div>
+        <input type="hidden" name="status" value="0"/>
+        
+        
+    </div>
+     <div class="it">
+     <div class="addstockdiv"></div>
+	    	<button type="button" class="addstock" >添加股东</button>
+	 </div>
+    <div class="it_hx"></div>
+    <div class="it">
+        <span class="jbr_top">上传资料</span>
+
+        <div class="it_sczl" style="position: relative;">
+            <span class="jp-identity">+</span>
+            <img style="display: none;" class="newidentity" src="" />
+            点击上传身份证
+            <input class="jp-loadfile identity " type="file" name="identity">
+        </div>
+        <div class="it_sczl" style="position: relative;">
+            <span  class="jp-house">+</span>
+             <img style="display: none;" class="newhouse" src="" />
+            点击上传房屋合同
+            <input class="jp-loadfile house " type="file"  name="house">
+        </div>
+        <div class="it_sczl" style="position: relative;">
+            <span class="jp-property">+</span>
+              <img style="display: none;" class="newproperty" src=""  />
+            点击上传产权证
+            <input class="jp-loadfile property " type="file"  name="property" />
+        </div>
+
+	<div class="it_hs">＊请上传真实的法人及股东身份证复印件、房屋<br/>合同及产权证复印件</div>
+    </div>
+
+ <div class="it_bt it_bt2">
+     <input type="button" onclick="doSubmit('${CPATH}/orders/client_orders_contact?flag=${flag!}&setOrdersId=${setOrdersId!}')" value="提交"class="it_bt_q">
+ </div>
+</form>
+   <#include "_inc/_footer.html"/> 
+
+</div>
+</@layout>

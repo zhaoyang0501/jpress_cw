@@ -1,0 +1,218 @@
+
+<#include "_inc/_layout.html"/> 
+<#macro title>
+ <title>缴费明细</title>
+</#macro>
+
+
+<#macro script>
+<script type="text/javascript">
+
+
+
+var isConfiged = false;
+
+	// api: https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_7&index=6
+	function onBridgeReady(appId,timeStamp,nonceStr,package,signType,paySign,$payId){
+
+		if(!isConfiged){
+			wx.config({
+				debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+				appId: appId, // 必填，公众号的唯一标识
+				timestamp: timeStamp, // 必填，生成签名的时间戳
+				nonceStr: nonceStr, // 必填，生成签名的随机串
+				signature: paySign,// 必填，签名，见附录1
+				jsApiList: [
+					'chooseWXPay'
+				]// 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+			});
+
+			isConfiged = true;
+		}
+
+
+		wx.ready(function(){
+			wx.chooseWXPay({
+				timestamp: timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+				nonceStr: nonceStr, // 支付签名随机串，不长于 32 位
+				package: package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
+				signType: signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+				paySign: paySign, // 支付签名
+				success: function (res) {
+					if(res.err_msg == "get_brand_wcpay_request：ok" ) {
+//	          	 // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+//				//  location.href="${CPATH}/wechat/pay/checkStatus?id="+$payId ;
+						var reqNO = 1;
+						checkStatus($payId,reqNO);
+					}
+				}
+			});
+		});
+
+
+
+
+	}
+
+	
+	//第一步：调用prepay，返回json
+	//第二步：调用onBridgeReady方法
+	//第三步：在onBridgeReady的回调里去检测是否成功，检测url：checkStatus
+	//第四步：成功--->>
+
+	function money($money){
+		if($("#money").val().length==0){
+			 alert("金额不为空");
+			return false;   
+	    }else{
+	   	 	var re =/^[0-9]*$/;
+	   	  	if(!re.test($money)){
+		    //	$(".money").after("<p class='infomeg'>请输入正确金额</p>");
+		    alert("请输入正确金额");
+		    	return false;  
+		  	}
+	    }
+	} 
+
+	/*
+	$("#recharge").click(function(){
+	  var $money=$("#money").val();
+	  $.ajax({
+	        type: "POST",
+	        url:"${CPATH}/wechat/pay/prepay",
+            dataType: "json",
+            data:{"amount":$money},
+           	beforeSend:function(){
+            	$(".infomeg").remove();
+            	var m = money($money);
+			   	if(false == m){
+			   		return false;
+			   	}
+			},
+            success: function (data) {
+            	if(data.errorCode==0){
+		           $appId =data.appId;
+		           $timeStamp=data.timeStamp;
+		           $nonceStr=data.nonceStr;
+		           $package=data.package;
+		           $signType=data.signType;
+		           $paySign=data.paySign;
+		           $payId=data.payId;
+		           onBridgeReady($appId,$timeStamp,$nonceStr,$package,$signType,$paySign,$payId);
+	            }else{
+	             $.alert("提交不成功，请稍后重试","提示");
+	            }
+                
+            },
+            error: function (data) {
+             	$.alert("网络慢请稍后重试");
+            }
+	    });	
+	})
+*/
+
+	function doSubmit(){
+	 	$("#form").ajaxSubmit({
+			type : "post", //提交方式  
+			dataType : "json", //数据类型  
+			beforeSubmit : function(){
+				 var $money=parseInt($("#money").val());
+	        	var m = money($money);
+			   	if(false == m){return false;	}
+			},
+			success : function(data) { //提交成功的回调函数 
+				if(data.errorCode==0){
+			           $appId =data.appId;
+			           $timeStamp=data.timeStamp;
+			           $nonceStr=data.nonceStr;
+			           $package=data.package;
+			           $signType=data.signType;
+			           $paySign=data.paySign;
+			           $payId=data.payId;
+			           onBridgeReady($appId,$timeStamp,$nonceStr,$package,$signType,$paySign,$payId);
+		            }else{
+		             alert("提交不成功，请稍后重试","提示");
+		            }
+			},
+			error : function() {
+				alert("网络慢请稍后重试");
+			}
+		});
+}
+	
+	function checkStatus($payId,reqNO){
+		$.ajax({
+      	 	type: "POST",
+      	 	url:"${CPATH}/wechat/pay/checkStatus",
+      	 	dataType: "json",
+      	 	data:{"id":$payId},
+      	 	success: function (data) {
+      	 		if(data.errorCode==0){
+      	 			location.href="${CPATH}/wechat/pay/fverify?verify=yes"
+      	 		}else{
+      	 			if(reqNO<2){
+      	 				checkStatus($payId,reqNO+1);
+      	 			}else{
+      	 				location.href="${CPATH}/wechat/pay/fverify?verify=no"
+      	 			}
+      	 		}
+      	 	},
+      	 	error: function (data) {
+      	 		if(reqNO<2){
+  	 				checkStatus($payId,reqNO+1);
+  	 			}else{
+  	 				location.href="${CPATH}/wechat/pay/fverify?verfy=no"
+  	 			}
+      	 	},
+      	 	
+      	 })
+	}
+	
+	
+
+	</script>
+</#macro> 
+
+<@layout>
+<div class="nwrapper ">
+	<form id="form" action="${CPATH}/wechat/pay/prepay"   method="post" >
+	<#if contract??>
+    <div class="pd">
+		<div class="pd_top">
+		    合同签订日期：${(contract.contract_date)!}<br/>
+		    合同金额：${(contract.contract_amount)!}元<br/>
+		    已缴金额：${(balance.amount)!}元<br/>
+		    已缴月份：${(contract.month_balance)!}<br/>
+		    应缴金额：${(contract.should_pay)!}元<br/>
+		    应缴月份：${(contract.month_should_pay)!}<br/>
+		    服务类型：${(contract.set_orders_orderType)!}<br/>
+		    税分余额：${(integral)!}
+		    <input type="hidden" name="shouldPay" value="${(contract.should_pay)!}">
+		    <input type="hidden" name="ordersEnterpriseId" value="${(contract.orders_enterprise_id)!}">
+		</div>
+        </div>
+	</#if>
+
+
+    <div class="it">
+        <span class="jbr_top jbr_top2">缴费催送</span>
+        <#if setOrders??>
+	        <div class="it_p">
+		        <select name="setOrdersId" class="gs_seb gs_seb2">
+		        	<#list setOrders as x>
+		           		 <option value = "${(x.id)!}">${(x.orderType)!}</option>
+		            </#list>
+		        </select>
+	        </div>
+        </#if>
+        <div class="it_p"><i>付款金额</i><input id="money" name ="amount" class="co_l" placeholder="请输入金额"></div>
+        <div class="it_p"><i>备注信息</i><input name ="remark" class="co_l" placeholder="请输入备注信息"></div>
+        <div class="clear"></div>
+        <button  id="recharge" type="button"  onclick="doSubmit()"  class="co_bt">付款</button>
+
+    </div>
+
+</form>
+ <#include "_inc/_footer.html"/> 
+</div>
+</@layout>

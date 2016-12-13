@@ -1,0 +1,106 @@
+<#macro groupmember label name>
+<div class="box box-solid">
+	<div class="box-header with-border">
+		<h3 class="box-title">${label}</h3>
+		<#if name?substring(name?length-1)=="1">
+		<a href="javascript:;" onclick="appendmember('${name}')">继续添加</a>
+		</#if>
+		<div class="box-tools">
+			<button type="button" class="btn btn-box-tool" data-widget="collapse">
+				<i class="fa fa-minus"></i>
+			</button>
+		</div>
+	</div>
+	<div class="box-body no-padding">
+		<div class="nav-tabs-custom well ">
+			<div class="tab-content">
+				<div class="tab-pane active form-horizontal">
+
+					<div class="media">
+						<a class="media-left" href="javascript:;" onclick="doSelectThumbnailMulti('${name}')"><img id="thumbnail${name}" alt="140x190"
+							src="${(content.metadata('group_${name}_thumbnail'))!CPATH+'/static/jpress/admin/image/noavatar.jpg'}" data-holder-rendered="true"
+							style="width: 140px; height: 190px;"> </a> <input type="hidden" name="meta:group_${name}_thumbnail" value="${(content.metadata('group_${name}_thumbnail'))!}"
+							id="content_thumbnail${name}">
+						<div class="media-body">
+							<div class="form-group">
+								<label for="director" class="col-sm-2 control-label">姓名</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="meta:group_${name}_name" value="${(content.metadata('group_${name}_name'))!}">
+								</div>
+								<label for="director" class="col-sm-2 control-label">职务</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="meta:group_${name}_duty" value="${(content.metadata('group_${name}_duty'))!}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="director" class="col-sm-2 control-label">工作单位</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" name="meta:group_${name}_unit" value="${(content.metadata('group_${name}_unit'))!}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="vice-director" class="col-sm-2 control-label">个人简介</label>
+								<div class="col-sm-10">
+									<textarea class="form-control" rows="3" name="meta:group_${name}_desc">${(content.metadata('group_${name}_desc'))!}</textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+</#macro>
+
+<#macro groupmember2 label name>
+
+<div class='box box-solid'><div class='box-header with-border'><h3 class='box-title'>${label}</h3>
+</#macro>
+<div class="box box-solid">
+	<div class="box-header with-border">
+		<h3 class="box-title">组织成员设置</h3>
+
+		<div class="box-tools">
+			<button type="button" class="btn btn-box-tool" data-widget="collapse">
+				<i class="fa fa-minus"></i>
+			</button>
+		</div>
+	</div>
+	<!-- /.box-header -->
+	<div class="box-body no-padding" id="director1">
+		<!-- Custom Tabs -->
+		<#if group_director==0>
+		<@groupmember label="组织会长1" name="director1"/>
+		<#else>
+		<#list 1..group_director as x>
+		<@groupmember label="组织会长${x}" name="director${x}"/>
+		</#list>
+		</#if>
+		<!-- nav-tabs-custom -->
+	</div>
+	<div class="box-body no-padding" id="vice_director1">
+		<!-- Custom Tabs -->
+		<#if group_vice_director==0>
+		<@groupmember label="副会长1" name="vice_director1"/>
+		<#else>
+		<#list 1..group_vice_director as y>
+		<@groupmember label="副会长${y}" name="vice_director${y}"/>
+		</#list>
+		</#if>
+		<!-- nav-tabs-custom -->
+	</div>
+	<div class="box-body no-padding" id="childman1">
+		<!-- Custom Tabs -->
+		<#if group_childman==0>
+		<@groupmember label="成员1" name="childman1"/>
+		<#else>
+		<#list 1..group_childman as z>
+		<@groupmember label="成员${z}" name="childman${z}"/>
+		</#list>
+		</#if>
+		<!-- nav-tabs-custom -->
+	</div>
+</div>

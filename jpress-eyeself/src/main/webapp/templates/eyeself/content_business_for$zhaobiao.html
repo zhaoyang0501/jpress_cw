@@ -1,0 +1,67 @@
+<#include "_inc/_layout.html"/> 
+<@layout>
+<!--cont-->
+<div class="main">
+<div class="cont list bus_list">
+
+    <div class="goods_list_top">
+    当前位置：<a href="">首页</a>&nbsp;&gt;&gt;&nbsp;<a href="">商机</a>&nbsp;&gt;&gt;&nbsp;<a href="">招标</a>&nbsp;&gt;&gt;&nbsp;<span>${content.title!}</span>
+    </div>
+    
+    <div class="qb_postl">
+    <a href="" class="qb_postla">我要发布</a>
+    
+    
+    <table class="td_table" border="1">
+  <tr>
+    <td colspan="4" class="td_table01">${content.title!}</td>
+    </tr>
+  <tr class="td_tabletr">
+    <td class="td_table02">公告类别</td>
+    <td class="td_table03">${content.metadata('announcement_type')!}</td>
+    <td class="td_table04">发布时间</td>
+    <td class="td_table05">${content.created!} </td>
+  </tr>
+  <tr class="td_tabletr">
+    <td class="td_table02">工程类别 </td>
+    <td class="td_table03">${content.metadata('industry')!} </td>
+    <td class="td_table04">招标性质 </td>
+    <td class="td_table05">${content.metadata('tender_character')!} </td>
+  </tr>
+  <tr class="td_tabletr">
+    <td class="td_table02">公告省份 </td>
+    <td class="td_table03">${content.metadata('address')!}</td>
+    <td class="td_table04">公告城市 </td>
+    <td class="td_table05">${content.metadata('announcement_city')!} </td>
+  </tr>
+  
+</table>
+    
+     <div class="qb_postlmain">
+     
+     	<div class="bus_post_rtop">详细内容</div>
+		${content.text!}
+
+      </div>
+     </div>
+     
+     <div class="qb_postr">
+        
+        <div class="goods_post_mainbox_top rdpost_top">
+                <span>热门招标</span><img src="${CTPATH!}/assets/img/more.png" width="20" height="17">
+                </div>
+                
+        <@jp.contents  module="business" typeSlug="zhaobiao" count="10" orderBy="view_count"> 
+		    <#list contents as content> 
+            <a href="${content.url!}" class="rdpost_ra">${content.title!}<em>${content.created!}</em></a>
+        	</#list> 
+	    </@jp.contents>
+        
+     </div>
+    </div>
+    
+    <div class="clear"></div>
+    
+</div>
+<!--/cont-->
+</@layout>

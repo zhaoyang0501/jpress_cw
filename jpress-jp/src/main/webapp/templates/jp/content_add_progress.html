@@ -1,0 +1,353 @@
+<#include "/WEB-INF/admin/_inc/_layout.html"/> 
+
+<#macro script>
+
+/*	$(function(){
+		$(".mt").change(function(){
+			if($(this).is(':checked')){
+				$("input[name$='Mt']").attr("disabled",true); ;
+			}else{
+				$("input[name$='Mt']").attr("disabled",false);
+			}
+		})
+		$(".pd").change(function(){
+			if($(this).is(':checked')){
+				$("input[name$='Pd']").attr("disabled",true); ;
+			}else{
+				$("input[name$='Pd']").attr("disabled",false);
+			}
+		})
+		$(".tax").change(function(){
+			if($(this).is(':checked')){
+				$("input[name$='Tax']").attr("disabled",true); ;
+			}else{
+				$("input[name$='Tax']").attr("disabled",false);
+			}
+		})
+		$(".fh").change(function(){
+			if($(this).is(':checked')){
+				$("input[name$='Fh']").attr("disabled",true); ;
+			}else{
+				$("input[name$='Fh']").attr("disabled",false);
+			}
+		})
+		
+	})
+	*/
+	
+	
+
+  function doSubmit(url){
+		doform($("#form"),url);
+	 }
+  function doSubmit2(url){
+		doform($("#form2"),url);
+	 }
+  function doSubmit3(url){
+		doform($("#form3"),url);
+	 }
+  function doSubmit4(url){
+		doform($("#form4"),url);
+	 }
+	 
+	function doform($form,url){
+			$form.ajaxSubmit({
+			type : "post", //提交方式  
+			dataType : "json", //数据类型  
+			
+			success : function(data) { //提交成功的回调函数 
+				if(data.errorCode == 0){
+					if(url !=null && ''!=url){
+						location.href=url;
+					}else{
+						location.reload();
+					}
+				}else{
+					alert(data.message);
+				}
+			},
+			error : function() {
+				alert("信息提交错误");
+			}
+		});
+	}  
+$('[data-toggle="datepicker"]').datepicker({ 
+  format: 'yyyy-mm-dd',
+   language: 'zh-CN'
+  });
+</#macro>
+
+<#macro script_import>
+	<script src="${CTPATH}/js/datepicker.min.js"></script>
+	<script src="${CTPATH}/js/datepicker.zh-CN.js"></script>
+</#macro> 
+
+<#macro css_import>
+	<link href="${CTPATH}/css/datepicker.min.css" rel="stylesheet">
+</#macro> 
+
+<@layout active_id=p child_active_id=c>
+
+<section class="content" style="z-index: 9999">
+<form id="form" action="${CPATH}/admin/progress/content_add_progress?progress.stepProgress=1&p=${p!}&c=${c!}"  method="post">
+   	<input type="hidden" name="progressId" value="${(progressId)!}" />
+   	<input type="hidden" name="userId" value="${(userId)!}" />
+	<div class="box box-solid">
+		<div class="box-header with-border">
+			<h3 class="box-title" <#if (cp.stepProgress) ?? && (cp.stepProgress)=='1'>style="background:#4F94CD"</#if>> 资料提交</h3>
+		</div>
+		<!-- /.box-header -->
+		<div class="box-body no-padding">
+			<!-- Custom Tabs -->
+			<div class="nav-tabs-custom">
+				
+				<div class="tab-content">
+					<div class="tab-pane active form-horizontal" id="tab_1">
+		                <div class="form-group">
+		                  	 <label class="col-sm-2 control-label">上传资料</label>
+			                  <div class="col-sm-9">
+			                   	 <input class="form-control"   type="text" name="progress.uploadMt"  value="${(cp.uploadMt)!}"/>
+			                  </div>
+		                </div>
+		                <div class="form-group">
+		                  <label  class="col-sm-2 control-label">缺失资料</label>
+		                  <div class="col-sm-9">
+		                    	<input class="form-control"  type="text" name="progress.lactMt" value="${(cp.lactMt)!}"/>
+		                  </div>
+		                </div>
+		                <div class="form-group">
+		                  <label class="col-sm-2 control-label">经办人</label>
+		                  <div class="col-sm-9">
+		                    	<input class="form-control"   type="text" name="progress.operatorMt" value="${(cp.operatorMt)!}"/>
+		                  </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">经办人电话</label>
+			                  <div class="col-sm-9">
+			                    	<input class="form-control"   type="text" name="progress.phoneMt" value="${(cp.phoneMt)!}"/>
+			                  </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">最后办理时间</label>
+			                  	<div class="col-sm-9">
+			                    	<input class="form-control"  data-toggle="datepicker"   type="text" name="progress.dateMt" value="${(cp.dateMt)!}"/>
+			                   </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">最后办理地址</label>
+			                  <div class="col-sm-9">
+			                    	<input  class="form-control"   type="text" name="progress.addressMt" value="${(cp.addressMt)!}"/>
+			                  </div>
+		                </div>
+		                <div class="checkbox">
+	    					<label class="col-sm-2 control-label"><input <#if (cp.statusMtc) ?? && (cp.statusMtc)=='1'>checked="checked"</#if> class="mt"  type="checkbox" name="progress.statusMtc" value="1"/> 完成资料上传</label>
+	 					</div>
+		                
+	              </div>
+	              <div class="form-group">
+					<button type="button" onclick="doSubmit('${CPATH}/admin/user?p=${p!}&c=${c!}')" class="modify-close btn btn-primary" >提交</button>	
+					</div>
+				</div>
+				<!-- /.tab-content -->
+			</div>
+			<!-- nav-tabs-custom -->
+		</div>
+	</div>
+    </form>
+    
+    
+    
+<form id="form2"  action="${CPATH}/admin/progress/content_add_progress?progress.stepProgress=2&p=${p!}&c=${c!}"  method="post">
+   	<input type="hidden" name="progressId" value="${(progressId)!}" />
+   	<input type="hidden" name="userId" value="${(userId)!}" />
+
+	<div class="box box-solid">
+		<div class="box-header with-border">
+			<h3 class="box-title" <#if (cp.stepProgress) ?? && (cp.stepProgress)=='2'>style="background:#4F94CD"</#if>>手续办理</h3>
+		</div>
+		<!-- /.box-header -->
+		<div class="box-body no-padding">
+			<!-- Custom Tabs -->
+			<div class="nav-tabs-custom">
+				
+				<div class="tab-content">
+					<div class="tab-pane active form-horizontal" id="tab_1">
+		                <div class="form-group">
+		                  	 <label class="col-sm-2 control-label">已办理手续</label>
+			                  <div class="col-sm-9">
+			                   	 <input class="form-control"    type="text" name="progress.donePd"  value="${(cp.donePd)!}"/>
+			                  </div>
+		                </div>
+		                <div class="form-group">
+		                  <label class="col-sm-2 control-label">待办手续</label>
+		                  <div class="col-sm-9">
+		                    	<input class="form-control"   type="text" name="progress.waitPd" value="${(cp.waitPd)!}"/>
+		                  </div>
+		                </div>
+		                <div class="form-group">
+		                  <label for="_uname" class="col-sm-2 control-label">经办人</label>
+		                  <div class="col-sm-9">
+		                    	<input class="form-control"    type="text" name="progress.operatorPd" value="${(cp.operatorPd)!}"/>
+		                  </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">经办人电话</label>
+			                  <div class="col-sm-9">
+			                    	<input class="form-control"   type="text" name="progress.phonePd" value="${(cp.phonePd)!}"/>
+			                  </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">最后办理时间</label>
+			                  	<div class="col-sm-9">
+			                    	<input class="form-control"  data-toggle="datepicker"   type="text" name="progress.datePd" value="${(cp.datePd)!}"/>
+			                   </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">最后办理地址</label>
+			                  <div class="col-sm-9">
+			                    	<input  class="form-control"  type="text" name="progress.addressPd" value="${(cp.addressPd)!}"/>
+			                  </div>
+		                </div>
+		                <div class="checkbox">
+	    					<label class="col-sm-2 control-label"><input <#if (cp.statusPdc) ?? && (cp.statusPdc)=='1'>checked="checked"</#if> class="pd"  type="checkbox" name="progress.statusPdc" value="1"/> 完成手续办理</label>
+	 					</div>
+	              </div>
+	              
+	              <div class="form-group">
+					<button type="button" onclick="doSubmit2('${CPATH}/admin/user?p=${p!}&c=${c!}')" class="modify-close btn btn-primary" >提交</button>		
+					</div>
+				</div>
+				<!-- /.tab-content -->
+			</div>
+			<!-- nav-tabs-custom -->
+		</div>
+	</div>
+    </form>
+    
+    <form id="form3"  action="${CPATH}/admin/progress/content_add_progress?progress.stepProgress=3&p=${p!}&c=${c!}" method="post">
+   <input type="hidden" name="progressId" value="${(progressId)!}" />
+   	<input type="hidden" name="userId" value="${(userId)!}" />
+
+	<div class="box box-solid">
+		<div class="box-header with-border">
+			<h3 class="box-title" <#if (cp.stepProgress) ?? && (cp.stepProgress)=='3'>style="background:#4F94CD"</#if>>税务登记</h3>
+		</div>
+		<!-- /.box-header -->
+		<div class="box-body no-padding">
+			<!-- Custom Tabs -->
+			<div class="nav-tabs-custom">
+				
+				<div class="tab-content">
+					<div class="tab-pane active form-horizontal" id="tab_1">
+		                <div class="form-group">
+		                  	 <label class="col-sm-2 control-label">已办理税务手续</label>
+			                  <div class="col-sm-9">
+			                   	 <input class="form-control"    type="text" name="progress.doneTax"  value="${(cp.doneTax)!}"/>
+			                  </div>
+		                </div>
+		                <div class="form-group">
+		                  <label class="col-sm-2 control-label">待办理税务手续</label>
+		                  <div class="col-sm-9">
+		                    	<input class="form-control"   type="text" name="progress.waitTax" value="${(cp.waitTax)!}"/>
+		                  </div>
+		                </div>
+		                <div class="form-group">
+		                  <label for="_uname" class="col-sm-2 control-label">经办人</label>
+		                  <div class="col-sm-9">
+		                    	<input class="form-control"    type="text" name="progress.operatorTax" value="${(cp.operatorTax)!}"/>
+		                  </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">经办人电话</label>
+			                  <div class="col-sm-9">
+			                    	<input class="form-control"   type="text" name="progress.phoneTax" value="${(cp.phoneTax)!}"/>
+			                  </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">最后办理时间</label>
+			                  	<div class="col-sm-9">
+			                    	<input class="form-control"  data-toggle="datepicker"   type="text" name="progress.dateTax" value="${(cp.dateTax)!}"/>
+			                   </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">最后办理地址</label>
+			                  <div class="col-sm-9">
+			                    	<input  class="form-control"  type="text" name="progress.addressTax" value="${(cp.addressTax)!}"/>
+			                  </div>
+		                </div>
+		                <div class="checkbox">
+	    					<label class="col-sm-2 control-label"><input <#if (cp.statusTaxc) ?? && (cp.statusTaxc)=='1'>checked="checked"</#if> class="tax"  type="checkbox" name="progress.statusTaxc" value="1"/> 完成税务手续办理</label>
+	 					</div>
+	              </div>
+	              
+	              <div class="form-group">
+					<button type="button" onclick="doSubmit3('${CPATH}/admin/user?p=${p!}&c=${c!}')" class="modify-close btn btn-primary" >提交</button>		
+					</div>
+				</div>
+				<!-- /.tab-content -->
+			</div>
+			<!-- nav-tabs-custom -->
+		</div>
+	</div>
+    </form>
+    
+    
+     <form id="form4" action="${CPATH}/admin/progress/content_add_progress?progress.stepProgress=4&p=${p!}&m=${m!}&c=list"  method="post">
+   	<input type="hidden" name="progressId" value="${(progressId)!}" />
+   	<input type="hidden" name="userId" value="${(userId)!}" />
+
+	<div class="box box-solid">
+		<div class="box-header with-border">
+			<h3 class="box-title" <#if (cp.stepProgress) ?? && (cp.stepProgress)=='4'>style="background:#4F94CD"</#if>>办理完成</h3>
+		</div>
+		<!-- /.box-header -->
+		<div class="box-body no-padding">
+			<!-- Custom Tabs -->
+			<div class="nav-tabs-custom">
+				
+				<div class="tab-content">
+					<div class="tab-pane active form-horizontal" id="tab_1">
+		               
+		                <div class="form-group">
+		                  <label for="_uname" class="col-sm-2 control-label">经办人</label>
+		                  <div class="col-sm-9">
+		                    	<input class="form-control"    type="text" name="progress.operatorFh" value="${(cp.operatorFh)!}"/>
+		                  </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">经办人电话</label>
+			                  <div class="col-sm-9">
+			                    	<input class="form-control"   type="text" name="progress.phoneFh" value="${(cp.phoneFh)!}"/>
+			                  </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">最后办理时间</label>
+			                  	<div class="col-sm-9">
+			                    	<input class="form-control"  data-toggle="datepicker"   type="text" name="progress.dateFh" value="${(cp.dateFh)!}"/>
+			                   </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">预计办理时间</label>
+			                  	<div class="col-sm-9">
+			                    	<input class="form-control"  data-toggle="datepicker"   type="text" name="progress.preTimeFh" value="${(cp.preTimeFh)!}"/>
+			                   </div>
+		                </div>
+		                
+		                <div class="checkbox">
+	    					<label class="col-sm-2 control-label"><input <#if (cp.statusFhc) ?? && (cp.statusFhc)=='1'>checked="checked"</#if> class="fh"  type="checkbox" name="progress.statusFhc" value="1"/> 完成办理</label>
+	 					</div>
+	              </div>
+	              
+	              <div class="form-group">
+					<button type="button" onclick="doSubmit4('${CPATH}/admin/user?p=${p!}&c=${c!}')" class="modify-close btn btn-primary" >提交</button>	
+					</div>
+				</div>
+				<!-- /.tab-content -->
+			</div>
+			<!-- nav-tabs-custom -->
+		</div>
+	</div>
+    </form>
+   </section>
+</@layout>
+   

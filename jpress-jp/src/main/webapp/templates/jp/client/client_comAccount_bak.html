@@ -1,0 +1,96 @@
+<!doctype html>
+<html manifest="app.manifest">
+<head>
+<meta charset="utf-8">
+<title>纳税明细</title>
+<meta name="description" content="">
+<meta name="Keywords" content="">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-touch-fullscreen" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="format-detection" content="telephone=no,email=no">
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/base.js"></script>
+<link href="css/global_m.css" rel="stylesheet">
+
+<script src="js/swiper.jquery.min.js"></script>
+<link href="css/swiper.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+<div class="nwrapper tp_nw">
+<form action="${CPATH}/account/client_comAccount"   method="post">
+
+
+    <div class="tp_top">
+    	
+        <div class="tp_top_box" id="end">
+            <span>选择时间</span>
+            	<input type="date" name="mdate" id="end_input"/>
+            <input type="submit" value="提交"/>
+    	</div>
+    </div>
+    </form>
+    
+    
+    <div class="tp_box">
+        
+
+       	   <table >
+                <thead>
+        <tr >
+            <th style="width:30%">往来名称</th>
+            <th  style="width:30%">期末余额</th>
+            <th  style="width:30%">风险提醒</th>
+
+        </tr>
+        </thead>
+        <tbody>
+       <#if chlist??>
+	       <#list chlist as x>
+	       		<tr >
+		            <td ><span>${x.subName!}</span></td>
+		            <td >
+		            	<#if x.subCode=="2202">
+		            			<#if x.fourc ?? && x.fourc !="">
+		            				<span>${(x.fourc)!}</span>
+		            			<#else>
+		            				<span style="color:red">${(x.fourd)!}</span>
+		            			</#if>
+				        <#else>
+					            <#if x.fourd ??  && x.fourd !="">
+					            	<span>${(x.fourd)!}</span>
+					            <#else>
+					            	<span style="color:red">${(x.fourc)!}</span>
+					            </#if>
+		           		 </#if>
+		           	</td>
+		            <td >
+		             
+		             <#if x.fourd ?? && x.fourd !="">
+		            	
+		            	<#if ((x.fourd)?number) gte 100000>
+		            		<span style="color:red">%##请注意及时核销</span>
+		            	</#if>     	
+		            </#if>
+		            	
+		            <#if x.fourc ?? && x.fourc !="">
+		            	<#if ((x.fourc)?number) gte 100000>
+		            		<span style="color:red">请注意及时核销</span>
+		            	</#if>
+		            </#if>
+		             </td>
+		        </tr>
+	       </#list>
+	   </#if>   
+        </tbody>
+        </table>
+        
+    </div>    
+</div>
+</body>
+
+
+</html>

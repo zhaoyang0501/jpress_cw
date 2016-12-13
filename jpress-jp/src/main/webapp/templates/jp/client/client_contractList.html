@@ -1,0 +1,45 @@
+<#include "_inc/_layout.html"/> 
+<#macro title>
+ <title>合同信息</title>
+</#macro>
+<@layout active_id = p>
+<div class="nwrapper ">
+    <div class="index_top">
+        <a href="">我的合同</a>
+    </div>
+
+<div class="clear"></div>
+  <#if page??>
+    <#list page.getList() as x>
+	    <div class="ci_box">
+		        <div class="ci_box_at"><span>${(x.contract_amount)!}￥</span></div>
+		        <#if (x.status)?? && (x.status)=="0">
+		        	<div class="ci_box_af ci_box_af_dks"></div>
+		        <#elseif (x.status)?? && (x.status)=="1">
+		        	<div class="ci_box_af ci_box_af_jxz"></div>
+		        <#elseif (x.status)?? && (x.status)=="2">
+		        	<div class="ci_box_af ci_box_af_js"></div>
+		        </#if>
+		        <div class="ci_box_top"><p>合同编号:<i>${(x.id)!}</i></p><span>${(x.contract_date)!}</span></div>
+		        <div class="ci_box_main">
+		        <span>合同备注</span>
+		        <span>${(x.remark)!}</span>
+		         </div>
+		        <div class="ci_box_foot">
+		            <span>服务类型：<i>${(x.set_orderType)!}</i></span>
+		            <span>收费方式：<i>${(x.paystatusstr)!}</i></span>
+		            <span>到期时间：<i>${(x.contract_deadline)!}</i></span>
+		        </div>
+	    </div>
+    </#list>
+ </#if>
+ 
+	<#if page??> 
+		<#include "_inc/_paginate.html" /> 
+		<@paginate currentPage=page.pageNumber totalPage=page.totalPage actionUrl="?userId=${userId!}&p=${p!}&page="/> 
+	</#if>
+	
+<#include "_inc/_footer.html"/> 
+
+</div>
+</@layout>

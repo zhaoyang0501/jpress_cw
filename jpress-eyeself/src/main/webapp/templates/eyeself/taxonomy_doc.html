@@ -1,0 +1,72 @@
+<#include "_inc/_layout.html"/> 
+<@layout> 
+<!--cont-->
+<div class="main">
+<div class="cont list cs_list">
+
+    <div class="goods_list_top">
+    当前位置：<a href="">首页</a>&nbsp;>&nbsp;<span>智库</span></a>
+    </div>
+
+    <div class="bo_l">
+    
+    
+	<div class="goods_list_tag">
+    	<div class="goods_list_tagl">
+    		<@jp.taxonomys module="doc" type="category">
+        	<#list taxonomys as taxonomy>
+        	<a href="${taxonomy.url!}">${taxonomy.title!}</a>
+        	</#list>
+        	</@jp.taxonomys>
+    	</div>
+        
+    </div>
+    <@jp.contentPage > 
+     <#list page.getList() as content>
+    <a href="${content.url!}" class="tt_lisst">${content.title!}<span>2016年7月28日</span></a>
+	 </#list>
+	 <@pagination>
+	         <div class="list_page">
+		     <div class="goods_list_tagr">
+		     		<#list pages as pItem>
+			             <a href="${pItem.url!}" >${pItem.text!}</a>
+			        </#list>
+		            <a href="" class="">></a>
+		            <em>共${page.totalPage!}页，到</em>
+		            <input type="tel">
+		            <em>页</em>
+		            <a href="" class="active">确定</a>
+			   </div>
+			   </div>
+	   	    </@pagination>
+	 </@jp.contentPage>
+            
+   </div>
+   
+   <div class="bo_r">
+   	
+    
+       
+   <div class="goods_post_mainbox_top"><span>推荐阅读</span></div>
+   
+   <div class="bo_r_box">
+   
+   	 <@jp.contents  module="doc" count="10" orderBy="view_count"> 
+		    <#list contents as content> 
+		    <#if content?is_first >
+			<a href="${content.url!}" class="bo_r_box01"><em>${content_index + 1}</em>
+			<Span>${content.title!}</Span>
+			<p>${content.summary!} ... <i>查看全文</i></p>
+			</a>
+			<#else>
+			  <a href="${content.url!}" ><em>${content_index!}</em><Span>${content.title!}</Span></a>
+			</#if>
+        	</#list> 
+	 </@jp.contents>
+   </div>
+   
+   </div>
+  </div>
+</div>
+<!--/cont-->
+</@layout>

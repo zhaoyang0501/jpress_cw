@@ -1,0 +1,86 @@
+<#include "_inc/_layout.html"/> 
+<#macro script>
+
+function doSubmit(){
+	$("#form").ajaxSubmit({
+		type : "post", 
+		dataType : "json", 
+		success : function(data) { 
+			if(data.errorCode == 0){
+				alert("保存成功！");
+			}else{
+				alert("保存失败");
+			}
+		},
+		error : function() {
+			alert("网络错误");
+		}
+	});
+}
+
+</#macro>
+<@layout> 
+<!--cont-->
+<div class="main">
+<div class="cont list bus_list">
+
+    <div class="goods_list_top">
+    当前位置：<a href="">首页</a>&nbsp;>&nbsp;<span>个人中心  </span></a>
+    </div>
+    
+ 	<#include "_inc/_user_menu.html"/> 
+    
+    <div class="per_r">
+            
+            <div class="per_rbox">
+    			<div class="per_rbox_top">
+    			企业信息
+    		</div>
+    		<span class="per_rbox_s">企业主页</span><p class="per_rbox_p"><a href="${CPATH}/company/detail/${USER.id}" >http://www.eyeself.com${CPATH}/company/detail/${USER.id}</a></p>
+            <div class="clear"></div>
+            <form action="${CPATH}/user/center/update/user" method="POST" id="form" enctype="multipart/form-data">
+            <input type="hidden" name="user.id" value="${USER.id!}">
+            <span class="per_rbox_s">名称</span><p class="per_rbox_p"><input type="text" value="${USER.company!}"  name="user.company"/></p>
+            <span class="per_rbox_s">类型</span><p class="per_rbox_p">
+            <select name="meta:company_type">
+            <option value="factory" ${METADATA_SELECTED(USER,'company_type','factory')!}>厂家</option>
+            <option value="dealer" ${METADATA_SELECTED(USER,'company_type','dealer')!}>经销商</option>
+            <option value="sp" ${METADATA_SELECTED(USER,'company_type','sp')!}>服务商</option>
+            </select>
+            </p>
+            <span class="per_rbox_s">联系电话</span><p class="per_rbox_p"><input name="meta:company_phone" type="text" value="${USER.metadata('company_phone')!}" /></p>
+            <span class="per_rbox_s">地址</span><p class="per_rbox_p"><input name="meta:company_address" type="text" value="${USER.metadata('company_address')!}" /></p>
+            <span class="per_rbox_s">官网</span><p class="per_rbox_p"><input name="user.site" type="text" value="${USER.site!}" /></p>
+            <span class="per_rbox_s">主营</span><p class="per_rbox_p"><input name="meta:company_main_business" type="text" value="${USER.metadata('company_main_business')!}" /></p>
+            <span class="per_rbox_s">咨询QQ</span><p class="per_rbox_p"><input name="user.qq" type="text" value="${USER.qq!}" /></p>
+            <div class="clear"></div>
+            <span class="per_rbox_s">公司封面</span><p class="per_rbox_p"><input name="meta:company_thumbnail" type="file"  /></p>
+            <#if USER.metadata('company_thumbnail') ??>
+            <div class="clear"></div>
+            <div style="margin-left: 20px;margin-top: 20px;">
+            <img src="${CPATH}${USER.metadata('company_thumbnail')}" width="200" >
+            <input type="hidden" name="meta:company_thumbnail" value="${USER.metadata('company_thumbnail')!}">
+            </div>
+            </#if>
+            <div class="clear"></div>
+            <span class="per_rbox_s">公司图标</span><p class="per_rbox_p"><input name="meta:company_icon" type="file"  /></p>
+            <#if USER.metadata('company_icon') ??>
+            <div class="clear"></div>
+            <div style="margin-left: 20px;margin-top: 20px;">
+            <img src="${CPATH}${USER.metadata('company_icon')}" width="200" >
+            <input type="hidden" name="meta:company_icon" value="${USER.metadata('company_icon')!}">
+            </div>
+            </#if>
+            <div class="clear"></div>
+            <span class="per_rbox_s">企业简介</span>  <div class="clear"></div>
+            <textarea  class="per_rbox_te" name="meta:company_des">${USER.metadata('company_des')!}</textarea>
+            <a href="javascript:;" onclick="doSubmit()" class="per_rbox_topxg" style="margin: 30px 10px;color:white;">保存更改</a>
+ 			</form>
+    		</div>
+    </div>
+    
+    <div class="clear"></div>
+</div>
+</div>
+<!--/cont-->
+</@layout>

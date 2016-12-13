@@ -1,0 +1,116 @@
+<#include "_inc/_layout.html"/> 
+<#macro script_import>
+<script src="${CTPATH}/assets/js/jquery.selectlist.js"></script>
+<script src="${CPATH}/static/tinymce/tinymce.min.js"></script>
+</#macro> 
+<#macro script>
+var data={
+    url:'',
+    alt:''
+};
+$(function(){
+		$('.edu').selectlist({
+			zIndex: 10,
+			width: 290,
+			height: 43
+		});		
+	})
+	function doSubmit(){
+	$("#form").ajaxSubmit({
+		type : "post", 
+		dataType : "json", 
+		success : function(data) { 
+			if(data.errorCode == 0){
+				alert("发布成功！");
+				window.location.href=data.data;
+			}else{
+				alert("保存失败");
+			}
+		},
+		error : function() {
+			alert("网络错误");
+		}
+	});
+}
+tinymce.init({
+        selector: '#textarea',
+        height: 500,
+        language: 'zh_CN',
+        menubar: false,
+        automatic_uploads: true,
+        paste_data_images: true,
+        convert_urls: false,
+        imagetools_toolbar: "rotateleft rotateright | flipv fliph | editimage imageoptions",
+        imagetools_proxy: '${CPATH}/admin/tinymce/image/proxy',
+        images_upload_url: '${CPATH}/admin/tinymce/image/upload',
+        wordcount_countregex: /[\u4e00-\u9fa5_a-zA-Z0-9]/g,
+		file_picker_callback: function(callback, value, meta) {
+		 	layer.open({
+			    type: 2,
+			    title: '选择图片',
+			    shadeClose: true,
+			    shade: 0.8,
+			    area: ['90%', '90%'],
+			    content: '${CPATH}/admin/attachment/choose_layer',
+			    end:function(){
+			    	callback(data.url, {alt: data.alt});
+			    }
+			}); 
+		 },
+        plugins: [
+		    "advlist autolink autosave link image imagetools lists charmap print preview hr anchor pagebreak spellchecker",
+		    "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+		    "table contextmenu directionality emoticons template textcolor paste fullpage textcolor colorpicker textpattern"
+		  ],
+        toolbar1: '  bold italic underline strikethrough removeformat | blockquote hr  |  alignleft aligncenter alignright alignjustify | bullist numlist  |  outdent indent | forecolor backcolor | code   ',
+    });
+</#macro> 
+<@layout>
+<!--cont-->
+<div class="main">
+<div class="cont list bus_list">
+
+    <div class="goods_list_top">
+    当前位置：<a href="">首页</a>&nbsp;>&nbsp;<a href="">>商机</a>&nbsp;>&nbsp;<span>发布求购  </span></a>
+    </div>
+    
+    <div class="clear"></div>
+    
+    <div class="wb_addtop">
+        <div class="wb_addtop_text"><em>1</em><span>填写标题</span></div><img src="${CTPATH}/assets/img/qg_03.png" width="41" height="17">
+        <div class="wb_addtop_text"><em>2</em><span>描述您的需求</span></div><img src="${CTPATH}/assets/img/qg_03.png" width="41" height="17">
+        <div class="wb_addtop_text"><em>3</em><span>设置详细资料</span></div><img src="${CTPATH}/assets/img/qg_03.png" width="41" height="17">
+        <div class="wb_addtop_text"><em>4</em><span>确认需求</span></div>
+    </div>
+    
+    <div class="clear"></div>
+    
+     <form action="${CPATH}/business/publishBuyOffer" method="post" id="form">
+    <div class="wb_addmain">
+    
+    	<div class="wb_addmain_t01">项目名称</div>
+    	<input type="text" class="wb_addmain_i01">
+        <div class="wb_addmain_t01">描述需求</div>
+        <div class="clear"></div>
+        <div class="wb_addmain_t02">项目知情人</div><input type="text" class="wb_addmain_i02">
+        <div class="wb_addmain_t02">勘察设计</div><input type="text" class="wb_addmain_i02">
+        <div class="clear"></div>
+             <div style="margin: 20px 40px 0 40px;">
+        	<textarea name="content.text"  id="textarea" style="margin-right: 50px;" cols="" rows="" class="wb_addmain_i03"></textarea>
+       	  </div>
+          <a class="wb_addmain_b034">添加附件</a><Span class="wb_addmain_te01">最多可添加五个附件，每个大小不超过50M.</Span>
+        <div class="clear"></div>
+        <div class="wb_addmain_t01">详细资料</div>
+        <div class="clear"></div>
+        <div class="wb_addmain_t02">项目知情人</div><input type="text" class="wb_addmain_i02">
+        <div class="wb_addmain_t02">勘察设计</div><input type="text" class="wb_addmain_i02">
+        <div class="clear"></div>
+        
+        <a href="javascript:;" class="wb_addmain_b05" onclick="doSubmit()">确认提交</a> <div class="clear"></div>
+    </div>
+    </form>
+     <div class="clear"></div>
+</div>
+</div>
+<!--/cont-->
+</@layout>

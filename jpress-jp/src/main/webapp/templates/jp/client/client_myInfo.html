@@ -1,0 +1,64 @@
+<#include "_inc/_layout.html"/> 
+<#macro title>
+ <title>个人中心</title>
+</#macro>
+<#macro script>
+<script type="text/javascript">
+var mySwiper = new Swiper ('.swiper-container', {
+    autoplay: 5000,
+    loop: true,
+
+    // 如果需要分页器
+    pagination: '.swiper-pagination',
+
+
+})
+</script>
+
+</#macro>
+<@layout active_id = p>
+<div class="nwrapper index_main">
+    <div class="index_top index_top2">
+        <a href="#">企业信息 </a>
+    </div>
+    <img src="${CTPATH}/client/img/grzx_02.png" class="pc_banner">
+    <div class="pc_top">
+        <div class="pc_top_h1">${(user.company)!}</div>
+        <div class="pc_top_h2">系统积分：${integral!"0"}</div>
+         <p><span><i>当月收入</i><b>￥${(shouru)!}</b></span>
+         <span><i>当月纳税</i><b>
+         <#if dt??>
+          ￥${ ((dt.citytax)?number)+((dt.eduTax)?number)+((dt.localEduTax)?number)+((dt.incomeTax)?number)+((dt.stampTax)?number)+((dt.output)?number) -((dt.inputTax)?number) - ((dt.reliefs)?number) }
+	      </#if>
+	        </b></span></p>
+    </div>
+    <div class="pc_main">
+    	
+        纳税人身份：<i>${(user.role)!}</i><br/>
+        法定代表人：<i>${(user.metadata('stockholder'))!}</i><br/>
+        经营范围：<i>${(user.metadata('bscope'))!}</i><br/>
+       	地址：<i>${(user.metadata('city'))!}${(user.metadata('district'))!}${(user.metadata('address'))!}</i><br/>
+      
+       	联系人：<i>${(user.metadata('contact'))!}</i><br/>
+       	联系电话：<i>${(user.metadata('pcontact'))!}</i><br/>
+       	联系地址：<i>${(user.metadata('addrcontact'))!}</i><br/>
+      
+        会计员：<i>${(uc.accountant)!"暂无添加"}</i><br/>
+        联系电话：<i>${(uc.accountant_mobile)!"暂无添加"}</i><br/> 
+        外勤员：<i>${(uc.service)!"暂无添加"}</i><br/>
+        联系电话：<i>${(uc.service_mobile)!"暂无添加"}</i><br/>
+    </div>
+
+
+    <div class="pc_footer">
+        <a href="${CPATH}/orders/client_contractList?userId=${(user.id)!}&p=${p!}"><img src="${CTPATH}/client/img/grzx_05.png"><b>合同信息</b> <i></i></a>
+        <a href="${CPATH}/orders/client_payInfor?userId=${(user.id)!}&p=${p!}"><img src="${CTPATH}/client/img/grzx_12.png"><b>付款信息</b> <i></i></a>
+        <a href="${CPATH}/Information/client_myMessage?userId=${(user.id)!}&p=${p!}"><img src="${CTPATH}/client/img/grzx_05.png"><b>我的信息</b> <i></i></a>
+    </div>
+
+
+
+<#include "_inc/_footer.html"/> 
+
+</div>
+</@layout>

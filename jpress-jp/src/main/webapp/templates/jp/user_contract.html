@@ -1,0 +1,101 @@
+<#include "/WEB-INF/admin/_inc/_layout.html"/> 
+
+<#macro script>
+
+  function doSubmit(url){
+		
+	 	$(".form").ajaxSubmit({
+			type : "post", //提交方式  
+			dataType : "json", //数据类型  
+		beforeSubmit : function(){
+	           //#################
+				},
+			success : function(data) { //提交成功的回调函数 
+				if(data.errorCode == 0){
+					if(url !=null && ''!=url){
+						location.href=url;
+					}else{
+						location.reload();
+					}
+				}else{
+					alert(data.message);
+				}
+			},
+			error : function() {
+				alert("信息提交错误");
+			}
+		});
+	 }
+	 
+	
+
+</#macro>
+
+<@layout active_id=p child_active_id=c>
+<section class="content-header">
+	<h1>
+		添加联系泉源
+	</h1>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+
+	<form class="form" action="${CPATH}/admin/data/user_contract?c=${c!}&p=${p!}"   method="post">
+	<input type="hidden" name="id" value="${userId!}">
+	<div class="box box-solid">
+		<div class="box-header with-border">
+			<h3 class="box-title" > 您的联系泉源</h3>
+		</div>
+		<!-- /.box-header -->
+		<div class="box-body no-padding">
+			<!-- Custom Tabs -->
+			<div class="nav-tabs-custom">
+				
+				<div class="tab-content">
+					<div class="tab-pane active form-horizontal" id="tab_1">
+		                <div class="form-group">
+		                  	 <label class="col-sm-3 control-label">会计姓名</label>
+			                  <div class="col-sm-8">
+			       
+			                   	 <input class="form-control"    type="text" name="userContract.accountant"  value="${(uc.accountant)!}"/>
+			                  </div>
+		                </div>
+		                <div class="form-group">
+		                  <label  class="col-sm-3 control-label">会计电话</label>
+		                  <div class="col-sm-8">
+		                    	<input class="form-control"  type="text" name="userContract.accountant_mobile" value="${(uc.accountant_mobile)!}"/>
+		                  </div>
+		                </div>
+		                <div class="form-group">
+		                  <label for="_uname" class="col-sm-3 control-label">外勤姓名</label>
+		                  <div class="col-sm-8">
+		                    	<input class="form-control"  type="text" name="userContract.service" value="${(uc.service)!}"/>
+		                  </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-3 control-label">外勤电话</label>
+			                  <div class="col-sm-8">
+			                    	<input class="form-control" type="text" name="userContract.service_mobile" value="${(uc.service_mobile)!}"/>
+			                  </div>
+		                </div>
+		               <div class="form-group">
+				               <div class="col-sm-8 col-sm-offset-3">
+								 		<button type="button" class="modify-close btn btn-primary"  onclick="doSubmit('${CPATH}/admin/user?c=${c!}&p=${p!}')">提交</button>	
+							 </div>
+				 		</div>
+	              </div>
+	              
+				</div>
+				<!-- /.tab-content -->
+			</div>
+			<!-- nav-tabs-custom -->
+		</div>
+	</div>
+    </form>
+		
+	<!-- /.row -->
+</section>
+<!-- /.content -->
+</@layout>

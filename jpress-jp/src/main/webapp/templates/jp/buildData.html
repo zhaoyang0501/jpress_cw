@@ -1,0 +1,62 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="${CPATH}/admin/excelUpload/buildData"  enctype="multipart/form-data"   method="post">
+	选择文件 ：<input type="file" name="file_excel"></br>
+	<input type="submit" value="提交">
+</form>
+
+</body>
+</html>
+ -->
+<#include "/WEB-INF/admin/_inc/_layout.html"/> 
+<#macro script>
+function doSubmit(){
+ 	$("#form").ajaxSubmit({
+			type : "post", 
+			dataType : "json", 
+			success : function(data) { 
+				if(data.errorCode == 0){
+					toastr.success(data.message,'上传数据成功');
+				}else{
+					toastr.error(data.message,'上传数据失败');
+				}
+			},
+			error : function() {
+				alert("信息提交错误");
+			}
+	});
+ }
+</#macro>
+<@layout active_id=p child_active_id=c>
+<section class="content-header">
+	<h1></h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+	<form action="${CPATH}/admin/excelUpload/buildData" enctype="multipart/form-data" id="form">
+	<div class="col-xs-12  upload-box ">
+		<div class="row">
+			<div class="col-md-offset-3 col-md-6  col-xs-12">
+				<div class="box  jp-content-theme">
+					<div class="col-xs-6">
+						<input type="file" class="upload-input" name="file">
+					</div>
+					<div class="col-xs-6">
+						<input type="button" class="btn btn-default" value="一键上传" onclick="doSubmit()">
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<p class="upload-text">请上传.xls或.xlsx格式。</p>
+
+	</div>
+	</form>
+</section>
+</@layout>

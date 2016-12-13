@@ -1,0 +1,106 @@
+<#include "_inc/_layout.html"/> 
+<@layout> 
+<!--cont-->
+<div class="main">
+<div class="cont list">
+
+    <div class="goods_list_top">
+    当前位置：<a href="/">首页</a>&nbsp;>&nbsp;<a href="/product">产品中心</a></div>
+    
+    <div class="goods_list_topbox">
+    	<div class="goods_list_topbox_class">
+        	<span>分类</span>
+        	<p>
+        	<a href="${CPATH}/product">全部</a>
+        	<@jp.taxonomys module="product" type="category" parentId=((taxonomy.id)!0) >
+        	<#list taxonomys as taxonomy>
+        	<a href="${taxonomy.url!}">${taxonomy.title!}</a>
+        	</#list>
+        	</@jp.taxonomys>
+        	</p>
+    	</div>
+        <div class="goods_list_topbox_class  goods_list_topbox_brand">
+        	<span>品牌</span>
+        	<p>
+        	<@jp.taxonomys module="product" type="brand">
+        	<#list taxonomys as taxonomy>
+        	<a href="${taxonomy.url!}"><img src="${taxonomy.icon!}"></a>
+        	</#list>
+        	</@jp.taxonomys>
+        	</p>
+    	</div>
+	</div>
+    
+    <div class="goods_list_tag">
+    	<div class="goods_list_tagl">
+            <a href="${REQUEST.getRequestURI()}" class="active">默认</a>
+            <!--<a href="${REQUEST.getRequestURI()}?order=price" class="">价格</a>-->
+            <a href="${REQUEST.getRequestURI()}?order=meta:consult_count" class="">咨询数</a>
+            <a href="${REQUEST.getRequestURI()}?order=created" class="">上架时间</a>
+            <a href="" class="">国产</a>
+            <a href="" class="">进口</a>
+    	</div>
+        
+        <div class="goods_list_tagr">
+            <a href="" class=""><</a>
+            <a href="" class="">1</a>
+            <span>2</span>
+            <a href="" class="">></a>
+            <em>到</em>
+            <input type="tel">
+            <em>页</em>
+        </div>
+    </div>
+    
+     <@jp.contentPage pageSize="5" containChild="true"> 
+   	 <div class="goods_list_main">
+		    <#list page.getList() as content>
+		        <div class="goods_list_mainbox">
+		        	<a href="${content.url!}" target="_blank" class="goods_list_mainbox_img"><img src="${content.thumbnail!}" width="227" height="201"></a>
+		            <div class="goods_list_mainmsg"><a href="${content.url!}">${content.title!}</a>
+		            <p>规格:${content.metadata('product_specification')!}
+					<br/>${content.getTaxonomyAsString('category')!}
+					<br/>厂家:${content.metadata('factory')!}
+					<br/>品牌:${content.getTaxonomyAsString('brand')!}
+					</div>
+					<div class="goods_list_mainbox_c">
+		            <a href="${content.url!}" class="goods_list_look" target="_blank">点击查看价格</a>
+		            <span>热度：${content.metadata('consult_count')!'0'}个咨询 <br /></span>
+		            <a href="${content.url!}" class="goods_list_bt" style="color:#fff" target="_blank">查看详情</a>
+		            </div>
+		            
+		            <div class="goods_list_mainbox_r">
+		            <a href="" class="goods_list_logo"><img src="${CPATH}${(content.user.metadata('company_icon'))!}" width="200" height="50"></a>
+		            <em>${(content.user.company)!}</em>
+		            <#if (content.user.metadata('zyqy'))?? && "true" == content.user.metadata('zyqy')>
+		            <a href="" class="goods_list_bt">爱眼自营</a>
+		            <#else> 
+		            	<a href="" class="goods_list_bt">入驻企业</a>
+		            </#if>
+		            <span>${(content.user.metadata('company_phone'))!}</span>
+		            </div>
+		        </div>
+		    </#list>
+		</div>
+		     <@pagination>
+	         <div class="list_page">
+		     <div class="goods_list_tagr">
+		     		<#list pages as pItem>
+			             <a href="${pItem.url!}" >${pItem.text!}</a>
+			        </#list>
+		            <a href="" class="">></a>
+		            <em>共${page.totalPage!}页，到</em>
+		            <input type="tel">
+		            <em>页</em>
+		            <a href="" class="active">确定</a>
+			   </div>
+			   </div>
+	   	    </@pagination>
+			</@jp.contentPage>
+        
+</div>
+</div>
+<!--/cont-->
+
+</@layout>
+

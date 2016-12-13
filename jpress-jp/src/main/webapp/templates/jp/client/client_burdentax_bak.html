@@ -1,0 +1,66 @@
+<#include "_inc/_layout.html"/> 
+<#macro title>
+ <title>收入统计</title>
+</#macro>
+<@layout >
+<div class="nwrapper index_main"  style="font-size:.3rem" >
+<form action="${CPATH}/account/client_comAccount"   method="post">
+
+
+    <div class="tp_top">
+    	
+        <div class="tp_top_box" id="end">
+            <span>选择时间</span>
+            	<input type="date" name="mdate" id="end_input"/>
+            <input type="submit" value="提交"/>
+    	</div>
+    </div>
+    </form>
+    
+    
+    <div class="tp_box" >
+        
+
+     <table >
+       <thead>
+        	<tr>
+            	<th style="width:50%">类目</th>
+           	 	<th  style="width:50%">税额</th>
+        	</tr>
+        </thead>
+        <tbody>
+        <tr > 
+	            <td >上期留底</td>
+	            <td >${(lb.lastmon)!"0"}</td>
+        </tr>
+        <tr > 
+	            <td >本月进项（已验）</td>
+	            <td >${income!"0"}</td>
+        </tr>
+        <tr > 
+	            <td >本月销项</td>
+	            <td >${output!"0"}</td>
+        </tr>
+        <tr > 
+	            <td >本月减免</td>
+	            <td >${subfree!"0"}</td>
+        </tr>
+        <tr > 
+	            <td >应交增值税</td>
+	            <td >${vat!"0"}</td>
+        </tr>
+        <tr > 
+	            <td >税负</td>
+	            <td >${taxff!"0.00%"}</td>
+        </tr>
+        <tr > 
+	            <td >上期留底</td>
+	            <td >${taxffy!"0.00%"}</td>
+        </tr>
+       
+        </tbody>
+        </table>
+        
+    </div>    
+</div>
+</@layout>

@@ -1,0 +1,76 @@
+
+<#include "_inc/_layout.html"/> 
+<#macro title>
+ <title>首页</title>
+</#macro>
+<#macro script>
+<script type="text/javascript">
+var mySwiper = new Swiper ('.swiper-container', {
+    autoplay: 5000,
+    loop: true,
+
+    // 如果需要分页器
+    pagination: '.swiper-pagination',
+
+
+})
+</script>
+
+</#macro>
+<@layout active_id = p>
+<div class="nwrapper index_main">
+
+
+    <div class="swiper-container swiper-container_zdy">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="${CTPATH}/client/img/grzx_02.png" class="pc_banner"></div>
+            <div class="swiper-slide"><img src="${CTPATH}/client/img/grzx_02.png" class="pc_banner"></div>
+            <div class="swiper-slide"><img src="${CTPATH}/client/img/grzx_02.png" class="pc_banner"></div>
+        </div>
+        <!-- 如果需要分页器 -->
+        <div class="swiper-pagination"></div>
+    </div>
+
+
+    <div class="in_t in_t2">
+        <i></i>常用功能
+    </div>
+
+    <div class="in_b2">
+    	<a href="${CPATH}/clientWechat/agent?p=${p!}" class="in_b2_3">事务<br/>代办</a>
+    	<a href="${CPATH}/orders/client_orders?p=${p!}" class="in_b2_2">我要<br/>下单</a>
+        <a href="${CPATH}/account/client_accountData?p=${p!}" class="in_b2_1">财税<br/>快报</a>
+        
+        
+        <a href="${CPATH}/notification-info-1" class="in_b2_4">通知<br/>公告</a>
+    </div>
+
+    <div class="clear"></div>
+
+    <div class="sof_hx"></div>
+
+    <div class="in_t in_t3">
+        <i></i>联系我们
+    </div>
+
+    <div class="in_b3">
+        会计员：<i>${(uc.accountant)!"暂无添加"}</i><br/>
+        联系电话：<i>${(uc.accountant_mobile)!"暂无添加"}</i><br/>
+        <div class="xx"></div>
+        外勤员：<i>${(uc.service)!"暂无添加"}</i><br/>
+        联系电话：<i>${(uc.service_mobile)!"暂无添加"}</i><br/>
+    </div>
+    <div class="clear"></div>
+
+    <div class="sof_hx"></div>
+
+
+
+
+    
+
+
+ <#include "_inc/_footer.html"/> 
+
+</div>
+</@layout>

@@ -1,0 +1,59 @@
+<#include "_inc/_layout.html"/> 
+<#macro title>
+ <title>增值税税负</title>
+</#macro>
+<@layout active_id = p>
+<div class="nwrapper index_main">
+    
+   <form action="${CPATH}/account/client_burdentax?p=${p!}"   method="post">
+    <div class="index_top">
+	    <a href="#" class="ac_tl">${company!}</a>
+		<input style="float: left; margin: 0.49rem 0.2rem;padding: 0.12rem;width: 2.5rem;border-radius: 0.1rem;" type="month" name="mdate" id="start_input">
+	    <input style="float: left; padding: 0.15rem; margin: 0.5rem 0px;font-size:.3rem;background: #00b9fe ;" value="发送" type="submit">  
+    </div>
+ </form>   
+
+    <div class="vt_box">
+        <span class="vt_box1">类目</span>
+        <span class="vt_box2">税额</span>
+    </div>
+
+    <div class="vt_box2">
+        <span class="vt_box21">上期留抵</span>
+        <span class="vt_box22">${(lb.lastmon)!"0"}</span>
+    </div>
+
+    <div class="vt_box2">
+        <span class="vt_box21">本月进项（已验）</span>
+        <span class="vt_box22">${income!"0"}</span>
+    </div>
+
+    <div class="vt_box2">
+        <span class="vt_box21">本月销项</span>
+        <span class="vt_box22">${output!"0"}</span>
+    </div>
+
+    <div class="vt_box2">
+        <span class="vt_box21">本月减免</span>
+        <span class="vt_box22">${subfree!"0"}</span>
+    </div>
+
+    <div class="vt_box2">
+        <span class="vt_box21">应交增值税</span>
+        <span class="vt_box22">${vat!"0"}</span>
+    </div>
+
+    <div class="vt_box2">
+        <span class="vt_box21">税负</span>
+        <span class="vt_box22">${taxff!"0.00%"}</span>
+    </div>
+
+    <div class="vt_box2">
+        <span class="vt_box21">累计税负</span>
+        <span class="vt_box22">${taxffy!"0.00%"}</span>
+    </div>
+
+  <#include "_inc/_footer.html"/> 
+
+</div>
+</@layout>

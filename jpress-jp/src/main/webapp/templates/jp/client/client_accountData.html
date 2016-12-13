@@ -1,0 +1,21 @@
+<#include "_inc/_layout.html"/> 
+<#macro title>
+ <title>财税快报</title>
+</#macro>
+<@layout active_id = p>
+<div class="nwrapper index_main">
+    <div class="fax_box">
+        <a href="${CPATH}/account/client_comAccount?p=${p!}"><img src="${CTPATH}/client/img/财税快报_03.png">往来账务</a>
+        <a href="${CPATH}/account/client_statistics?p=${p!}"><img src="${CTPATH}/client/img/财税快报_03-02.png">收入统计</a>
+        <#if role?? && role=="一般纳税人">
+        <a href="${CPATH}/account/client_burdentax?p=${p!}"><img src="${CTPATH}/client/img/财税快报_03-03.png">增值税税负</a>
+        </#if>
+         <a href="${CPATH}/account/client_incometax?p=${p!}"><img src="${CTPATH}/client/img/财税快报_03-04.png">所得税测算</a>
+        <a href="${CPATH}/account/client_detailtax?p=${p!}"><img src="${CTPATH}/client/img/财税快报_03-05.png">纳税明细</a>
+        <a href="${CPATH}/account/client_uploadBill?p=${p!}"><img src="${CTPATH}/client/img/财税快报_03-06.png">单据上传</a>
+    </div>
+    
+  <#include "_inc/_footer.html"/> 
+
+</div>
+</@layout>

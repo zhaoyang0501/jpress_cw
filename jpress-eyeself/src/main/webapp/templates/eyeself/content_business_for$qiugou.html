@@ -1,0 +1,82 @@
+<#include "_inc/_layout.html"/> 
+<@layout>
+<!--cont-->
+<div class="main">
+<div class="cont list bus_list">
+
+    <div class="goods_list_top">
+    当前位置：<a href="">首页</a>&nbsp;&gt;&gt;&nbsp;<a href="">商机</a>&nbsp;&gt;&gt;&nbsp;<a href="">求购</a>&nbsp;&gt;&gt;>&nbsp;<span>${content.title!}</span></a>
+    </div>
+    
+    <div class="qb_postl">
+    <a href="" class="qb_postla">我要发布</a>
+    <div class="qb_postlbox">
+    	<div class="qb_postlbox_top">
+    		${content.title!}
+    	</div>
+        <img src="${CTPATH}/assets/img/qgxq_03.png" width="157" height="167" class="qb_postlbox_img">
+        <span class="qb_postlbox_s">更新时间:2016-08-07</span>
+        <span class="qb_postlbox_s2">公　司：${(content.user.company)!}</span>
+        <span class="qb_postlbox_s">有 效 期:36个月</span>
+        <span class="qb_postlbox_s2">所属行业:${content.metadata('industry')!}</span>
+        <span class="qb_postlbox_s">联系人：${content.user.nickname!}</span>
+        <span class="qb_postlbox_s2">地　址：${USER.metadata('address')!}</span>
+        
+        <A class="qb_postlbox_b">打印本页</A>
+        <A class="qb_postlbox_b2">收藏本页</A>
+        <p class="qb_postlbox_p">查看“${content.title!}” 联系方式请<a href="">登录</a></p>
+        <A class="qb_postlbox_b3">还不是会员？马上<em>免费注册</em></A>
+    </div>
+    
+    
+     <div class="qb_postlmain">
+     	<div class="bus_post_rtop">
+        详细信息</div>
+        ${content.text!}
+        </div>
+        
+        
+     </div>
+     
+     <div class="qb_postr">
+     	<div class="qb_postr_top">
+	     <p>${(content.user.company)!}</p>
+	     <span>类   型： 生产商<br/>
+			联系人： ${content.user.nickname!}<br/>
+			电   话： ${content.user.metadata('company_phone')!}<br/>
+		 </span>
+     	</div>
+        
+        <div class="goods_post_mainbox_top">
+                <span>商家概况</span>
+                </div>
+     <div class="qb_postr_top">
+     <span>${USER.metadata('company_des')!}</span>
+     </div>
+     
+     <div class="goods_post_mainbox_top">
+                <span>该商家其他求购</span>
+                </div>
+          <div class="qb_postr_main">
+          
+	         <@jp.contents  module="business" typeSlug="qiugou" count="10" orderBy="view_count" userId=content.user.id> 
+			    <#list contents as content> 
+	            <a href="${content.url!}"><em class="ell">${content.title!}</em>
+	         	 <img src="$${content.image!CTPATH+'/assets/img/qgxq_07.png'}" width="57" height="62"><span>${content.summary!}</span>
+	            </a>
+	        	</#list> 
+		    </@jp.contents>
+          
+          </div>      
+        
+     </div>
+     
+     
+    </div>
+    
+    <div class="clear"></div>
+
+    
+</div>
+<!--/cont-->
+</@layout>

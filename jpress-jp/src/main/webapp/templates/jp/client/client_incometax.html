@@ -1,0 +1,45 @@
+<#include "_inc/_layout.html"/> 
+<#macro title>
+ <title>所得税测算</title>
+</#macro>
+<@layout active_id = p>
+<div class="nwrapper index_main"  >
+    <div class="it">
+      
+	
+	 
+	  <#if map??>
+		      <#list map.keySet() as testKey>
+		        <span class="jbr_top">月份：${ (map.get(testKey).month)!"0"}</span>
+			    
+			    	<#if ((map.get(testKey).month)?substring(5,7))=="12">
+		      				<div class="it_p"> <i>本季度预缴</i><span>${(map.get(testKey).seasonIncome)!"0"}</span></div>
+		      		</#if>
+		      		<#if ((map.get(testKey).month)?substring(5,7))=="09">
+		      				<div class="it_p"> <i>本季度预缴</i><span>${(map.get(testKey).seasonIncome)!"0"}</span></div>
+		      		</#if>
+		      		<#if ((map.get(testKey).month)?substring(5,7))=="06">
+		      			<div class="it_p"> <i>本季度预缴</i><span>${(map.get(testKey).seasonIncome)!"0"}</span></div>
+		      		</#if>
+		      		<#if ((map.get(testKey).month)?substring(5,7))=="03">
+		      			<div class="it_p"> <i>本季度预缴</i><span>${(map.get(testKey).seasonIncome)!"0"}</span></div>
+		      		</#if>
+			    
+			    
+				    	<#if ((map.get(testKey).yearMajor)?? && (map.get(testKey).yearMajor !="") && (map.get(testKey).yearIncome)?? && (map.get(testKey).yearIncome !=""))  >
+			      		<div class="it_p"><i>累计税负</i><span>	${((map.get(testKey).yearIncome)?number)/((map.get(testKey).yearMajor)?number)}</span></div>
+	      				<#else>
+		      				<div class="it_p"><i>累计税负</i><span>0</span></div>
+			      		</#if>
+				    
+		      </#list>
+		      <#else>
+		      <h2 style="margin: 20px 0;text-align: center;">没有数据</h2>
+    
+    
+		</#if>
+    </div>    
+  <#include "_inc/_footer.html"/> 
+
+</div>
+</@layout>

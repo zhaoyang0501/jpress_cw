@@ -1,0 +1,239 @@
+<#include "/WEB-INF/admin/_inc/_layout.html"/> 
+
+
+<#macro css_import>
+	<link href="${CTPATH}/css/datepicker.min.css" rel="stylesheet">
+</#macro> 
+<#macro css>
+	.jp-top7{
+		display: block;
+	    margin-top: 7px;
+    }
+</#macro>
+
+<@layout active_id=p child_active_id=c>
+
+<section class="content" style="z-index: 9999">
+
+	<div class="box box-solid">
+		<div class="box-header with-border">
+			<h3 class="box-title" <#if (cp.stepProgress) ?? && (cp.stepProgress)=='1'>style="background:#4F94CD"</#if>> 资料提交</h3>
+		</div>
+		<!-- /.box-header -->
+		<div class="box-body no-padding">
+			<!-- Custom Tabs -->
+			<div class="nav-tabs-custom">
+				
+				<div class="tab-content">
+					<div class="tab-pane active form-horizontal" id="tab_1">
+		                <div class="form-group">
+		                  	 <label class="col-sm-2 control-label">上传资料</label>
+			                  <div class="col-sm-9">
+			                   	 <span class="jp-top7">${(cp.uploadMt)!}</span>
+			                  </div>
+		                </div>
+		                <div class="form-group">
+		                  <label  class="col-sm-2 control-label">缺失资料</label>
+		                  <div class="col-sm-9">
+		                    	<span class="jp-top7">${(cp.lactMt)!}</span>
+		                  </div>
+		                </div>
+		                <div class="form-group">
+		                  <label class="col-sm-2 control-label">经办人</label>
+		                  <div class="col-sm-9">
+		                    	<span class="jp-top7">${(cp.operatorMt)!}</span>
+		                  </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">经办人电话</label>
+			                  <div class="col-sm-9">
+			                    	<span class="jp-top7">${(cp.phoneMt)!}</span>
+			                  </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">最后办理时间</label>
+			                  	<div class="col-sm-9">
+			                    	<span class="jp-top7">${(cp.dateMt)!}</span>
+			                   </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">最后办理地址</label>
+			                  <div class="col-sm-9">
+			                    	<span class="jp-top7">${(cp.addressMt)!}</span>
+			                  </div>
+		                </div>
+	              </div>
+	              
+				</div>
+				<!-- /.tab-content -->
+			</div>
+			<!-- nav-tabs-custom -->
+		</div>
+	</div>
+ 
+    
+	<div class="box box-solid">
+		<div class="box-header with-border">
+			<h3 class="box-title" <#if (cp.stepProgress) ?? && (cp.stepProgress)=='2'>style="background:#4F94CD"</#if>>手续办理</h3>
+		</div>
+		<!-- /.box-header -->
+		<div class="box-body no-padding">
+			<!-- Custom Tabs -->
+			<div class="nav-tabs-custom">
+				
+				<div class="tab-content">
+					<div class="tab-pane active form-horizontal" id="tab_1">
+		                <div class="form-group">
+		                  	 <label class="col-sm-2 control-label">已办理手续</label>
+			                  <div class="col-sm-9">
+			                   	 <span class="jp-top7">${(cp.donePd)!}</span>
+			                  </div>
+		                </div>
+		                <div class="form-group">
+		                  <label class="col-sm-2 control-label">待办手续</label>
+		                  <div class="col-sm-9">
+		                    	<span class="jp-top7">${(cp.waitPd)!}</span>
+		                  </div>
+		                </div>
+		                <div class="form-group">
+		                  <label for="_uname" class="col-sm-2 control-label">经办人</label>
+		                  <div class="col-sm-9">
+		                    	<span class="jp-top7">${(cp.operatorPd)!}</span>
+		                  </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">经办人电话</label>
+			                  <div class="col-sm-9">
+			                    	<span class="jp-top7">${(cp.phonePd)!}</span>
+			                  </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">最后办理时间</label>
+			                  	<div class="col-sm-9">
+			                    	<span class="jp-top7">${(cp.datePd)!}</span>
+			                   </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">最后办理地址</label>
+			                  <div class="col-sm-9">
+			                    	<span class="jp-top7">${(cp.addressPd)!}</span>
+			                  </div>
+		                </div>
+		                
+	              </div>
+	              
+	              
+				</div>
+				<!-- /.tab-content -->
+			</div>
+			<!-- nav-tabs-custom -->
+		</div>
+	</div>
+    
+
+	<div class="box box-solid">
+		<div class="box-header with-border">
+			<h3 class="box-title" <#if (cp.stepProgress) ?? && (cp.stepProgress)=='3'>style="background:#4F94CD"</#if>>税务登记</h3>
+		</div>
+		<!-- /.box-header -->
+		<div class="box-body no-padding">
+			<!-- Custom Tabs -->
+			<div class="nav-tabs-custom">
+				
+				<div class="tab-content">
+					<div class="tab-pane active form-horizontal" id="tab_1">
+		                <div class="form-group">
+		                  	 <label class="col-sm-2 control-label">已办理税务手续</label>
+			                  <div class="col-sm-9">
+			                   	 <span class="jp-top7">${(cp.doneTax)!}</span>
+			                  </div>
+		                </div>
+		                <div class="form-group">
+		                  <label class="col-sm-2 control-label">待办理税务手续</label>
+		                  <div class="col-sm-9">
+		                    	<span class="jp-top7">${(cp.waitTax)!}</span>
+		                  </div>
+		                </div>
+		                <div class="form-group">
+		                  <label for="_uname" class="col-sm-2 control-label">经办人</label>
+		                  <div class="col-sm-9">
+		                    	<span class="jp-top7">${(cp.operatorTax)!}</span>
+		                  </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">经办人电话</label>
+			                  <div class="col-sm-9">
+			                    	<span class="jp-top7">${(cp.phoneTax)!}</span>
+			                  </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">最后办理时间</label>
+			                  	<div class="col-sm-9">
+			                    	<span class="jp-top7">${(cp.dateTax)!}</span>
+			                   </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">最后办理地址</label>
+			                  <div class="col-sm-9">
+			                    	<span class="jp-top7">${(cp.addressTax)!}</span>
+			                  </div>
+		                </div>
+		                
+	              </div>
+	              
+	              
+				</div>
+				<!-- /.tab-content -->
+			</div>
+			<!-- nav-tabs-custom -->
+		</div>
+	</div>
+
+	<div class="box box-solid">
+		<div class="box-header with-border">
+			<h3 class="box-title" <#if (cp.stepProgress) ?? && (cp.stepProgress)=='4'>style="background:#4F94CD"</#if>>办理完成</h3>
+		</div>
+		<!-- /.box-header -->
+		<div class="box-body no-padding">
+			<!-- Custom Tabs -->
+			<div class="nav-tabs-custom">
+				
+				<div class="tab-content">
+					<div class="tab-pane active form-horizontal" id="tab_1">
+		               
+		                <div class="form-group">
+		                  <label for="_uname" class="col-sm-2 control-label">经办人</label>
+		                  <div class="col-sm-9">
+		                    	<span class="jp-top7">${(cp.operatorFh)!}</span>
+		                  </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">经办人电话</label>
+			                  <div class="col-sm-9">
+			                    	<span class="jp-top7">${(cp.phoneFh)!}</span>
+			                  </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">最后办理时间</label>
+			                  	<div class="col-sm-9">
+			                    	<span class="jp-top7">${(cp.dateFh)!}</span>
+			                   </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">预计办理时间</label>
+			                  	<div class="col-sm-9">
+			                    	<span class="jp-top7">${(cp.preTimeFh)!}</span>
+			                   </div>
+		                </div>
+		                
+	              </div>
+	              
+				</div>
+				<!-- /.tab-content -->
+			</div>
+			<!-- nav-tabs-custom -->
+		</div>
+	</div>
+   </section>
+</@layout>
+   

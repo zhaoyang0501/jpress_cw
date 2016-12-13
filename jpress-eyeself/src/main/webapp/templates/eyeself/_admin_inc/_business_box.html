@@ -1,0 +1,48 @@
+<div class="box box-solid">
+    <div class="box-header with-border">
+        <h3 class="box-title">基本设置</h3>
+
+        <div class="box-tools">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-minus"></i>
+            </button>
+        </div>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body no-padding">
+        <!-- Custom Tabs -->
+        <div class="nav-tabs-custom">
+            <div class="tab-content">
+                <div class="tab-pane active form-horizontal">
+
+                    <div class="form-group">
+                        <label for="vice-director" class="col-sm-1 control-label">行业</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="vice-director" name="meta:industry"
+                                   value="${(content.industry)!}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="meta:address" class="col-sm-1 control-label">地址</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="meta:address" name="meta:address"
+                                   value="${(content.metadata('address'))!}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="announcement_type" class="col-sm-1 control-label">公告类别</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="meta:announcement_type" id="announcement_type"
+                                   value="${(content.metadata('announcement_type'))!}">（招标填写）
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- /.tab-content -->
+        </div>
+        <!-- nav-tabs-custom -->
+    </div>
+</div>

@@ -1,0 +1,111 @@
+<#include "_inc/_layout.html"/> 
+<#macro script>
+$(document).ready(function(e) {
+    var links = $("#slidehrefs").val().split("|");
+    $(".slide").click(function(){
+        var index = $(this).attr('index');
+        if(index === undefined) {
+            window.open(links[0]);
+        } else {
+            window.open(links[(parseInt(index)+1)]);
+        }
+    });
+    
+});
+</#macro>
+<@layout nav_active="active">
+<!--banner-->
+<div class="main">
+<div class="container-fluid text-center">
+    <div class="header">
+     	<@jp.slider></@jp.slider>
+    </div>
+</div>
+</div>
+
+<div class="main index_top">
+    <div class="cont">
+    	<#if OPTION('eyeself_index_nav1') ??>
+			<a href="${OPTION('eyeself_index_nav1_link')!}"><img src="${CPATH}${OPTION('eyeself_index_nav1')!}"> </a>
+		</#if>
+    	<#if OPTION('eyeself_index_nav2') ??>
+			<a href="${OPTION('eyeself_index_nav2_link')!}"><img src="${CPATH}${OPTION('eyeself_index_nav2')!}"> </a>
+		</#if>
+    	<#if OPTION('eyeself_index_nav3') ??>
+			<a href="${OPTION('eyeself_index_nav3_link')!}"><img src="${CPATH}${OPTION('eyeself_index_nav3')!}"> </a>
+		</#if>
+    	<#if OPTION('eyeself_index_nav4') ??>
+			<a href="${OPTION('eyeself_index_nav4_link')!}"><img src="${CPATH}${OPTION('eyeself_index_nav4')!}"> </a>
+		</#if>
+    	<#if OPTION('eyeself_index_nav5') ??>
+			<a href="${OPTION('eyeself_index_nav5_link')!}"><img src="${CPATH}${OPTION('eyeself_index_nav5')!}"> </a>
+		</#if>
+    </div>
+</div>
+
+
+<@jp.taxonomys module="product" type="category" parentId="0">
+<#list taxonomys as taxonomy>
+<!--index_floor-->
+<div class="main index_floor">
+    <div class="cont">
+       <div class="index_floor_top">
+           <img src="${CTPATH}/assets/img/index_31.gif" width="35" height="35">${taxonomy.title!}
+           <p>
+            <@jp.taxonomys parentId=taxonomy.id count="5">
+           	   <#list taxonomys as taxonomy>
+               <a href="${taxonomy.url!}" target="_blank">${taxonomy.title!}</a>
+               </#list>
+			</@jp.taxonomys>
+           </p>
+       </div>
+
+        <div class="index_floor_left">
+        	<!-- 大图广告 -->
+           <a href="${CPATH}${OPTION(taxonomy.slug+'_banner_01_link')!'javascript:;'}" class="index_floor_left_ad">
+           	<img src="${CPATH}${OPTION(taxonomy.slug+'_banner_01')!TPATH+'/assets/img/index_36.gif'}" width="227" height="405"> 
+           </a>
+           <!-- 大图广告 end-->
+           <div class="index_floor_goods">
+           	<@jp.contents module="product" count="6" upperId=taxonomy.id> 
+           		 <#list contents as content>
+			         <a href="${content.url}"><img src="${content.image!}" width="225" height="165"><span>${content.title}</span></a>
+			    </#list> 
+           	</@jp.contents>
+           </div>
+
+       </div>
+
+       <div class="index_floor_right">
+           <a href="" class="index_floor_right_top">
+               <Span>热门品牌</Span>
+               <img src="${CTPATH}/assets/img/more.png">
+           </a>
+           <div class="index_floor_right_brand">
+           		<#if OPTION(taxonomy.slug+'_brand_01') ??>
+					<a href="${OPTION(taxonomy.slug+'brand_01_link')!}"><img src="${CPATH}${OPTION(taxonomy.slug+'brand_01')!}"  width="100" height="60"></a>
+				</#if>
+           		<#if OPTION(taxonomy.slug+'_brand_02') ??>
+					<a href="${OPTION(taxonomy.slug+'brand_02_link')!}"><img src="${CPATH}${OPTION(taxonomy.slug+'brand_02')!}"  width="100" height="60"></a>
+				</#if>
+           		<#if OPTION(taxonomy.slug+'_brand_03') ??>
+					<a href="${OPTION(taxonomy.slug+'brand_013_link')!}"><img src="${CPATH}${OPTION(taxonomy.slug+'brand_03')!}"  width="100" height="60"></a>
+				</#if>
+           		<#if OPTION(taxonomy.slug+'_brand_04') ??>
+					<a href="${OPTION(taxonomy.slug+'brand_04_link')!}"><img src="${CPATH}${OPTION(taxonomy.slug+'brand_04')!}"  width="100" height="60"></a>
+				</#if>
+           </div>
+           <!-- 小图广告 -->
+           <a href="${CPATH}${OPTION(taxonomy.slug+'_banner_02_link')!'javascript:;'}" class="index_floor_right_ad">
+           	<img src="${CPATH}${OPTION(taxonomy.slug+'_banner_02')!TPATH+'/assets/img/index_49.gif'}" width="200" height="237">
+           </a>
+           <!-- 小图广告 end-->
+        </div>
+    </div>
+</div>
+<!--index_floor-->
+</#list>
+</@jp.taxonomys>
+
+
+</@layout>

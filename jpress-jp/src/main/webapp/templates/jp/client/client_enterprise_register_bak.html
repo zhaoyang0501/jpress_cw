@@ -1,0 +1,93 @@
+<#include "_inc/_layout.html"/> 
+<#macro title>
+ <title>工商注册</title>
+</#macro>
+
+<#macro script>
+<script type="text/javascript">
+	function doSubmit(url){
+	 	$("#form").ajaxSubmit({
+			type : "post", //提交方式  
+			dataType : "json", //数据类型  
+		beforeSubmit : function(){
+	           
+	           //#################
+				},
+			success : function(data) { //提交成功的回调函数 
+				if(data.errorCode == 0){
+					if(url !=null && ''!=url){
+						location.href=url;
+					}else{
+						location.reload();
+					}
+				}else{
+					alert(data.message);
+				}
+			},
+			error : function() {
+				alert("信息提交错误");
+			}
+		});
+}
+	
+	
+	$(function(){
+		$(".addEnterprise").click(function(){
+			var html = "";
+			html +='<div >企业名称：<input  class="enterprise" type="text" name="enterpriseName" /></div>';
+			$(".addetp").before(html);
+		})
+		
+		$(".addstock").click(function(){
+			var html = "";
+			html +='<div >企业股东：<input  class="stockholder" type="text" name="stockholder" /></div>';
+			html +='<div >股东身份证：<input  class="stockholderId" type="text" name="stockholderId" /></div>';
+			html +='<div >认缴比例：<input  class="stockRate" type="text" name="stockRate" /></div>';
+			html +='<div >占股：<input  class="stockNum" type="text" name="stockNum" /></div>';
+			html +='<input type="hidden" name="flag" value="0"/>';
+			
+			$(".addstockdiv").before(html);
+		})
+	})
+	
+	
+	
+</script>
+
+</#macro>
+<@layout >
+<div class="nwrapper index_main" style="font-size:.3rem">
+  
+    
+    
+<form id="form" action="${CPATH}/register/client_enterprise_register" method="post">
+  
+<div >企业名称：<input  class="enterprise" type="text" name="enterpriseName" /></div>
+<div class="addetp"><button type="button"  class="addEnterprise">添加按钮</button></div>
+<div >公司所在地：<input  class="city" type="text" name="city" /><input  class="district" type="text" name="district" /></div>
+<div >公司地址：<input  class="address" type="text" name="address" /></div>
+<div >经营范围：<input  class="bscope" type="text" name="bscope" /></div>
+<br/><br/><br/><br/>
+
+<div >企业法人：<input  class="stockholder" type="text" name="stockholder" /></div>
+<div >法人身份证：<input  class="stockholderId" type="text" name="stockholderId" /></div>
+<div >认缴比例：<input  class="stockRate" type="text" name="stockRate" /></div>
+<div >占股：<input  class="stockNum" type="text" name="stockNum" /></div>
+<input type="hidden" name="flag" value="1"/>
+<br/><br/><br/><br/>
+
+<div >企业股东：<input  class="stockholder" type="text" name="stockholder" /></div>
+<div >股东身份证：<input  class="stockholderId" type="text" name="stockholderId" /></div>
+<div >认缴比例：<input  class="stockRate" type="text" name="stockRate" /></div>
+<div >占股：<input  class="stockNum" type="text" name="stockNum" /></div>
+<input type="hidden" name="flag" value="0"/>
+
+<div class="addstockdiv"><button type="button" class="addstock" >添加股东</button></div>
+
+<button type="button" class="">在线下单</button><br/><button type="button">在线咨询</button>
+
+
+<div ><input type="button" onclick="doSubmit('${CPATH}/register/client_user_regsuccess')" value="提交"></div>
+</form>
+</div>
+</@layout>

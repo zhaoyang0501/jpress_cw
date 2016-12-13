@@ -1,0 +1,207 @@
+<#include "_inc/_layout.html"/> 
+<#macro title>
+ <title>收入统计</title>
+</#macro>
+
+
+<#macro script>
+	<script type="text/javascript">
+window.onload = function() {
+  
+  var tabsSwiper = new Swiper('#tabs-container',{
+    speed:500,
+    onSlideChangeStart: function(){
+      $(".tabs .active").removeClass('active')
+      $(".tabs a").eq(tabsSwiper.activeIndex).addClass('active')  
+    }
+  })
+  $(".tabs a").on('touchstart mousedown',function(e){
+    e.preventDefault()
+    $(".tabs .active").removeClass('active')
+    $(this).addClass('active')
+    tabsSwiper.slideTo( $(this).index() )
+  })
+  $(".tabs a").click(function(e){
+    e.preventDefault()
+  })
+  
+  
+  	var wheight = $(window).height();
+		var theight = $(".tabs").height();
+		var h = wheight - theight;
+		$(".swiper-slide,.content-slide,#tabs-container").css("height", h);
+		$(".swiper-slide,.content-slide").css("overflow-y", "scroll");
+  
+}
+
+$(function(){
+	$(".jp1").click(function(){
+		$(".jpc1").toggle();
+	})
+	$(".jp2").click(function(){
+		$(".jpc2").toggle();
+	})
+	$(".jp3").click(function(){
+		$(".jpc3").toggle();
+	})
+})
+
+</script>
+</#macro>
+<@layout active_id = p>
+<div class="nwrapper index_main">
+    
+
+<div class="tabs"> <a href="#" class="active">销售服务</a> 
+<a href="#" >销售货物</a> <a href="#">加工修理</a> </div>
+<form action="${CPATH}/account/client_statistics"   method="post">
+ <div class="sof_top" style="background:#00b9fe">
+	<div style="margin:auto 0">
+      <!--  <i class="sof_top_l"></i>2016年6月<i class="sof_top_r"></i>-->
+		<input value="${mdateStr!}" placeholder="请选择日期" style=" margin: 0rem 0.2rem;padding: 0.12rem;width: 2.5rem;border-radius: 0.1rem;" type="month" name="mdate" id="start_input">
+	    <input style="padding: 0rem; margin: 0rem 0px;font-size:.3rem;background: #00b9fe ;" value="发送" type="submit">  
+    </div>
+    </div>
+    </form>
+    <div class="sof_hx"></div>
+<div id="tabs-container" class="swiper-container" style="font-size:.3rem">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+      		<div class="content-slide">
+      		       <div class="sof_y">
+				        <div class="sof_y_box">
+				            <p>收入上线  <i>${lservice!"0"} 元</i></p>
+				        </div>
+				   </div>
+				    <div class="sof_tb">可新增收入：${subsell!"0"}元</div>
+				     <div class="it">
+				        <div class="clear"></div>
+				        
+				        <div class="rs_tbox jpc1">
+						    <div class="rs_tbox_main">
+						        <div class="rs_tbox_main_top">
+						            <span>月份</span>
+						            <span>收入类型</span>
+						            <span>本月收入</span>
+						            <span>年累计收入</span>
+						        </div>
+								<#if chlist??>
+								       <#list chlist as x>
+									       	<#if x.subName !="销售收入" && x.subName !="加工修理修配">
+									       	<div class="rs_tbox_main_c">
+										            <span>${x.mdate!}</span>
+										            <span>${x.subName!}</span>
+										            <span class="amincome">${x.twoc!"0"}</span>
+										            <span class="ayincome">${x.threec!"0"}</span>
+										     </div> 
+										      </#if>
+									      </#list>
+									        <div class="rs_tbox_main_c">
+									            <span >合计</span>
+									            <span></span>
+									            <span class="amall">${sellmon!"0"}</span>
+									            <span class="ayall">${sellAmount!"0"}</span>
+									       </div> 
+								       </#if>
+								    </div>
+								</div>
+				        
+				        		<button class="co_bt co_bt2 jp1">明细统计</button>
+				    	</div>
+       			</div>	
+       		</div>
+      <div class="swiper-slide">
+      	<div class="content-slide">
+   					<div class="sof_y">
+				        <div class="sof_y_box">
+				            <p>收入上线  <i>${lstuff!"0"} 元</i></p>
+				        </div>
+				  	</div>
+				    <div class="sof_tb">可新增收入：${subls!"0"}元</div>
+				      <div class="it">
+				      	<div class="clear"></div>
+				      	<div class="rs_tbox jpc3">
+						    <div class="rs_tbox_main">
+						        <div class="rs_tbox_main_top">
+						            <span>月份</span>
+						            <span>收入类型</span>
+						            <span>本月收入</span>
+						            <span>年累计收入</span>
+						        </div>
+								<#if chlist??>
+				      				 <#list chlist as x>
+				       					<#if x.subName =="销售收入">
+								       	<div class="rs_tbox_main_c">
+									            <span>${x.mdate!}</span>
+									            <span>${x.subName!}</span>
+									            <span class="amincome">${x.twoc!"0"}</span>
+									            <span class="ayincome">${x.threec!"0"}</span>
+									     </div> 
+									        </#if>
+									        </#list>
+									        <div class="rs_tbox_main_c">
+									            <span >合计</span>
+									            <span></span>
+									            <span class="bmall">${lsm!"0"}</span>
+					            				<span class="byall">${lsy!"0"}</span>
+									       </div> 
+								       </#if>
+								        
+								    </div>
+								</div>
+				        
+				        		<button class="co_bt co_bt2 jp3">明细统计</button>
+				      </div>
+				      
+			
+      </div></div>
+      <div class="swiper-slide">
+      	<div class="content-slide">
+      	<div class="sof_y">
+				        <div class="sof_y_box">
+				            <p>收入上线  <i> ${lprocess!"0"} 元</i></p>
+				        </div>
+				  	</div>
+				    <div class="sof_tb">可新增收入：${sublp!"0"}元</div>
+       				<div class="it">
+				      	<div class="clear"></div>
+				      	<div class="rs_tbox jpc3">
+						    <div class="rs_tbox_main">
+						        <div class="rs_tbox_main_top">
+						            <span>月份</span>
+						            <span>收入类型</span>
+						            <span>本月收入</span>
+						            <span>年累计收入</span>
+						        </div>
+								<#if chlist??>
+				       				<#list chlist as x>
+				       					<#if x.subName =="加工修理修配">
+								       	<div class="rs_tbox_main_c">
+									            <span>${x.mdate!}</span>
+									            <span>${x.subName!}</span>
+									            <span class="amincome">${x.twoc!"0"}</span>
+									            <span class="ayincome">${x.threec!"0"}</span>
+									     </div> 
+									        </#if>
+									        </#list>
+									        <div class="rs_tbox_main_c">
+									            <span >合计</span>
+									            <span></span>
+									            <span class="bmall">${lpm!"0"}</span>
+					            				<span class="byall">${lpy!"0"}</span>
+									       </div> 
+								       </#if>
+								        
+								    </div>
+								</div>
+				        		<button class="co_bt co_bt2 jp3">明细统计</button>
+				      </div>
+      
+        </div></div>
+    </div>
+  </div>  
+
+<#include "_inc/_footer.html"/> 
+
+</div>
+</@layout>

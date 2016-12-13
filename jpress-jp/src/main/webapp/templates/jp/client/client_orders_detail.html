@@ -1,0 +1,85 @@
+
+<#include "_inc/_layout.html"/> 
+<#macro title>
+<title>公司变更</title>
+</#macro>
+<#macro css>
+<style type="text/css">
+	.co_tagbox{width: 33.3%;}
+	.co_tagbox span{width:100%;}
+	.co_tagbox span.jp-ot,.jp-ot{
+		display: none;
+	}
+</style>
+</#macro>
+<#macro script>
+	<script type="text/javascript">
+	$(function(){
+		$(".co_tagbox").click(function(){
+			var $index = $(this).index(".co_tagbox");
+			if($(this).hasClass("temp")){
+				$(this).removeClass("temp");
+				$(this).find("img").attr("src","${CTPATH}/client/img/gsbg_03.png");
+				var $jp = "jp-"+$index;
+				$(".it").find("."+$jp).remove();
+			}else{
+				$(this).find("img").attr("src","${CTPATH}/client/img/gsbg_06.png");
+				$(this).addClass("temp");
+				var $temp = $(this).find(".jp-img").text();
+				var $tempvalue = $(this).find(".jp-ot").text();
+				html="";
+				html +='<div class="it_p jp-'+$index+'"><i>' + $temp + '</i>';
+				html +='<input type="text" name="content" class="co_l" placeholder="请输入内容"/>';
+				html +='<input type="hidden" name="title" value='+ $tempvalue+'></div>';
+				$(".clear").before(html);
+			}
+			
+		})
+	})
+	</script>
+</#macro>
+<@layout >
+<div class="nwrapper ">
+
+<form action="${CPATH}/orders/client_orders_detail?setOrdersId=${setOrdersId!}"  method="post">
+	<input type="hidden" name="flag"  value="${flag!}">
+    <div class="co_box">
+    	<#if secList??>
+    		<#list secList as x>
+    		<#if x_index==0>
+        			<div class="co_box_top">${x.orderType}<span ></div>
+        	</#if>
+        	<span class="co_tagbox"> 
+            	<span class="jp-img"><img src="${CTPATH}/client/img/gsbg_03.png">${(x.change_title)!}</span>
+            	 <span class="jp-ot"> ${(x.change_title)!}</span>
+            </span>
+        	</#list>
+    	</#if>
+    	
+    	 <!--     <span><img src="./img/gsbg_06.png"> 变更名称</span>
+            <span><img src="./img/gsbg_03.png"> 变更名称</span>
+            <span><img src="./img/gsbg_03.png"> 变更名称</span>
+            <span><img src="./img/gsbg_03.png"> 变更名称</span>
+            <span><img src="./img/gsbg_03.png"> 变更名称</span>
+            <span><img src="./img/gsbg_03.png"> 变更名称</span>-->
+    </div>
+
+
+
+    <div class="it">
+        <span class="jbr_top jbr_top2">变更后内容描述</span>
+        <!--
+    <div class="it_p"><i>公司名称</i><span class="co_l">笑嘻嘻笑嘻嘻系有限公司</span></div>
+        <div class="it_p"><i>注册资本</i><span class="co_l">七万</span></div>
+        <div class="it_p"><i>企业法人</i><span class="co_l">xxxxxxxx</span></div>
+        -->
+        <div class="clear"></div>
+            <button type="submit" class="co_bt">在线下单</button>
+        <div class="zxzx"><img src="${CTPATH}/client/img/gszc_07.png">在线咨询 </div>
+
+    </div>
+
+</form>
+<#include "_inc/_footer.html"/> 
+</div>
+</@layout>

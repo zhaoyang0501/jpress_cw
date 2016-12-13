@@ -1,0 +1,101 @@
+<#include "_inc/_layout.html"/> 
+<#macro title>
+ <title>纳税明细</title>
+</#macro>
+
+ 
+<#macro script>
+	<script type="text/javascript">
+$(document).ready(function(e) {
+	var newStart = $('#start_input').val();
+	 var newend = $('#end_input').val();
+	
+  $("#start_input").bind("change", function(){
+		  newStart = $('#start_input').val();
+		  $("#start span").html(newStart);
+		  $("#start span").css("color","#00b9fe");
+  });
+  
+  $("#end_input").bind("change", function(){ 
+		  newend = $('#end_input').val();
+		  $("#end span").html(newend);
+		  $("#end span").css("color","#00b9fe");
+  });
+	
+});
+</script>
+</#macro>
+
+<#macro css>
+	<style type="text/css">
+		.tp_boxmain { width: 1.2rem;}
+		.tp_top_box2 {margin: 0.45rem 0.3rem 0;}
+		p span.showdata{
+		    color: #9497ae;
+		    display: block;
+		    float: right;
+		    font-size: 0.28rem;
+		    height: 0.56rem;
+		    line-height: 0.56rem;
+		    padding: 0 0.1rem;
+		    width: 1.8rem;
+	    }
+	</style>
+</#macro>
+<@layout active_id = p>
+<div class="nwrapper tp_nw">
+<form  id="form" action="${CPATH}/account/client_detailtax" method="post">
+    <div class="tp_top">
+    	<div class="tp_top_box" id="start">
+            <span>${mdate!"选择时间"}</span>
+            <input type="month" name="mdate" id="start_input"/>
+            <img src="${CTPATH}/client/img/ns_03.png">
+    	</div>
+        
+        <div class="tp_top_box" id="end">
+            <span>${mdate1!"选择时间"}</span>
+            <input type="month" name="mdate1" id="end_input"/>
+            <img src="${CTPATH}/client/img/ns_03.png">
+    	</div>
+    	<i><input type="submit" value="确定" style="padding: 0rem; margin: 0rem 0px;font-size:.3rem;background: #00b9fe ;"></i>
+    </div>
+    
+    </form>
+    <div class="tp_boxmain"></div> 
+    
+    <div class="tp_box">
+        
+ <#if map??>
+		<#list map.keySet() as testKey>
+       		<div class="tp_boxmain_cbox">
+                <div class="tp_boxmain_cbox_top"><em></em><span>${(map.get(testKey).month)!}</span></div>
+                <div class="tp_boxmain_cbox_cont">
+	                <p><span>收   入:</span><span class="showdata">${(map.get(testKey).shouru)!"0"}</span></p>
+	                <p><span>增值税:</span><span class="showdata" >
+	                	<#if (map.get(testKey).output)?? && (map.get(testKey).inputTax)?? && (map.get(testKey).reliefs)??>
+	                	${ ((map.get(testKey).output)?number) -((map.get(testKey).inputTax)?number) - ((map.get(testKey).reliefs)?number) }
+	                	</#if>
+	                </span></p>
+	                <p><span>附加税:</span><span class="showdata" >
+	                		<#if (map.get(testKey).citytax)?? && (map.get(testKey).eduTax)?? && (map.get(testKey).localEduTax)??>
+	                		${ ((map.get(testKey).citytax)?number)+((map.get(testKey).eduTax)?number)+((map.get(testKey).localEduTax)?number) }
+	                		</#if>
+	                		</span></p>
+	                <p><span>所得税:</span><span class="showdata" >${(map.get(testKey).incomeTax)!"0"}</span></p>
+	                <p><span>印花税:</span><span class="showdata" >${(map.get(testKey).stampTax)!"0"}</span></p>
+	                <p>
+	                	<span>纳税合计:</span>
+	                	<span class="showdata" >
+	               			 ${((map.get(testKey).citytax)?number)+((map.get(testKey).eduTax)?number)+((map.get(testKey).localEduTax)?number)+((map.get(testKey).incomeTax)?number)+((map.get(testKey).stampTax)?number)+((map.get(testKey).output)?number) -((map.get(testKey).inputTax)?number) - ((map.get(testKey).reliefs)?number) }
+	                	</span>
+	                </p>
+                </div>
+            </div>
+            </#list>
+		</#if>
+    </div>
+
+  <#include "_inc/_footer.html"/> 
+
+</div>
+</@layout>

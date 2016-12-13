@@ -1,0 +1,79 @@
+<#include "_inc/_layout.html"/> 
+<@layout> 
+<!--cont-->
+<div class="main">
+<div class="cont list bus_list">
+
+    <div class="goods_list_top">
+    当前位置：<a href="">首页</a>&nbsp;>&nbsp;<span>学术组织  </span></a>
+    </div>
+	<img src="${CTPATH}/assets/img/xszz_03.png" class="a0_ad" >
+    
+    <div class="a0_l">
+    	<p><em><a href="${CPATH}/group">全国</a></em></p>
+    	<@jp.taxonomys module="group" type="city">
+       	<#list taxonomys as taxonomy>
+       	 <#if taxonomy.parent_id == 0>
+       	 <p><em>地区－${taxonomy.title!}</em>
+       	 <span class="active">
+	       	 <@jp.taxonomys module="group" type="city" parentId=taxonomy.id>
+	       	<#list taxonomys as t>
+	       	 <a href="${t.url!}">${t.title!}</a>
+	       	 </#list>
+	       	</@jp.taxonomys>
+       	 </span></p>
+       	 </#if>
+       	</#list>
+       	</@jp.taxonomys>
+       	
+    </div>
+    
+    
+    <div class="a0_r">
+    <form class="cs_list_topbox">
+    <input type="text" class="goods_list_input" placeholder="填写您想要查询的项目内容或名称">
+    <input type="submit" class="goods_list_bt" value="搜 索">
+<A href=""  class="a0_rzx"><img src="${CTPATH}/assets/img/xszz_07.png" width="36" height="25"><br/>我要咨询</A>
+    </form>
+    
+    
+    <div class="per_rbox_top">
+    		全部地区
+    </div>
+    
+     <@jp.contentPage > 
+    <div class="a0_rbox">
+    
+    <#list page.getList() as content>
+    <A href="${content.url!}"><img src="${content.image!}" width="200" height="110"><span>${content.title!}</span>
+    <p>
+    主   任 ：${(content.metadata('group_director1_name'))!}<br/>
+	副主任 ：${(content.metadata('group_vice_director1_name'))!}<br/>
+	地址：${(content.metadata('group_address'))!}
+	</p>
+	</A>
+	 </#list>
+
+    </div>
+    
+   		<@pagination>
+        <div class="list_page">
+	     <div class="goods_list_tagr">
+	     		<#list pages as pItem>
+		             <a href="${pItem.url!}" >${pItem.text!}</a>
+		        </#list>
+	            <a href="" class="">></a>
+	            <em>共${page.totalPage!}页，到</em>
+	            <input type="tel">
+	            <em>页</em>
+	            <a href="" class="active">确定</a>
+		   </div>
+		   </div>
+  	    </@pagination>
+	</@jp.contentPage>
+    </div>
+    
+</div>
+</div>
+<!--/cont-->
+</@layout>

@@ -1,0 +1,70 @@
+<#include "_inc/_layout.html"/> 
+<@layout> 
+<!--cont-->
+<div class="main">
+<div class="cont list bus_list">
+
+    <div class="goods_list_top">
+    当前位置：<a href="">首页</a>&nbsp;>&nbsp;<span>学术组织  </span></a>
+    </div>
+	<img src="${CTPATH}/assets/img/xszz_03.png" class="a0_ad" >
+    
+    <div class="a0_l">
+    	<p><em><a href="${CPATH}/group">全国</a></em></p>
+    	<@jp.taxonomys module="group" type="city">
+       	<#list taxonomys as taxonomy>
+       	 <#if taxonomy.parent_id == 0>
+       	 <p><em>地区－${taxonomy.title!}</em>
+       	 <span class="active">
+	       	 <@jp.taxonomys module="group" type="city" parentId=taxonomy.id>
+	       	<#list taxonomys as t>
+	       	 <a href="${t.url!}">${t.title!}</a>
+	       	 </#list>
+	       	</@jp.taxonomys>
+       	 </span></p>
+       	 </#if>
+       	</#list>
+       	</@jp.taxonomys>
+    </div>
+    
+    
+    <div class="a0_r">
+        <div class="per_rbox_top">组织详情</div>
+    <div class="od_box">    
+    	${content.text!}
+		<div class="od_postimg">
+		    <p class="od_postimg_title">${content.title}</p>
+		    <#list 1..group_director as x>
+				    <#if (content.metadata('group_director${x}_name'))??>
+				    <img src="${(content.metadata('group_director${x}_thumbnail'))!CPATH+'/static/jpress/admin/image/noavatar.jpg'}" width="138" height="184" class="od_postimg_top" alt="<#if content.metadata('group_director${x}_unit')??>工作单位：${content.metadata('group_director${x}_unit')!}</#if>&#10<#if content.metadata('group_director${x}_unit')??>简介：${content.metadata('group_director${x}_desc')!}</#if>" title="<#if content.metadata('group_director${x}_unit')??>工作单位：${content.metadata('group_director${x}_unit')!}</#if>&#10<#if content.metadata('group_director${x}_desc')??>简介：${content.metadata('group_director${x}_desc')!}</#if>">
+				    <span class="od_postimg_topname">${content.metadata('group_director${x}_name')!}-${content.metadata('group_director${x}_duty')!}</span>
+				    </#if>
+			</#list>
+		    	<div class="od_postimg_f">
+		    	<#list 1..group_vice_director as x>
+			    	<#if (content.metadata('group_vice_director${x}_name'))??>
+			        <span><img src="${(content.metadata('group_vice_director${x}_thumbnail'))!CPATH+'/static/jpress/admin/image/noavatar.jpg'}" width="138" height="184" class="od_postimg_top" alt="<#if content.metadata('group_vice_director${x}_unit')??>工作单位：${content.metadata('group_vice_director${x}_unit')!}</#if>&#10<#if content.metadata('group_vice_director${x}_unit')??>简介：${content.metadata('group_vice_director${x}_desc')!}</#if>" title="<#if content.metadata('group_vice_director${x}_unit')??>工作单位：${content.metadata('group_vice_director${x}_unit')!}</#if>&#10<#if content.metadata('group_vice_director${x}_desc')??>简介：${content.metadata('group_vice_director${x}_desc')!}</#if>">
+			        <em src="${(content.metadata('group_vice_director${x}_thumbnail'))!CPATH+'/static/jpress/admin/image/noavatar.jpg'}" width="138" height="184" class="od_postimg_topname">${content.metadata('group_vice_director${x}_name')!}-${content.metadata('group_vice_director${x}_duty')!}</em></span>
+		   			</#if>
+		   		</#list>
+		   		</div>
+		    
+		   		<div class="od_postimg_f">
+		   		<#list 1..group_childman as x>
+			    	<#if (content.metadata('group_childman${x}_name'))??>
+			        <span><img src="${(content.metadata('group_childman${x}_thumbnail'))!CPATH+'/static/jpress/admin/image/noavatar.jpg'}" width="138" height="184" class="od_postimg_top" alt="<#if content.metadata('group_childman${x}_unit')??>工作单位：${content.metadata('group_childman${x}_unit')!}</#if>&#10<#if content.metadata('group_childman${x}_unit')??>简介：${content.metadata('group_childman${x}_desc')!}</#if>" title="<#if content.metadata('group_childman${x}_unit')??>工作单位：${content.metadata('group_childman${x}_unit')!}</#if>&#10<#if content.metadata('group_childman${x}_desc')??>简介：${content.metadata('group_childman${x}_desc')!}</#if>">
+			        <em src="${(content.metadata('group_childman${x}_thumbnail'))!CPATH+'/static/jpress/admin/image/noavatar.jpg'}" width="138" height="184" class="od_postimg_topname">${content.metadata('group_childman${x}_name')!}-${content.metadata('group_childman${x}_duty')!}</em></span>
+			   		</#if>
+			   	</#list>
+		   		</div>
+		</div>
+    </div>
+    
+    
+    </div>
+    
+   </div>
+</div>
+<!--/cont-->
+
+</@layout>

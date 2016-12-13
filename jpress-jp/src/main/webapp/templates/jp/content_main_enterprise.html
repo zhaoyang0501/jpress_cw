@@ -1,0 +1,270 @@
+<#include "/WEB-INF/admin/_inc/_layout.html"/> 
+
+<#macro script>
+	
+
+</#macro>
+
+<@layout active_id=p child_active_id=c>
+
+<section class="content" style="z-index: 9999">
+<form action="${CPATH}/admin/progress/content_add_progress?progress.ispg=1"   method="post">
+   	<input type="hidden" name="etpId" value="${etpId!}" />
+
+	<div class="box box-solid">
+		<div class="box-header with-border">
+			<h3 class="box-title" > 统计设置红线</h3>
+		</div>
+		<!-- /.box-header -->
+		<div class="box-body no-padding">
+			<!-- Custom Tabs -->
+			<div class="nav-tabs-custom">
+				
+				<div class="tab-content">
+					<div class="tab-pane active form-horizontal" id="tab_1">
+		                <div class="form-group">
+		                  	 <label class="col-sm-2 control-label">上传资料</label>
+			                  <div class="col-sm-9">
+			       
+			                   	 <input class="form-control"   <#if (cp.metadata('statusMtc')) ?? && (cp.metadata('statusMtc'))=='1'> disabled="disabled"</#if> type="text" name="progress.uploadMt"  value="${cp.metadata('uploadMt')!}"/>
+			                  </div>
+		                </div>
+		                <div class="form-group">
+		                  <label  class="col-sm-2 control-label">缺失资料</label>
+		                  <div class="col-sm-9">
+		                    	<input class="form-control"  <#if (cp.metadata('statusMtc')) ?? && (cp.metadata('statusMtc'))=='1'> disabled="disabled"</#if> type="text" name="progress.lostMt" value="${cp.metadata('lostMt')!}"/>
+		                  </div>
+		                </div>
+		                <div class="form-group">
+		                  <label for="_uname" class="col-sm-2 control-label">经办人</label>
+		                  <div class="col-sm-9">
+		                    	<input class="form-control"  <#if (cp.metadata('statusMtc')) ?? && (cp.metadata('statusMtc'))=='1'> disabled="disabled"</#if> type="text" name="progress.operatorMt" value="${cp.metadata('operatorMt')!}"/>
+		                  </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">经办人电话</label>
+			                  <div class="col-sm-9">
+			                    	<input class="form-control"  <#if (cp.metadata('statusMtc')) ?? && (cp.metadata('statusMtc'))=='1'> disabled="disabled"</#if> type="text" name="progress.phoneMt" value="${cp.metadata('phoneMt')!}"/>
+			                  </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">最后办理时间</label>
+			                  	<div class="col-sm-9">
+			                    	<input class="form-control"  <#if (cp.metadata('statusMtc')) ?? && (cp.metadata('statusMtc'))=='1'> disabled="disabled"</#if> type="text" name="progress.dateMt" value="${cp.metadata('dateMt')!}"/>
+			                   </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">最后办理地址</label>
+			                  <div class="col-sm-9">
+			                    	<input  class="form-control"  <#if (cp.metadata('statusMtc')) ?? && (cp.metadata('statusMtc'))=='1'> disabled="disabled"</#if> type="text" name="progress.addressMt" value="${cp.metadata('addressMt')!}"/>
+			                  </div>
+		                </div>
+		                <div class="checkbox">
+	    					<label class="col-sm-2 control-label"><input <#if (cp.metadata('statusMtc')) ?? && (cp.metadata('statusMtc'))=='1'>checked="checked"</#if> class="mt"  type="checkbox" name="progress.statusMtc" value="1"/> 完成资料上传</label>
+	 					</div>
+		                
+	              </div>
+	              <div class="form-group">
+					<button type="submit" class="modify-close btn btn-primary" >提交</button>	
+					</div>
+				</div>
+				<!-- /.tab-content -->
+			</div>
+			<!-- nav-tabs-custom -->
+		</div>
+	</div>
+    </form>
+    
+    
+    
+<form action="${CPATH}/admin/progress/content_add_progress?progress.ispg=2"   method="post">
+   	<input type="hidden" name="etpId" value="${etpId!}" />
+
+	<div class="box box-solid">
+		<div class="box-header with-border">
+			<h3 class="box-title" <#if (cp.metadata('ispg')) ?? && (cp.metadata('ispg'))=='2'>style="background:#4F94CD"</#if>>手续办理</h3>
+		</div>
+		<!-- /.box-header -->
+		<div class="box-body no-padding">
+			<!-- Custom Tabs -->
+			<div class="nav-tabs-custom">
+				
+				<div class="tab-content">
+					<div class="tab-pane active form-horizontal" id="tab_1">
+		                <div class="form-group">
+		                  	 <label class="col-sm-2 control-label">已办理手续</label>
+			                  <div class="col-sm-9">
+			                   	 <input class="form-control"   <#if (cp.metadata('statusPdc')) ?? && (cp.metadata('statusPdc'))=='1'> disabled="disabled"</#if> type="text" name="progress.donePd"  value="${cp.metadata('donePd')!}"/>
+			                  </div>
+		                </div>
+		                <div class="form-group">
+		                  <label class="col-sm-2 control-label">待办手续</label>
+		                  <div class="col-sm-9">
+		                    	<input class="form-control"  <#if (cp.metadata('statusPdc')) ?? && (cp.metadata('statusPdc'))=='1'> disabled="disabled"</#if> type="text" name="progress.waitPd" value="${cp.metadata('waitPd')!}"/>
+		                  </div>
+		                </div>
+		                <div class="form-group">
+		                  <label for="_uname" class="col-sm-2 control-label">经办人</label>
+		                  <div class="col-sm-9">
+		                    	<input class="form-control"  <#if (cp.metadata('statusPdc')) ?? && (cp.metadata('statusPdc'))=='1'> disabled="disabled"</#if>  type="text" name="progress.operatorPd" value="${cp.metadata('operatorPd')!}"/>
+		                  </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">经办人电话</label>
+			                  <div class="col-sm-9">
+			                    	<input class="form-control"  <#if (cp.metadata('statusPdc')) ?? && (cp.metadata('statusPdc'))=='1'> disabled="disabled"</#if> type="text" name="progress.phonePd" value="${cp.metadata('phonePd')!}"/>
+			                  </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">最后办理时间</label>
+			                  	<div class="col-sm-9">
+			                    	<input class="form-control"  <#if (cp.metadata('statusPdc')) ?? && (cp.metadata('statusPdc'))=='1'> disabled="disabled"</#if> type="text" name="progress.datePd" value="${cp.metadata('datePd')!}"/>
+			                   </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">最后办理地址</label>
+			                  <div class="col-sm-9">
+			                    	<input  class="form-control" <#if (cp.metadata('statusPdc')) ?? && (cp.metadata('statusPdc'))=='1'> disabled="disabled"</#if> type="text" name="progress.addressPd" value="${cp.metadata('addressPd')!}"/>
+			                  </div>
+		                </div>
+		                <div class="checkbox">
+	    					<label class="col-sm-2 control-label"><input <#if (cp.metadata('statusPdc')) ?? && (cp.metadata('statusPdc'))=='1'>checked="checked"</#if> class="pd"  type="checkbox" name="progress.statusPdc" value="1"/> 完成手续办理</label>
+	 					</div>
+	              </div>
+	              
+	              <div class="form-group">
+					<button type="submit" class="modify-close btn btn-primary" >提交</button>	
+					</div>
+				</div>
+				<!-- /.tab-content -->
+			</div>
+			<!-- nav-tabs-custom -->
+		</div>
+	</div>
+    </form>
+    
+    <form action="${CPATH}/admin/progress/content_add_progress?progress.ispg=3"   method="post">
+   	<input type="hidden" name="etpId" value="${etpId!}" />
+
+	<div class="box box-solid">
+		<div class="box-header with-border">
+			<h3 class="box-title" <#if (cp.metadata('ispg')) ?? && (cp.metadata('ispg'))=='3'>style="background:#4F94CD"</#if>>税务登记</h3>
+		</div>
+		<!-- /.box-header -->
+		<div class="box-body no-padding">
+			<!-- Custom Tabs -->
+			<div class="nav-tabs-custom">
+				
+				<div class="tab-content">
+					<div class="tab-pane active form-horizontal" id="tab_1">
+		                <div class="form-group">
+		                  	 <label class="col-sm-2 control-label">已办理税务手续</label>
+			                  <div class="col-sm-9">
+			                   	 <input class="form-control"   <#if (cp.metadata('statusTaxc')) ?? && (cp.metadata('statusTaxc'))=='1'> disabled="disabled"</#if> type="text" name="progress.doneTax"  value="${cp.metadata('doneTax')!}"/>
+			                  </div>
+		                </div>
+		                <div class="form-group">
+		                  <label class="col-sm-2 control-label">待办理税务手续</label>
+		                  <div class="col-sm-9">
+		                    	<input class="form-control"  <#if (cp.metadata('statusTaxc')) ?? && (cp.metadata('statusTaxc'))=='1'> disabled="disabled"</#if> type="text" name="progress.waitTax" value="${cp.metadata('waitTax')!}"/>
+		                  </div>
+		                </div>
+		                <div class="form-group">
+		                  <label for="_uname" class="col-sm-2 control-label">经办人</label>
+		                  <div class="col-sm-9">
+		                    	<input class="form-control"  <#if (cp.metadata('statusTaxc')) ?? && (cp.metadata('statusTaxc'))=='1'> disabled="disabled"</#if>  type="text" name="progress.operatorTax" value="${cp.metadata('operatorTax')!}"/>
+		                  </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">经办人电话</label>
+			                  <div class="col-sm-9">
+			                    	<input class="form-control"  <#if (cp.metadata('statusTaxc')) ?? && (cp.metadata('statusTaxc'))=='1'> disabled="disabled"</#if> type="text" name="progress.phoneTax" value="${cp.metadata('phoneTax')!}"/>
+			                  </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">最后办理时间</label>
+			                  	<div class="col-sm-9">
+			                    	<input class="form-control"  <#if (cp.metadata('statusTaxc')) ?? && (cp.metadata('statusTaxc'))=='1'> disabled="disabled"</#if> type="text" name="progress.dateTax" value="${cp.metadata('dateTax')!}"/>
+			                   </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">最后办理地址</label>
+			                  <div class="col-sm-9">
+			                    	<input  class="form-control" <#if (cp.metadata('statusTaxc')) ?? && (cp.metadata('statusTaxc'))=='1'> disabled="disabled"</#if> type="text" name="progress.addressTax" value="${cp.metadata('addressTax')!}"/>
+			                  </div>
+		                </div>
+		                <div class="checkbox">
+	    					<label class="col-sm-2 control-label"><input <#if (cp.metadata('statusTaxc')) ?? && (cp.metadata('statusTaxc'))=='1'>checked="checked"</#if> class="tax"  type="checkbox" name="progress.statusTaxc" value="1"/> 完成税务手续办理</label>
+	 					</div>
+	              </div>
+	              
+	              <div class="form-group">
+					<button type="submit" class="modify-close btn btn-primary" >提交</button>	
+					</div>
+				</div>
+				<!-- /.tab-content -->
+			</div>
+			<!-- nav-tabs-custom -->
+		</div>
+	</div>
+    </form>
+    
+    
+     <form action="${CPATH}/admin/progress/content_add_progress?progress.ispg=4"   method="post">
+   	<input type="hidden" name="etpId" value="${etpId!}" />
+
+	<div class="box box-solid">
+		<div class="box-header with-border">
+			<h3 class="box-title" <#if (cp.metadata('ispg')) ?? && (cp.metadata('ispg'))=='4'>style="background:#4F94CD"</#if>>办理完成</h3>
+		</div>
+		<!-- /.box-header -->
+		<div class="box-body no-padding">
+			<!-- Custom Tabs -->
+			<div class="nav-tabs-custom">
+				
+				<div class="tab-content">
+					<div class="tab-pane active form-horizontal" id="tab_1">
+		               
+		                <div class="form-group">
+		                  <label for="_uname" class="col-sm-2 control-label">经办人</label>
+		                  <div class="col-sm-9">
+		                    	<input class="form-control"  <#if (cp.metadata('statusFhc')) ?? && (cp.metadata('statusFhc'))=='1'> disabled="disabled"</#if>  type="text" name="progress.operatorFh" value="${cp.metadata('operatorFh')!}"/>
+		                  </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">经办人电话</label>
+			                  <div class="col-sm-9">
+			                    	<input class="form-control"  <#if (cp.metadata('statusFhc')) ?? && (cp.metadata('statusFhc'))=='1'> disabled="disabled"</#if> type="text" name="progress.phoneFh" value="${cp.metadata('phoneFh')!}"/>
+			                  </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">最后办理时间</label>
+			                  	<div class="col-sm-9">
+			                    	<input class="form-control"  <#if (cp.metadata('statusFhc')) ?? && (cp.metadata('statusFhc'))=='1'> disabled="disabled"</#if> type="text" name="progress.dateFh" value="${cp.metadata('dateFh')!}"/>
+			                   </div>
+		                </div>
+		                <div class="form-group">
+			                  <label for="_uname" class="col-sm-2 control-label">最后办理时间</label>
+			                  	<div class="col-sm-9">
+			                    	<input class="form-control"  <#if (cp.metadata('statusFhc')) ?? && (cp.metadata('statusFhc'))=='1'> disabled="disabled"</#if> type="text" name="progress.preTimeFh" value="${cp.metadata('preTimeFh')!}"/>
+			                   </div>
+		                </div>
+		                
+		                <div class="checkbox">
+	    					<label class="col-sm-2 control-label"><input <#if (cp.metadata('statusFhc')) ?? && (cp.metadata('statusFhc'))=='1'>checked="checked"</#if> class="fh"  type="checkbox" name="progress.statusFhc" value="1"/> 完成办理</label>
+	 					</div>
+	              </div>
+	              
+	              <div class="form-group">
+					<button type="submit" class="modify-close btn btn-primary" >提交</button>	
+					</div>
+				</div>
+				<!-- /.tab-content -->
+			</div>
+			<!-- nav-tabs-custom -->
+		</div>
+	</div>
+    </form>
+   </section>
+</@layout>
+   

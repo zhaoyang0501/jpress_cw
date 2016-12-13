@@ -1,0 +1,177 @@
+<#include "_inc/_layout.html"/> 
+<#macro title>
+ <title>资料提交</title>
+</#macro>
+<#macro script>
+<script>
+$(function(){
+	<#if (cp.stepProgress) ?? && (cp.stepProgress)=="1">
+//		var uploadMt="${(cp.uploadMt)!}";
+//		var lostMt="${(cp.lactMt)!}";
+		progressData("${(cp.uploadMt)!}","${(cp.lactMt)!}");
+	</#if>
+	<#if (cp.stepProgress) ?? && (cp.stepProgress)=="2">
+//		var uploadMt="${(cp.donePd)!}";
+//		var lostMt="${(cp.waitPd)!}";
+		progressData("${(cp.donePd)!}","${(cp.waitPd)!}");
+	</#if>
+	<#if (cp.stepProgress) ?? && (cp.stepProgress)=="3">
+//		var uploadMt="${(cp.doneTax)!}";
+//		var lostMt="${(cp.waitTax)!}";
+		progressData("${(cp.doneTax)!}","${(cp.waitTax)!}");
+	</#if>
+	
+	function progressData($done,$lost){
+		var  uploadMt=$done;
+		var lostMt = $lost;
+		var uploadArray = uploadMt.split("#");
+		var up = pstr(uploadArray);
+		$(".hp_mainbox_main").eq(0).html(up);
+		
+		
+		var lostArray = lostMt.split("#");
+		var lost = pstr(lostArray);
+		$(".hp_mainbox_main").eq(1).html(lost );
+	}
+	function pstr(array){
+		var str ="";
+		$.each(array,function(i){
+			str+='<span>'+array[i]+'</span>';
+		})
+		return str
+	}
+	
+	
+})
+
+</script>
+</#macro>
+<@layout active_id = p>
+<div class="nwrapper">
+<#if cp??>
+
+<div class="top">
+ <div class="zl_top">${type!}进度</div>
+ <div class="zl_topmain">
+ 	 <div class="zl_topmain_tiao"></div>
+     <div class="zl_topmain_box <#if  (cp.stepProgress) ?? &&  (cp.stepProgress)=='1'>active</#if>"><em></em><span>资料提交</span></div>
+     <div class="zl_topmain_box  <#if  (cp.stepProgress) ?? &&  (cp.stepProgress)=='2'>active</#if>"><em></em><span>手续办理</span></div>
+     <div class="zl_topmain_box  <#if (cp.stepProgress) ?? &&  (cp.stepProgress)=='3'>active</#if>"><em></em><span>税务登记</span></div>
+     <div class="zl_topmain_box  <#if  (cp.stepProgress)?? &&  (cp.stepProgress)=='4'>active</#if>"><em></em><span>办理完成</span></div>
+ </div>
+</div>
+ <#if  (cp.stepProgress) ?? &&  (cp.stepProgress)=="1">
+	 <div class="hp_mainbox">
+	 	<span class="jbr_top">上传资料</span>
+	    <div class="hp_mainbox_main"></div>
+	    <span class="jbr_top">缺失资料</span>
+	    <div class="hp_mainbox_main"> </div>
+	 </div>
+	 
+	 <div class="jbr">
+	 	<span class="jbr_top">经办人</span>
+	     <img src="${CTPATH}/client/img/jd_14.jpg" class="jbr_logo">
+	     <p>
+	         <i>${(cp.operatorMt)!}</i>
+	         <span><img src="${CTPATH}/client/img/jbr_03.png">${(cp.phoneMt)!}</span>
+	     </p>
+	 </div>
+	 
+	  <div class="sj">
+	  <i><img src="${CTPATH}/client/img/jd_18.png"></i>
+	  <p><span>最后提交时间：${(cp.dateMt)!}</span>
+	  <span>办理地址：${(cp.addressMt)!}</span></p>
+	  </div>
+  </#if>
+  <#if (cp.stepProgress) ?? &&  (cp.stepProgress)=="2">
+  	<div class="hp_mainbox">
+ 	<span class="jbr_top">已办理手续</span>
+    <div class="hp_mainbox_main"></div>
+    
+    <span class="jbr_top">待办手续</span>
+    <div class="hp_mainbox_main"></div>
+ </div>
+ 
+ <div class="jbr">
+ 	<span class="jbr_top">经办人</span>
+     <img src="${CTPATH}/client/img/jd_14.jpg" class="jbr_logo">
+     <p>
+         <i>${(cp.operatorPd)!}</i>
+         <span><img src="${CTPATH}/client/img/jbr_03.png">${(cp.phonePd)!}</span>
+     </p>
+ </div>
+ 
+  <div class="sj">
+  <i><img src="${CTPATH}/client/img/jd_18.png"></i>
+  <p><span>最后提交时间：${(cp.datePd)!}</span>
+  <span>办理地址：${(cp.addressPd)!}</span></p>
+  </div>
+  </#if>
+  
+  <#if (cp.stepProgress) ?? &&  (cp.stepProgress)=="3">
+  	<div class="hp_mainbox">
+ 	<span class="jbr_top">已办理税务手续</span>
+    <div class="hp_mainbox_main"></div>
+    
+    <span class="jbr_top">待办理税务手续</span>
+    <div class="hp_mainbox_main"></div>
+ </div>
+ 
+ <div class="jbr">
+ 	<span class="jbr_top">经办人</span>
+     <img src="${CTPATH}/client/img/jd_14.jpg" class="jbr_logo">
+     <p>
+         <i>${(cp.operatorTax)!}</i>
+         <span><img src="${CTPATH}/client/img/jbr_03.png">${(cp.phoneTax)!}</span>
+     </p>
+ </div>
+ 
+  <div class="sj">
+  <i><img src="${CTPATH}/client/img/jd_18.png"></i>
+  <p><span>最后提交时间：${(cp.dateTax)!}</span>
+  <span>办理地址：${(cp.addressTax)!}</span></p>
+  </div>
+    
+  </#if>
+  
+  <#if (cp.stepProgress) ?? &&  (cp.stepProgress)=="4">
+   <div class="zl_mainbox">
+ 	<p><em></em><span>公司资料提交</span><i></i><img src="${CTPATH}/client/img/jd_10.png"><b>已完成</b></p>
+    <p><em></em><span>手续办理</span><i></i><img src="${CTPATH}/client/img/jd_10.png"><b>已完成</b></p>
+    <p><em></em><span>税务登记</span><i></i><img src="${CTPATH}/client/img/jd_10.png"><b>已完成</b></p>
+ </div>
+ 
+ <div class="jbr">
+ 	<span class="jbr_top">经办人</span>
+     <img src="${CTPATH}/client/img/jd_14.jpg" class="jbr_logo">
+     <p>
+         <i>${(cp.operatorFh)!}</i>
+         <span><img src="${CTPATH}/client/img/jbr_03.png">${(cp.phoneFh)!}</span>
+     </p>
+ </div>
+ 
+  <div class="sj">
+  <i><img src="${CTPATH}/client/img/jd_18.png"></i>
+  <p><span>最后提交时间：${(cp.dateFh)!}</span>
+  <span>预计办理时间：${(cp.preTimeFh)!}</span></p>
+  </div>
+    </#if>
+    
+    <#else>
+    <div class="top">
+ <div class="zl_top">企业注册进度</div>
+ 
+ <div class="zl_topmain">
+ 	 <div class="zl_topmain_tiao"></div>
+     <div class="zl_topmain_box"><em></em><span>资料提交</span></div>
+     <div class="zl_topmain_box"><em></em><span>手续办理</span></div>
+     <div class="zl_topmain_box"><em></em><span>税务登记</span></div>
+     <div class="zl_topmain_box active"><em></em><span>办理完成</span></div>
+ </div>
+</div> 
+</#if>
+    
+  <#include "_inc/_footer.html"/> 
+
+</div>
+</@layout>

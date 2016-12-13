@@ -1,0 +1,65 @@
+<#include "_inc/_layout.html"/> 
+<@layout> 
+<!--cont-->
+<div class="main">
+<div class="cont list bus_list tt_box"> 
+
+    <div class="goods_list_top">
+    当前位置：<a href="">首页</a>&nbsp;&gt;&gt;&nbsp;<a href="">智库</a>&nbsp;&gt;&gt;&nbsp;<span>${content.title!} </span>
+    </div>
+    
+    <div class="qb_postl">
+    <div class="tt_box_main">
+    <em>${content.title!}</em>
+    <i>${content.created!} 来源：${content.metadata('source')!'网络'}</i>
+    	${content.text!}
+    </div>
+   
+     <div class="goods_post_mainbox_top">
+          <span>热点聚焦</span>
+     </div>
+     <div class="tt_box_a">
+   	 <@jp.contents  module="doc" count="10" orderBy="view_count"> 
+		    <#list contents as content> 
+            <a href="${content.url!}"> ${content.title!}</a>
+        	</#list> 
+	 </@jp.contents>
+     </div> 
+     <div class="clear"></div> 
+     
+    <form action="${CPATH}/comment/submit" method="post"  id="comment">
+    <input type="hidden" name="cid" value="${(content.id)!}" >        
+   	 <textarea name="text" cols="" rows="" class="tt_te"></textarea>
+     <button type="submit" class="">发送评论</button>
+    </form>
+    
+    </div>
+     
+     <div class="qb_postr">
+     	
+        
+     
+     
+     <div class="goods_post_mainbox_top">
+                <span>最新推荐</span>
+                </div>
+          <div class="qb_postr_main">
+          <@jp.contents  module="doc" count="10" hasThumbnail="true"> 
+			<#list contents as content> 
+          <a href="${content.url!}"> <img src="${content.image!}" width="57" height="62"><span>${content.title!}</span> </a>
+         	</#list> 
+		 </@jp.contents>
+          
+          </div>      
+        
+     </div>
+     
+     
+     
+    </div>
+    
+    <div class="clear"></div>
+    
+</div>
+<!--/cont-->
+</@layout>

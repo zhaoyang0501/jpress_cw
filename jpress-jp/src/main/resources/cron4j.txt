@@ -1,0 +1,11 @@
+SmsUpReceive.cron=* * * * *
+SmsUpReceive.enable=true
+SendStudentInfo.cron=* * * * *
+SendStudentInfo.enable=true
+contract.cron=* 2 * * *
+input.cron=* 5 24 * *
+collect.cron=* 5 25 * *
+collectx.cron=* 6 1 * *
+caobaotax.cron=* 5 1 * *
+clearcard.cron=* 5 13 * *
+payment.cron=* 2 25 * *

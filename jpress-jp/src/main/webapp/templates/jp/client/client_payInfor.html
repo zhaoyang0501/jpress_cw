@@ -1,0 +1,34 @@
+<#include "_inc/_layout.html"/> 
+<#macro title>
+ <title>付款信息</title>
+</#macro>
+
+<@layout active_id = p>
+<div class="nwrapper index_main">
+<#if page??>
+    <#list page.getList() as x>
+    <div class="pi_box">
+        
+        <P>
+        	<span>¥${(x.amount)!}</span>
+        	<span>${(x.created)?string("yyyy-MM-dd")!""}</span>
+        	<i><#if (x.set_orders_id)?? >
+        				${order(x.set_orders_id)!}
+        			<#else>
+        				${orderEnterprise(x.orders_enterprise_id)!}
+        			</#if>
+        	</i>
+        </P>
+    </div>
+     </#list>
+ </#if>
+ 
+	<#if page??> 
+		<#include "_inc/_paginate.html" /> 
+		<@paginate currentPage=page.pageNumber totalPage=page.totalPage actionUrl="?userId=${userId!}&p=${p!}&page="/> 
+	</#if>
+
+  <#include "_inc/_footer.html"/> 
+
+</div>
+</@layout>

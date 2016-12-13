@@ -1,0 +1,28 @@
+<#include "client/_inc/_layout.html"/> 
+
+<#macro title>
+ <title>${content.title!}</title>
+</#macro>
+<#macro css>
+<style type="text/css">
+.index_top a {
+    border: 0 solid #ffffff;
+    width: 100%;
+}
+</style>
+</#macro>
+<@layout >
+<div class="nwrapper index_main">
+
+   <div class="index_top index_top2">
+        <a href="#">${content.title!}</a>
+   </div>
+    <div class="pc_main">
+     	${content.text!}
+    </div>
+
+
+<#include "client/_inc/_footer.html"/> 
+
+</div>
+</@layout>

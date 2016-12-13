@@ -1,0 +1,87 @@
+<#include "_inc/_layout.html"/> 
+<@layout> 
+<!--cont-->
+<div class="main">
+<div class="cont list">
+
+    <div class="goods_list_top">
+    当前位置：<a href="">首页</a>&nbsp;>&nbsp;<span>产品中心</span>&nbsp;>&nbsp;<a href="">搜索</a>
+    </div>
+    
+    <div class="goods_list_topmsg">为你找到关键字 “${keyword!}” 的内容如下 </div>
+    
+    <div class="goods_list_topbox">
+    	<!--<div class="goods_list_topbox_class">
+        	<span>分类</span>
+        	<p>
+        	<a href="${CPATH}/product">全部</a>
+        	<@jp.taxonomys module="product" type="category">
+        	<#list taxonomys as taxonomy>
+        	<a href="${taxonomy.url!}">${taxonomy.title!}</a>
+        	</#list>
+        	</@jp.taxonomys>
+        	</p>
+    	</div>
+        <div class="goods_list_topbox_class  goods_list_topbox_brand">
+        	<span>品牌</span>
+        	<p>
+        	<@jp.taxonomys module="product" type="brand">
+        	<#list taxonomys as taxonomy>
+        	<a href="${taxonomy.url!}"><img src="${taxonomy.icon!}"></a>
+        	</#list>
+        	</@jp.taxonomys>
+        	</p>
+    	</div>
+	</div>
+    -->
+    
+     <@jp.searchResultPage pageSize="5"> 
+   	 <div class="goods_list_main">
+		    <#list page.getList() as bean>
+		        <div class="goods_list_mainbox">
+		        	<a href="" class="goods_list_mainbox_img"><img src="${bean.data.thumbnail!}" width="227" height="201"></a>
+		            <div class="goods_list_mainmsg"><a href="${bean.url!}" target="_blank">${bean.title!}</a>
+		            <p>规格:${bean.data.metadata('product_specification')!}
+					<br/>${bean.data.getTaxonomyAsString('category')!}
+					<br/>厂家:${bean.data.metadata('factory')!}
+					<br/>品牌:${bean.data.getTaxonomyAsString('brand')!}
+					</div>
+					<div class="goods_list_mainbox_c">
+		            <a href="${bean.url!}" target="_blank" class="goods_list_look">点击查看价格</a>
+		            <span>热度：${bean.data.metadata('consult_count')!'0'}个咨询 <br /></span>
+		            <a href="${bean.url!}" class="goods_list_bt" target="_blank">联系供应商</a>
+		            </div>
+		            
+		            <div class="goods_list_mainbox_r">
+		            <a href="" class="goods_list_logo"><img src="${CPATH}${(bean.data.user.metadata('company_icon'))!}" width="200" height="50"></a>
+		            <em>${(bean.data.user.company)!}</em>
+		            <#if (bean.data.user.metadata('zyqy'))?? && "true" == bean.data.user.metadata('zyqy')>
+		            <a href="" class="goods_list_bt">爱眼自营</a>
+		            </#if>
+		            <span>${(bean.data.user.metadata('company_phone'))!}</span>
+		            </div>
+		        </div>
+		    </#list>
+		</div>
+		     <@pagination>
+	         <div class="list_page">
+		     <div class="goods_list_tagr">
+		     		<#list pages as pItem>
+			             <a href="${pItem.url!}" >${pItem.text!}</a>
+			        </#list>
+		            <a href="" class="">></a>
+		            <em>共${page.totalPage!}页，到</em>
+		            <input type="tel">
+		            <em>页</em>
+		            <a href="" class="active">确定</a>
+			   </div>
+			   </div>
+	   	    </@pagination>
+			</@jp.searchResultPage>
+        
+</div>
+</div>
+<!--/cont-->
+
+</@layout>
+

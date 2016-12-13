@@ -1,0 +1,31 @@
+<#include "_inc/_layout.html"/> 
+<#macro title>
+ <title>我的信息</title>
+</#macro>
+<@layout active_id = p>
+<div class="nwrapper index_main">
+    <div class="index_top">
+    <a href="#">最新消息</a>
+    </div>
+    
+<#if page??>
+    <#list page.getList() as x>
+    <div class="mm_c">
+	    <a href="${CPATH}/Information/client_comMessage?id=${(x.id)!}&p=${p!}">
+	        <div class="mm_cc">${(x.type)!}<i>${(x.created)?string("yyyy-MM-dd hh:mm")!""}</i></div>
+	    </a>
+    </div>
+    </#list>
+</#if>
+
+    <#if page??> 
+		<#include "_inc/_paginate.html" /> 
+		<@paginate currentPage=page.pageNumber totalPage=page.totalPage actionUrl="?userId=${userId!}&p=${p!}&page="/> 
+	</#if>
+
+
+
+<#include "_inc/_footer.html"/> 
+
+</div>
+</@layout>

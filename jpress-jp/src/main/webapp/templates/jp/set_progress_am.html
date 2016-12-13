@@ -1,0 +1,133 @@
+<#include "/WEB-INF/admin/_inc/_layout.html"/> 
+
+<#macro script>
+	
+
+  function doSubmit(url){
+		
+	 	$(".form").ajaxSubmit({
+			type : "post", //提交方式  
+			dataType : "json", //数据类型  
+		beforeSubmit : function(){
+	            var sb =	sblank();
+            	if(false==sb){
+            		return false;
+            	}
+	            	
+	           //#################
+				},
+			success : function(data) { //提交成功的回调函数 
+				if(data.errorCode == 0){
+					if(url !=null && ''!=url){
+						location.href=url;
+					}else{
+						location.reload();
+					}
+				}else{
+					alert(data.message);
+				}
+			},
+			error : function() {
+				alert("信息提交错误");
+			}
+		});
+	 }
+	 
+	 function sblank(){
+	 	 var $input =$("input[name^='setUserType.']");
+		  for(var i=0;i<$input.length;i++){
+		    
+		     	if($input.eq(i).val().trim().length==0){	
+				       		alert("提交不能为空");
+	//			       console.log("提交不能为空");
+			 			return false;
+			 		
+				 }     
+		      
+		  }
+	 }
+	 
+	 $("#img").change(function(){
+        var  resultFile = $("#img")[0].files[0];
+        if (resultFile) {
+            var reader = new FileReader();
+            reader.readAsDataURL(resultFile);
+            reader.onload = function (e) {
+                var urlData = this.result;
+				$("#newimg").css("display","block");
+                $("#newimg").attr("src",urlData);
+            };
+        }
+    })
+
+</#macro>
+
+<@layout active_id=p child_active_id=c>
+<section class="content-header">
+	<h1>
+		用户类型
+	</h1>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+
+	<form class="form" action="${CPATH}/admin/data/set_progress_am?c=${c!}&p=${p!}"   method="post">
+	<div class="box box-solid">
+		<div class="box-header with-border">
+			<h3 class="box-title" > <#if id??>修改事项<#else>添加事项</#if></h3>
+		</div>
+		<!-- /.box-header -->
+		<div class="box-body no-padding">
+			<!-- Custom Tabs -->
+			<div class="nav-tabs-custom">
+				<div class="tab-content">
+					<div class="tab-pane active form-horizontal" id="tab_1">
+		                <div class="form-group">
+		                  	 <label class="col-sm-3 control-label">事项名称</label>
+			                  <div class="col-sm-8">
+			                   	 <input class="form-control"   type="text" name="setProgress.progressType"  value="${(sp.progressType)!}"/> 
+			                  </div>
+		                </div>
+		                <#if (sp.icon)??>
+				           <div class="col-sm-8  col-sm-offset-3">
+				           		<div id="icon" style="width: 100px;height: 100px">
+				                  	 <img style="width: 50px;height: 50px" id="newimg" src="${CPATH}${(sp.icon)!}" />
+				                 </div>
+				            </div>
+				             <#else>
+				             <div class="col-sm-8  col-sm-offset-3">
+				           		<div id="icon" style="width: 100px;height: 100px">
+				                  	 <img style="width: 100px;height: 100px;display:none" id="newimg" src="" />
+				                  </div>
+				             </div>
+			           	  </#if>
+		                <#if id??>
+		                <input class="form-control"   type="hidden" name="id"  value="${(sp.id)!}"/>
+		                </#if>
+		                <div class="form-group">
+	                  	 <label class="col-sm-3 control-label">选择图片</label>
+		                  <div class="col-sm-8">
+		                   	 <input id="img"   type="file" name="setOrders.icon"  /> 
+		                  </div>
+	                </div>
+		                <div class="form-group">
+				              <div class="col-sm-8  col-sm-offset-3">
+								 	<button type="button" class="modify-close btn btn-primary"  onclick="doSubmit('${CPATH}/admin/data/set_progress?c=${c!}&p=${p!}')">提交</button>	
+							 	</div>
+						 </div>
+	              </div>
+	              
+				</div>
+				<!-- /.tab-content -->
+			</div>
+			<!-- nav-tabs-custom -->
+		</div>
+	</div>
+    </form>
+		
+	<!-- /.row -->
+</section>
+<!-- /.content -->
+</@layout>

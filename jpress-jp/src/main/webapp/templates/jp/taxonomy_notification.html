@@ -1,0 +1,102 @@
+<#include "client/_inc/_layout.html"/> 
+<#macro script>
+<script>
+$(function(){
+	var num = location.href.lastIndexOf("/");
+	var url=location.href.substr(num+1,location.href.length);
+	var title =url.split("-");
+	console.log(title[1]);
+	$(".ctt").each(function(){
+		if($(this).text()==decodeURI(title[1])){
+			$(this).parent().addClass("active")
+		}
+	})
+})
+</script>
+</#macro> 
+<#macro script_import>
+  </#macro> 
+  <#macro css_import>
+   </#macro> 
+
+
+<#macro title>
+ <title>通知公告</title>
+</#macro>
+<@layout active_id = p>
+<div class="nwrapper index_main">
+  
+<@jp.taxonomys module="notification" type="category">
+	<div class="tabs">
+        	<#list taxonomys as taxonomy>
+        	
+			<a class=""  href="${taxonomy.url!}">${taxonomy.title!}<span class="ctt" style="display:none">${taxonomy.slug!}</span></a>
+			</#list>
+	</div>
+ </@jp.taxonomys>
+<div>
+    <div >
+      <div ><div class="content-slide">
+	      <@jp.contentPage pageSize="2" >
+	      	 <#list page.getList() as content>
+	      	  	 <div class="na_box">
+	      	  	 		<a href="${content.url}">
+	      	  	 			<span>${content.title}</span>
+	      	  	 			<i>${content.created?string("yyyy-MM-dd")!}</i>
+	      	  	 			<p>${content.summary}</p>
+	      	  	 			<img src="${content.thumbnailByName('t1')!}" />
+	      	  	 		</a>
+	      	  	 	</div>
+	      	 </#list>
+	     
+	<style type="text/css">
+		.pagination{
+		    margin: 15px 8px 34px;
+		    overflow: hidden;
+		    text-align: center;
+		}
+		.previous,.next{	
+		     float: left;
+		    font-size: .3rem;
+		    line-height: 30px;
+		    padding: 5px 0;
+		    text-align: center;
+		    width: 50%;	    
+		   }
+   .pagination > .disabled > a, .pagination > .disabled > a:focus, .pagination > .disabled > a:hover, .pagination > .disabled > span, .pagination > .disabled > span:focus, .pagination > .disabled > span:hover {
+    background-color: #f9f9f9;
+    color: #ccd5db;
+    cursor: not-allowed;
+}
+.previous a,.next a{ 
+	    background: #ffffff none repeat scroll 0 0;
+    border-color: #e4eaec;
+    border-image: none;
+    border-style: solid;
+    border-width: 1px;
+    color: #4a4a4a;
+    display: block;
+    margin: 0 auto;
+    width: 60%;}
+	</style>
+	<div style="clear:both"></div>
+	<ul class="x-page">
+			<@pagination >
+				<#list pages as pi>
+				<li class="${pi.style!}">
+					<a href="${pi.url!}">${pi.text!}</a>
+				</li>
+				</#list>
+			</@pagination>
+		</ul>
+		
+		 </@jp.contentPage>
+       </div></div>
+    
+    </div>
+  </div>  
+
+<#include "client/_inc/_footer.html"/> 
+
+</div>
+</@layout>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<infos>
+		<title>EyeSelf</title>
+		<id>eyeself</id>
+		<description>EyeSelf.com。</description>
+		<author>eyeself</author>
+		<authorWebsite>http://www.eyeself.com</authorWebsite>
+		<version>v1.0</version>
+		<versionCode>1</versionCode>
+		<updateUrl>http://www.eyeself.com</updateUrl>
+	</infos>
+
+	<module title="产品" name="product" list="所有产品" add="撰写产品信息" comment="评论" orders="price,created,meta:consult_count">
+		<taxonomy title="分类" name="category" formType="select" />
+		<taxonomy title="品牌" name="brand" formType="select" />
+	</module>
+	
+	<module title="商机" name="business" list="商机信息" add="撰写商机信息" comment="评论">
+		<taxonomy title="分类" name="category" formType="select" />
+		<taxonomy title="城市" name="city" formType="select" />
+	</module>
+	
+	<module title="收费标准" name="fee" list="收费标准列表" add="撰写收费标准" >
+		<taxonomy title="城市" name="city" formType="select" />
+	</module>
+	
+	<module title="学术组织" name="group" list="组织信息" add="撰写组织信息" >
+		<taxonomy title="分类" name="category" formType="select" />
+		<taxonomy title="所在地" name="city" formType="select" />
+	</module>
+	
+	<module title="智库" name="doc" list="智库信息" add="撰写智库信息" comment="评论" >
+		<taxonomy title="分类" name="category" formType="select" />
+	</module>
+
+	<module title="页面" name="page" list="所有页面" add="新建页面" />
+
+</config>

@@ -1,0 +1,86 @@
+<#include "/WEB-INF/admin/_inc/_layout.html"/> 
+<#macro css>
+.jjbs-border-bottom {
+    border-bottom: 1px solid #e4eaec;
+}
+.jjbs-padleft30 {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.jjbs-left {
+    float: left;
+}
+.jjbs-border-bottom {
+    border-bottom: 1px solid #e4eaec;
+}
+.jjbs-padleft30 {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.jjbs-pad30{
+  padding: 30px;
+}
+.jjbs-manage-ico {
+    float: right;
+    margin-top: 10px;
+    padding-right: 30px;
+}
+.btn-icon, .btn.icon {
+    padding: 4px;
+}
+.jjbs-h5-color h5 {
+    margin-bottom: 11px;
+    margin-top: 11px;
+    font-size:16px;
+}
+.jjbs-h5-color h4 {
+    margin-bottom: 11px;
+}
+.jjbs-jp-table{
+	 border: 1px solid gray;
+    display: table;
+    height: 150px;
+    text-align: center;
+    width: 200px;
+}
+.jjbs-jp-cell{
+	display: table-cell;
+	vertical-align: middle;
+}
+</#macro>
+<@layout active_id=p child_active_id=c>
+<section class="content-header">
+	<h1>
+		下单信息详情
+	</h1>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+<div class="box">
+  <div class=" box-body page-content page-content-table jjbs-h5-color">
+<div class="clearfix jjbs-border-bottom">
+                    <div class="jjbs-left jjbs-padleft30">
+                    	<h4>选择事项&nbsp;&nbsp;</h4>
+                	</div>
+                </div>
+            <ul class="list-unstyled">
+                
+                
+                <#if spList ??>
+	                <#list spList as x>
+	                <li class="jjbs-left">
+	                	<a href="${CPATH}/admin/data/set_enterprise_change?setOrdersId=${(x.id)!}&c=${c!}&p=${p!}">
+	                    	<div class="jjbs-left jjbs-pad30"><div class="jjbs-jp-table"><span class="jjbs-jp-cell"><h5>${x.orderType!} </h5></span></div></div>
+	                    </a>
+	                </li>
+	                </#list>
+                </#if>
+            </ul>
+    </div>
+	<!-- /.row -->
+	</div>
+</section>
+<!-- /.content -->
+</@layout>

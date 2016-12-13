@@ -1,0 +1,53 @@
+<#include "_inc/_layout.html"/> 
+<#macro title>
+ <title>纳税明细</title>
+</#macro>
+
+
+<#macro script>
+	
+
+</#macro>
+<@layout active_id = p>
+<div class="nwrapper index_main">
+  
+    
+    
+
+
+<div id="tabs-container" style="font-size:.3rem">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+      		<div class="content-slide">
+      		     <br/><br/><br/>
+   <p>时间： ${mdate!} 元</p>
+   <p>时间：${mdate1!}</p>
+			    
+			       <#if map??>
+				      <#list map.keySet() as testKey>
+						  <p>时间：${testKey}。。。。</p>,
+							收入：${(map.get(testKey).shouru)!0}</br>
+							</br></br></br>
+							销项税：${(map.get(testKey).output)!0}</br>
+							进项税：${(map.get(testKey).inputTax)!0}</br>
+							减免税：${(map.get(testKey).reliefs)!0}</br>
+							</br></br></br>
+						增值税:	${(map.get(testKey).vat)!}</br>
+						
+						增值附加税:${(map.get(testKey).subjoin)!}</br>
+						所得税:${(map.get(testKey).incomeTax)!}</br>
+						印花税:${(map.get(testKey).stampTax)!}</br>
+						
+						</#list>
+				       
+				    </#if>
+			       
+       		</div>	
+       </div>
+    </div>
+  </div>  
+
+</div>
+
+
+</@layout>

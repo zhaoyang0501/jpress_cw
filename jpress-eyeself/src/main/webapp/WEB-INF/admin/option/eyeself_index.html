@@ -1,0 +1,355 @@
+<#include "../_inc/_layout.html"/> 
+<#include "_option_script.html"/> 
+<@layout active_id=p child_active_id=c>
+<section class="content-header">
+	<h1>网站首页设置</h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+	<p class="content-msg">
+		 模板功能设置
+	</p>
+
+	<form action="${CPATH}/admin/option/save" method="POST" id="form" enctype="multipart/form-data">
+		<input type="hidden" name="ucode" value="${ucode}"> 
+		<div class="row">
+			
+			<div class="col-xs-12">
+			<h4 class="jp-set-title">轮播图设置</h4>
+			<ul class="list-unstyled">
+			
+				
+				<li class="jp-set-pad">
+					<div class="col-sm-3 ">
+						<div class="jp-set-info ">轮播图1</div>
+					</div>
+					<div class="col-sm-9  jp-set-title-line">
+						<div class="col-sm-6 jp-table-distance-top ">
+							<#if OPTION('eyeself_index_slide1') ??>
+							<img alt="" src="${CPATH}${OPTION('eyeself_index_slide1')!}" style="max-width: 400px;">
+							<input class="form-control input-md" type="hidden" name="eyeself_index_slide1" value="${OPTION('eyeself_index_slide1')!}">
+							<br />
+							</#if>
+							<input name="eyeself_index_slide1" type="file">
+							连接地址:<input class="form-control input-md" type="text" name="eyeself_index_slide1_link" value="${OPTION('eyeself_index_slide1_link')!}">
+							
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				
+				<li class="jp-set-pad">
+					<div class="col-sm-3 ">
+						<div class="jp-set-info ">轮播图2</div>
+					</div>
+					<div class="col-sm-9  jp-set-title-line">
+						<div class="col-sm-6 jp-table-distance-top ">
+							<#if OPTION('eyeself_index_slide2') ??>
+							<img alt="" src="${CPATH}${OPTION('eyeself_index_slide2')!}" style="max-width: 400px;">
+							<input class="form-control input-md" type="hidden" name="eyeself_index_slide2" value="${OPTION('eyeself_index_slide2')!}">
+							<br />
+							</#if>
+							<input name="eyeself_index_slide2" type="file">
+							连接地址:<input class="form-control input-md" type="text" name="eyeself_index_slide2_link" value="${OPTION('eyeself_index_slide2_link')!}">
+							
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				
+				<li class="jp-set-pad">
+					<div class="col-sm-3 ">
+						<div class="jp-set-info ">轮播图3</div>
+					</div>
+					<div class="col-sm-9  jp-set-title-line">
+						<div class="col-sm-6 jp-table-distance-top ">
+							<#if OPTION('eyeself_index_slide3') ??>
+							<img alt="" src="${CPATH}${OPTION('eyeself_index_slide3')!}" style="max-width: 400px;">
+							<input class="form-control input-md" type="hidden" name="eyeself_index_slide3" value="${OPTION('eyeself_index_slide3')!}">
+							<br />
+							</#if>
+							<input name="eyeself_index_slide3" type="file">
+							连接地址:<input class="form-control input-md" type="text" name="eyeself_index_slide3_link" value="${OPTION('eyeself_index_slide3_link')!}">
+							
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				
+				<li class="jp-set-pad">
+					<div class="col-sm-3 ">
+						<div class="jp-set-info ">轮播图4</div>
+					</div>
+					<div class="col-sm-9  jp-set-title-line">
+						<div class="col-sm-6 jp-table-distance-top ">
+							<#if OPTION('eyeself_index_slide4') ??>
+							<img alt="" src="${CPATH}${OPTION('eyeself_index_slide4')!}" style="max-width: 400px;">
+							<input class="form-control input-md" type="hidden" name="eyeself_index_slide4" value="${OPTION('eyeself_index_slide4')!}">
+							<br />
+							</#if>
+							<input name="eyeself_index_slide4" type="file">
+							连接地址:<input class="form-control input-md" type="text" name="eyeself_index_slide4_link" value="${OPTION('eyeself_index_slide4_link')!}">
+							
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				
+				<li class="jp-set-pad">
+					<div class="col-sm-3 ">
+						<div class="jp-set-info ">轮播图5</div>
+					</div>
+					<div class="col-sm-9  jp-set-title-line">
+						<div class="col-sm-6 jp-table-distance-top ">
+							<#if OPTION('eyeself_index_slide5') ??>
+							<img alt="" src="${CPATH}${OPTION('eyeself_index_slide5')!}" style="max-width: 400px;">
+							<input class="form-control input-md" type="hidden" name="eyeself_index_slide5" value="${OPTION('eyeself_index_slide5')!}">
+							<br />
+							</#if>
+							<input name="eyeself_index_slide5" type="file">
+							连接地址:<input class="form-control input-md" type="text" name="eyeself_index_slide5_link" value="${OPTION('eyeself_index_slide5_link')!}">
+							
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				
+			</ul>
+			</div>
+			
+			
+			<div class="col-xs-12">
+			<h4 class="jp-set-title">导航广告图</h4>
+			<ul class="list-unstyled">
+				
+				
+				<li class="jp-set-pad">
+					<div class="col-sm-3 ">
+						<div class="jp-set-info ">导航1</div>
+					</div>
+					<div class="col-sm-9  jp-set-title-line">
+						<div class="col-sm-6 jp-table-distance-top ">
+							<#if OPTION('eyeself_index_nav1') ??>
+							<img alt="" src="${CPATH}${OPTION('eyeself_index_nav1')!}" style="max-width: 400px;">
+							<input class="form-control input-md" type="hidden" name="eyeself_index_nav1" value="${OPTION('eyeself_index_nav1')!}">
+							<br />
+							</#if>
+							<input name="eyeself_index_nav1" type="file">
+							连接地址:<input class="form-control input-md" type="text" name="eyeself_index_nav1_link" value="${OPTION('eyeself_index_nav1_link')!}">
+							
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				
+				<li class="jp-set-pad">
+					<div class="col-sm-3 ">
+						<div class="jp-set-info ">导航2</div>
+					</div>
+					<div class="col-sm-9  jp-set-title-line">
+						<div class="col-sm-6 jp-table-distance-top ">
+							<#if OPTION('eyeself_index_nav2') ??>
+							<img alt="" src="${CPATH}${OPTION('eyeself_index_nav2')!}" style="max-width: 400px;">
+							<input class="form-control input-md" type="hidden" name="eyeself_index_nav2" value="${OPTION('eyeself_index_nav2')!}">
+							<br />
+							</#if>
+							<input name="eyeself_index_nav2" type="file">
+							连接地址:<input class="form-control input-md" type="text" name="eyeself_index_nav2_link" value="${OPTION('eyeself_index_nav2_link')!}">
+							
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				
+				<li class="jp-set-pad">
+					<div class="col-sm-3 ">
+						<div class="jp-set-info ">导航3</div>
+					</div>
+					<div class="col-sm-9  jp-set-title-line">
+						<div class="col-sm-6 jp-table-distance-top ">
+							<#if OPTION('eyeself_index_nav3') ??>
+							<img alt="" src="${CPATH}${OPTION('eyeself_index_nav3')!}" style="max-width: 400px;">
+							<input class="form-control input-md" type="hidden" name="eyeself_index_nav3" value="${OPTION('eyeself_index_nav3')!}">
+							<br />
+							</#if>
+							<input name="eyeself_index_nav3" type="file">
+							连接地址:<input class="form-control input-md" type="text" name="eyeself_index_nav3_link" value="${OPTION('eyeself_index_nav3_link')!}">
+							
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				
+				<li class="jp-set-pad">
+					<div class="col-sm-3 ">
+						<div class="jp-set-info ">导航4</div>
+					</div>
+					<div class="col-sm-9  jp-set-title-line">
+						<div class="col-sm-6 jp-table-distance-top ">
+							<#if OPTION('eyeself_index_nav4') ??>
+							<img alt="" src="${CPATH}${OPTION('eyeself_index_nav4')!}" style="max-width: 400px;">
+							<input class="form-control input-md" type="hidden" name="eyeself_index_nav4" value="${OPTION('eyeself_index_nav4')!}">
+							<br />
+							</#if>
+							<input name="eyeself_index_nav4" type="file">
+							连接地址:<input class="form-control input-md" type="text" name="eyeself_index_nav3_link" value="${OPTION('eyeself_index_nav3_link')!}">
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				
+				
+				<li class="jp-set-pad">
+					<div class="col-sm-3 ">
+						<div class="jp-set-info ">导航5</div>
+					</div>
+					<div class="col-sm-9  jp-set-title-line">
+						<div class="col-sm-6 jp-table-distance-top ">
+							<#if OPTION('eyeself_index_nav5') ??>
+							<img alt="" src="${CPATH}${OPTION('eyeself_index_nav5')!}" style="max-width: 400px;">
+							<input class="form-control input-md" type="hidden" name="eyeself_index_nav5" value="${OPTION('eyeself_index_nav5')!}">
+							<br />
+							</#if>
+							<input name="eyeself_index_nav5" type="file">
+							连接地址:<input class="form-control input-md" type="text" name="eyeself_index_nav5_link" value="${OPTION('eyeself_index_nav5_link')!}">
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				
+			</ul>
+			</div>
+			
+			
+			
+			<@jp.taxonomys module="product" type="category" asTree="true">
+		    <#list taxonomys as taxonomy>
+			<div class="col-xs-12">
+			<h4 class="jp-set-title">【${taxonomy.title!}】栏目设置</h4>
+			<ul class="list-unstyled">
+			
+				<li class="jp-set-pad">
+					<div class="col-sm-3 ">
+						<div class="jp-set-info ">大图广告</div>
+					</div>
+					<div class="col-sm-9  jp-set-title-line">
+						<div class="col-sm-6 jp-table-distance-top ">
+							<#if OPTION(taxonomy.slug+'_banner_01') ??>
+							<img alt="" src="${CPATH}${OPTION(taxonomy.slug+'_banner_01')!}" style="max-width: 400px;">
+							<input class="form-control input-md" type="hidden" name="${taxonomy.slug!}_banner_01" value="${OPTION(taxonomy.slug+'hcsb_banner_01')!}">
+							<br />
+							</#if>
+							<input name="${taxonomy.slug!}_banner_01" type="file">
+							连接地址:<input class="form-control input-md" type="text" name="${taxonomy.slug!}_banner_01_link" value="${OPTION(taxonomy.slug+'_banner_01_link')!}">
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				
+				<li class="jp-set-pad">
+					<div class="col-sm-3 ">
+						<div class="jp-set-info ">小图广告</div>
+					</div>
+					<div class="col-sm-9  jp-set-title-line">
+						<div class="col-sm-6 jp-table-distance-top ">
+							<#if OPTION(taxonomy.slug+'hcsb_banner_02') ??>
+							<img alt="" src="${CPATH}${OPTION(taxonomy.slug+'_banner_01')!}" style="max-width: 400px;">
+							<input class="form-control input-md" type="hidden" name="${taxonomy.slug!}_banner_02" value="${OPTION(taxonomy.slug+'_banner_01')!}">
+							<br />
+							</#if>
+							<input name="${taxonomy.slug!}_banner_02" type="file">
+							连接地址:<input class="form-control input-md" type="text" name="${taxonomy.slug!}_banner_02_link" value="${OPTION(taxonomy.slug+'banner_02_link')!}">
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				
+				<li class="jp-set-pad">
+					<div class="col-sm-3 ">
+						<div class="jp-set-info ">推荐品牌1</div>
+					</div>
+					<div class="col-sm-9  jp-set-title-line">
+						<div class="col-sm-6 jp-table-distance-top ">
+							<#if OPTION(taxonomy.slug+'_brand_01') ??>
+							<img alt="" src="${CPATH}${OPTION(taxonomy.slug+'brand_01')!}" style="max-width: 400px;">
+							<input class="form-control input-md" type="hidden" name="${taxonomy.slug!}_brand_01" value="${OPTION(taxonomy.slug+'brand_01')!}">
+							<br />
+							</#if>
+							<input name="${taxonomy.slug!}_banner_02" type="file">
+							连接地址:<input class="form-control input-md" type="text" name="${taxonomy.slug!}_brand_01_link" value="${OPTION(taxonomy.slug+'brand_01_link')!}">
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				
+				<li class="jp-set-pad">
+					<div class="col-sm-3 ">
+						<div class="jp-set-info ">推荐品牌2</div>
+					</div>
+					<div class="col-sm-9  jp-set-title-line">
+						<div class="col-sm-6 jp-table-distance-top ">
+							<#if OPTION(taxonomy.slug+'_brand_02') ??>
+							<img alt="" src="${CPATH}${OPTION(taxonomy.slug+'brand_02')!}" style="max-width: 400px;">
+							<input class="form-control input-md" type="hidden" name="${taxonomy.slug!}_brand_02" value="${OPTION(taxonomy.slug+'brand_02')!}">
+							<br />
+							</#if>
+							<input name="${taxonomy.slug!}_brand_02" type="file">
+							连接地址:<input class="form-control input-md" type="text" name="${taxonomy.slug!}_banner_02_link" value="${OPTION(taxonomy.slug+'banner_02_link')!}">
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				
+				<li class="jp-set-pad">
+					<div class="col-sm-3 ">
+						<div class="jp-set-info ">推荐品牌3</div>
+					</div>
+					<div class="col-sm-9  jp-set-title-line">
+						<div class="col-sm-6 jp-table-distance-top ">
+							<#if OPTION(taxonomy.slug+'_brand_03') ??>
+							<img alt="" src="${CPATH}${OPTION(taxonomy.slug+'brand_02')!}" style="max-width: 400px;">
+							<input class="form-control input-md" type="hidden" name="${taxonomy.slug!}_brand_03" value="${OPTION(taxonomy.slug+'brand_03')!}">
+							<br />
+							</#if>
+							<input name="${taxonomy.slug!}_brand_03" type="file">
+							连接地址:<input class="form-control input-md" type="text" name="${taxonomy.slug!}_brand_03_link" value="${OPTION(taxonomy.slug+'brand_03_link')!}">
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				
+				<li class="jp-set-pad">
+					<div class="col-sm-3 ">
+						<div class="jp-set-info ">推荐品牌4</div>
+					</div>
+					<div class="col-sm-9  jp-set-title-line">
+						<div class="col-sm-6 jp-table-distance-top ">
+							<#if OPTION(taxonomy.slug+'_brand_04') ??>
+							<img alt="" src="${CPATH}${OPTION(taxonomy.slug+'brand_04')!}" style="max-width: 400px;">
+							<input class="form-control input-md" type="hidden" name="${taxonomy.slug!}_brand_04" value="${OPTION(taxonomy.slug+'brand_04')!}">
+							<br />
+							</#if>
+							<input name="${taxonomy.slug!}_brand_04" type="file">
+							连接地址:<input class="form-control input-md" type="text" name="${taxonomy.slug!}_banner_04_link" value="${OPTION(taxonomy.slug+'banner_04_link')!}">
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+			</ul>
+			</div>
+			</#list>
+		    </@jp.taxonomys>
+			
+			<!-- /.box -->
+		</div>
+		<div class="row">
+		<div class="col-xs-12">
+			<button type="button" onclick="doSubmit()" class="btn btn-primary">保存更改</button>
+		</div>
+		</div>
+		<!-- /.row -->
+	</form>
+</section>
+
+</@layout>

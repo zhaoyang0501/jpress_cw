@@ -1,0 +1,478 @@
+<#include "_inc/_layout.html"/> 
+<@layout>
+<#macro script>
+$(document).ready(function(){
+
+	
+	// 图片上下滚动
+	var count = $("#imageMenu li").length - 2; /* 显示 6 个 li标签内容 */
+	var interval = $("#imageMenu li:first").width();
+	var curIndex = 0;
+	
+	$('.scrollbutton').click(function(){
+		if( $(this).hasClass('disabled') ) return false;
+		
+		if ($(this).hasClass('smallImgUp')) --curIndex;
+		else ++curIndex;
+		
+		$('.scrollbutton').removeClass('disabled');
+		if (curIndex == 0) $('.smallImgUp').addClass('disabled');
+		if (curIndex == count-1) $('.smallImgDown').addClass('disabled');
+		
+		$("#imageMenu ul").stop(false, true).animate({"marginLeft" : -curIndex*interval + "px"}, 600);
+	});	
+	// 解决 ie6 select框 问题
+	$.fn.decorateIframe = function(options) {
+        if ($.browser.msie && $.browser.version < 7) {
+            var opts = $.extend({}, $.fn.decorateIframe.defaults, options);
+            $(this).each(function() {
+                var $myThis = $(this);
+                //创建一个IFRAME
+                var divIframe = $("<iframe />");
+                divIframe.attr("id", opts.iframeId);
+                divIframe.css("position", "absolute");
+                divIframe.css("display", "none");
+                divIframe.css("display", "block");
+                divIframe.css("z-index", opts.iframeZIndex);
+                divIframe.css("border");
+                divIframe.css("top", "0");
+                divIframe.css("left", "0");
+                if (opts.width == 0) {
+                    divIframe.css("width", $myThis.width() + parseInt($myThis.css("padding")) * 2 + "px");
+                }
+                if (opts.height == 0) {
+                    divIframe.css("height", $myThis.height() + parseInt($myThis.css("padding")) * 2 + "px");
+                }
+                divIframe.css("filter", "mask(color=#fff)");
+                $myThis.append(divIframe);
+            });
+        }
+    }
+    $.fn.decorateIframe.defaults = {
+        iframeId: "decorateIframe1",
+        iframeZIndex: -1,
+        width: 0,
+        height: 0
+    }
+    //放大镜视窗
+    $("#bigView").decorateIframe();
+    //点击到中图
+    var midChangeHandler = null;
+	
+    $("#imageMenu li img").bind("click", function(){
+		if ($(this).attr("id") != "onlickImg") {
+			midChange($(this).attr("src").replace("small", "mid"));
+			$("#imageMenu li").removeAttr("id");
+			$(this).parent().attr("id", "onlickImg");
+		}
+	}).bind("mouseover", function(){
+		if ($(this).attr("id") != "onlickImg") {
+			window.clearTimeout(midChangeHandler);
+			midChange($(this).attr("src").replace("small", "mid"));
+			$(this).css({ "border": "1px solid #dd2727" });
+		}
+	}).bind("mouseout", function(){
+		if($(this).attr("id") != "onlickImg"){
+			$(this).removeAttr("style");
+			midChangeHandler = window.setTimeout(function(){
+				midChange($("#onlickImg img").attr("src").replace("small", "mid"));
+			}, 1000);
+		}
+	});
+    function midChange(src) {
+        $("#midimg").attr("src", src).load(function() {
+            changeViewImg();
+        });
+    }
+    //大视窗看图
+    function mouseover(e) {
+        if ($("#winSelector").css("display") == "none") {
+            $("#winSelector,#bigView").show();
+        }
+        $("#winSelector").css(fixedPosition(e));
+        e.stopPropagation();
+    }
+    function mouseOut(e) {
+        if ($("#winSelector").css("display") != "none") {
+            $("#winSelector,#bigView").hide();
+        }
+        e.stopPropagation();
+    }
+    $("#midimg").mouseover(mouseover); //中图事件
+    $("#midimg,#winSelector").mousemove(mouseover).mouseout(mouseOut); //选择器事件
+
+    var $divWidth = $("#winSelector").width(); //选择器宽度
+    var $divHeight = $("#winSelector").height(); //选择器高度
+    var $imgWidth = $("#midimg").width(); //中图宽度
+    var $imgHeight = $("#midimg").height(); //中图高度
+    var $viewImgWidth = $viewImgHeight = $height = null; //IE加载后才能得到 大图宽度 大图高度 大图视窗高度
+
+    function changeViewImg() {
+        $("#bigView img").attr("src", $("#midimg").attr("src").replace("mid", "big"));
+    }
+    changeViewImg();
+    $("#bigView").scrollLeft(0).scrollTop(0);
+    function fixedPosition(e) {
+        if (e == null) {
+            return;
+        }
+        var $imgLeft = $("#midimg").offset().left; //中图左边距
+        var $imgTop = $("#midimg").offset().top; //中图上边距
+        X = e.pageX - $imgLeft - $divWidth / 2; //selector顶点坐标 X
+        Y = e.pageY - $imgTop - $divHeight / 2; //selector顶点坐标 Y
+        X = X < 0 ? 0 : X;
+        Y = Y < 0 ? 0 : Y;
+        X = X + $divWidth > $imgWidth ? $imgWidth - $divWidth : X;
+        Y = Y + $divHeight > $imgHeight ? $imgHeight - $divHeight : Y;
+
+        if ($viewImgWidth == null) {
+            $viewImgWidth = $("#bigView img").outerWidth();
+            $viewImgHeight = $("#bigView img").height();
+            if ($viewImgWidth < 200 || $viewImgHeight < 200) {
+                $viewImgWidth = $viewImgHeight = 800;
+            }
+            $height = $divHeight * $viewImgHeight / $imgHeight;
+            $("#bigView").width($divWidth * $viewImgWidth / $imgWidth);
+            $("#bigView").height($height);
+        }
+        var scrollX = X * $viewImgWidth / $imgWidth;
+        var scrollY = Y * $viewImgHeight / $imgHeight;
+        $("#bigView img").css({ "left": scrollX * -1, "top": scrollY * -1 });
+        $("#bigView").css({ "top": 299, "left": $(".preview").offset().left + $(".preview").width() - 30 });
+
+        return { left: X, top: Y };
+    }
+	
+	
+	 
+	 <!--选择框置顶-->
+	 var try_select_top= $(".goods_post_mainr_top").offset().top;
+	 
+	 var g_xx= $("#g_xx").offset().top-40;
+	 var g_cs= $("#g_cs").offset().top-40;
+	 var g_sp= $("#g_sp").offset().top-40;
+	 var g_qd= $("#g_qd").offset().top-40;
+	 var g_fw= $("#g_fw").offset().top-40;
+	 var g_tw= $("#g_tw").offset().top-40;
+	 var g_xz= $("#g_xz").offset().top-40;
+	 
+	 
+	 $(window).scroll(function() {
+        var s = $(window).scrollTop();
+        if (s > try_select_top) {
+            $(".goods_post_mainr_top").css("position","fixed");
+        } else {
+            $(".goods_post_mainr_top").css("position","relative");
+        };
+		
+		/*if (s >= g_xx) {
+			$(".goods_post_mainr_top a").removeClass("active");
+			$(".goods_post_mainr_top a.g_xx").addClass("active");
+        };
+		if (s >= g_cs) {
+			$(".goods_post_mainr_top a").removeClass("active");
+			$(".goods_post_mainr_top a.g_cs").addClass("active");
+        };
+		if (s >= g_sp) {
+			$(".goods_post_mainr_top a").removeClass("active");
+			$(".goods_post_mainr_top a.g_sp").addClass("active");
+        };
+		if (s >= g_qd) {
+			$(".goods_post_mainr_top a").removeClass("active");
+			$(".goods_post_mainr_top a.g_qd").addClass("active");
+        };
+		if (s >= g_fw) {
+			$(".goods_post_mainr_top a").removeClass("active");
+			$(".goods_post_mainr_top a.g_fw").addClass("active");
+        };
+		if (s >= g_tw) {
+			$(".goods_post_mainr_top a").removeClass("active");
+			$(".goods_post_mainr_top a.g_tw").addClass("active");
+        };
+		if (s >= g_xz) {
+			$(".goods_post_mainr_top a").removeClass("active");
+			$(".goods_post_mainr_top a.g_xz").addClass("active");
+        };*/
+		
+    });
+	
+	$(".goods_post_mainr_top a").click(function(){
+		$(".goods_post_mainr_top a").removeClass("active");
+		$(this).addClass("active");
+	});
+	
+});
+</#macro>
+<#macro css_import>
+    <link rel="stylesheet" href="${CTPATH}/assets/css/comments.css">
+</#macro>
+<!--cont-->
+<div class="main">
+<div class="cont post">
+
+    <div class="goods_list_top">
+    当前位置：<a href="">首页</a>&nbsp;>&nbsp;<a href="">产品中心</a>&nbsp;>&nbsp;<span>${content.title!}</span>
+    </div>
+    
+    <div class="goods_post_top">
+    	
+        <div class="preview">
+            <div id="vertical" class="bigImg">
+            	<#if content.metadata('thumbnail1') ??>
+                <img src="${content.metadata('thumbnail1')!}"  id="midimg" class="postkz_01"  style="width: 340px;height: 340px;"/>
+                <#else>
+                <img src="${content.thumbnail!}"  id="midimg" class="postkz_01" style="width: 340px;height: 340px;"/>
+                </#if>
+                <div style="display:none;" id="winSelector"></div>
+            </div><!--bigImg end-->	
+            <div class="smallImg">
+                <div class="scrollbutton smallImgUp disabled"></div>
+                <div id="imageMenu">
+                    <ul>
+                    	<#if content.thumbnail ??>
+                    	<li id="onlickImg"><img src="${content.thumbnail!}" class="postkz_01" /></li>
+                    	</#if>
+                    	<#if content.metadata('thumbnail1') ??>
+                        <li id="onlickImg"><img src="${content.metadata('thumbnail1')!}" class="postkz_01" /></li>
+                        </#if>
+                    	<#if content.metadata('thumbnail2') ??>
+                        <li><img src="${content.metadata('thumbnail2')!}" class="postkz_01" /></li>
+                        </#if>
+                    	<#if content.metadata('thumbnail3') ??>
+                        <li><img src="${content.metadata('thumbnail3')!}" class="postkz_01" /></li>
+                        </#if>
+                    	<#if content.metadata('thumbnail4') ??>
+                        <li><img src="${content.metadata('thumbnail4')!}" class="postkz_01" /></li>
+                        </#if>
+                    	<#if content.metadata('thumbnail5') ??>
+                        <li><img src="${content.metadata('thumbnail5')!}" class="postkz_01" /></li>
+                        </#if>
+        
+                    </ul>
+                </div>
+                <div class="scrollbutton smallImgDown"></div>
+            </div><!--smallImg end-->	
+            <div id="bigView" style="display:none;"><img width="800" height="800" alt="" src="" /></div>
+        </div>
+        
+        <div class="goods_post_topc">
+            <span>${content.title!}</span>
+            <p>
+            
+            <i>市场价</i><a href="">点击查看价格</a><br/>
+            <i>提货价</i><a href="">点击查看价格</a><br/>
+            <i>产品名称</i><em> ${content.metadata('product_name')!}</em><br/>
+            <#if content.metadata('product_specification')??><i>型号规格</i><em>${content.metadata('product_specification')!}</em><br/></#if>
+            <#if content.metadata('factory')??><i>生产厂家</i><em>${content.metadata('factory')!}</em><br/></#if>
+            <#if content.metadata('category')??><i>器械分类</i><em>${content.metadata('category')!}</em><br/></#if>
+            <#if content.metadata('approval_number')??><i>批准文号</i><em>${content.metadata('approval_number')!}</em><br/></#if>
+  
+            
+            <i>${content.metadata('logistics_info')!}</i></p>
+            <div class="goods_post_topc_bottom"> 售后服务由【${(content.user.company)!}】提供售后服务支持<a href="${CPATH}/product/consult?id=${content.id!}" target="_blank">采购咨询</a></div>
+        </div>
+        
+        <div class="goods_list_mainbox_r goods_post_topr">
+            <a href="" class="goods_list_logo"><img src="${CPATH}${content.user.metadata('company_icon')!}" width="200" height="50"></a>
+            <em>${content.user.company!}</em>
+            <span>${content.user.metadata('company_phone')!}</span>
+            <A href="${CPATH}/company/detail/${content.user.id!}" class="goods_post_topr_bt">详情</A>
+            <A href="${CPATH}/product/consult?id=${content.id!}" class="goods_post_topr_bt">联系</A>
+            <A href="#" class="goods_post_topr_ad"><img src="${CPATH}${content.user.metadata('company_thumbnail')!}" width="200"></A>
+        </div>
+
+    
+    </div>
+    
+    <div class="goods_post_main">
+    
+        <div class="goods_post_mainl">
+            <div class="bus_post_rtop">
+            推荐产品
+            </div>
+            <div class="goods_post_mainl_box">
+            
+            	<@jp.contents  module="product" count="5" orderBy="view_count" hasThumbnail="true"> 
+				    <#list contents as content> 
+		            <a href=""> </a>
+		            <a href="${content.url!}">
+                    <img src="${content.image!}" width="280">
+                    <span>${content.title!}</span>
+                    <em>¥${content.price!}</em>&nbsp;&nbsp;<del>¥${content.metadata('market_prices')!}</del>
+               		</a>
+		        	</#list> 
+			   </@jp.contents>
+	 
+            </div>
+    	</div>
+        
+        <div class="goods_post_mainr">
+        	<div class="goods_post_mainr_top fixed_overflow">
+            <a href="#g_xx" class="g_xx ">商品信息</a>
+            <#if content.metadata('product_cs')??><a href="#g_cs" class="g_xx ">规格参数</a></#if>
+            <#if content.metadata('product_sp')??><a href="#g_sp" class="g_xx ">产品实拍</a></#if>
+            <#if content.metadata('product_qd')??><a href="#g_qd" class="g_xx ">商品清单</a></#if>
+            <a href="#g_fw" class="g_fw">售后服务</a>
+            <a href="#g_tw" class="g_tw">即时提问</a>
+            <a href="#g_xz" class="g_xz">资料下载</a>
+        	</div>
+            
+            
+            
+            <div class="goods_post_mainbox goods_post_mainbox_cr" id="g_xx">
+                <div class="goods_post_mainbox_top">
+                <span>商品信息</span>Commodity information
+                </div>
+                <div class="goods_post_mainbox_cr_cont">
+                	${content.text!}
+                </div>
+            </div>
+           <#if content.metadata('product_cs')??>
+            <div class="goods_post_mainbox goods_post_mainbox_cr" id="g_cs">
+                <div class="goods_post_mainbox_top">
+                <span>规格参数</span>Specifications
+                </div>
+                <div class="goods_post_mainbox_cr_cont">
+                	${content.metadata('product_cs')!}
+                </div>
+            </div>
+           </#if>
+           <#if content.metadata('product_sp')??>
+            <div class="goods_post_mainbox goods_post_mainbox_cr" id="g_sp">
+                <div class="goods_post_mainbox_top">
+                <span>产品实拍</span>Specifications
+                </div>
+                <div class="goods_post_mainbox_cr_cont">
+                	${content.metadata('product_sp')!}
+                </div>
+            </div>
+           </#if>
+           <#if content.metadata('product_qd')??>
+            <div class="goods_post_mainbox goods_post_mainbox_cr" id="g_qd">
+                <div class="goods_post_mainbox_top">
+                <span>商品清单</span>Commodity List
+                </div>
+                <div class="goods_post_mainbox_cr_cont">
+                	${content.metadata('product_qd')!}
+                </div>
+            </div>
+            </#if>
+            
+            <div class="goods_post_mainbox goods_post_mainbox_cs" id="g_fw">
+                <div class="goods_post_mainbox_top">
+                <span>售后服务</span>Customer Service
+                </div>
+                <div class="goods_post_mainbox_cr_cont">
+                	<i>售后服务</i><em>支持<b>7天无理由退换货、30天质量问题换货</b>以及<b>30天原品退换货</b>服务。</em><br/>
+                    <i>补充说明</i><em>该商品原封包装拆封后可恢复原状，拆封时请确保外包装完好，不影响二次销售情形下可享受标准退换货服务。</em><br/>
+                    <i>保修方式</i><em>用户送修。因保修所产生的物流及运输费用需由用户承担</em><br/>
+					<p><h1>售后保修流程</h1><img src="${CTPATH}/assets/img/post_134.png"></p>
+                </div>
+            </div>
+            
+            
+            <div class="goods_post_mainbox goods_post_mainbox_iq" id="g_tw">
+                <div class="goods_post_mainbox_top">
+                <span>即时提问</span>Immediate question
+                </div>
+                <div class="goods_post_mainbox_iq_cont">
+                
+                <div id="promember_reprot" class="pro_box pro_consult">
+									
+									<div class="comment_panel" id="comment_panel">
+										<div class="title">
+											<h4>即时提问</h4></div>
+										<div class="cmt_inpts">
+											<form action="${CPATH}/comment/submit" method="post"  id="comment">
+    										<input type="hidden" name="cid" value="${(content.id)!}" >
+    										<input type="hidden" name="anchor" value="comment_panel" >
+												<div class="txt_panel">
+													<div class="txt"><label for="comment_content">在此咨询...</label>
+													<textarea id="comment_content" name="text"></textarea>
+													</div>
+												</div>
+												<div class="ext_panel">
+													<span class="chk_code" style="margin-left: 0px;">
+													<label for="commentCode">验证码：</label>
+													<input type="text" id="commentCode"  name="comment_captcha">
+													<img src="${CPATH}/captcha" onclick="this.src='${CPATH}/captcha?d='+Math.random();" >
+													<span></span>
+													</span>
+													<button type="submit" class="btn send" style="margin-left: 30px;"><span>发表</span></button>
+												</div>
+											</form>
+										</div>
+										<@jp.commentPage pagesize="10">
+										<!-- consult main -->
+										<div id="comment_html" class="consult_main">
+											<#list page.getList() as comment>
+											
+											<div class="cmt_item consult_item ${comment?item_parity} ">
+											
+												 <#if comment.qc_content ??>
+                                                        <div class="cmt_header"> <a href="#" target="_blank" class="pic">
+                                                        <span class="curr"><img src="#" height="56" width="56" alt="aliuser1q8phyl"></span><i></i></a>
+                                                        <strong class="name">${comment.qc_author!}</strong> <i class="arrow"><b></b></i> </div>
+                                                        <div class="cmt_main">
+                                                            <p data-commentid="48860">${comment.qc_content!}</p> <span class="timer">2016-04-29 10:50:30</span> </div>
+                                                        <div class="consult_reply">
+                                                            <div class="cmt_header"> <a href="#" class="pic"><span class="curr">
+                                                            <img src="" height="56" width="56" alt=""></span><i></i></a>
+                                                            <strong class="name">${comment.author!}</strong>														<i class="arrow"><b></b></i> </div>
+                                                            <div class="cmt_main">
+                                                                <p>${comment.text!} </p> <span class="timer">${comment.created!}</span> </div>
+                                                        </div>
+												<#else>
+                                                    <div class="cmt_header">
+                                                    <a href="#" target="_blank" class="pic">
+                                                        <span class="curr"><img src="/templates/eyeself/assets/img/avatar.jpg" height="56" width="56" alt=""></span><i></i></a>
+                                                    <strong class="name">${comment.author!}</strong> <i class="arrow"><b></b></i> </div>
+                                                    <div class="cmt_main">
+                                                        <p data-commentid="48860">${comment.text!}</p> <span class="timer">2016-04-29 10:50:30</span>
+                                                    </div>
+												</#if>
+											</div>
+											</#list>
+										</div>
+
+										<!-- Pager -->
+										<div id="pager2" class="cmt_pager">
+											<div class="list">
+											<@pagination previousText="«" nextText="»" anchor="pager2" previous="prev" active="current">
+												<#list pages as pi>
+												<a href="${pi.url!}"  class="${pi.style!}"><span>${pi.text!}</span></a>
+												</#list>
+											</@pagination>
+											</div>
+										</div>
+									    </@jp.commentPage>
+									</div>
+								</div>
+                </div>
+                
+                
+            </div>
+            
+            <div class="goods_post_mainbox goods_post_mainbox_dd" id="g_xz">
+                <div class="goods_post_mainbox_top">
+                <span>资料下载</span>Data download
+                </div>
+                <div class="goods_post_mainbox_dd_cont">
+                	<img src="${CTPATH}/assets/img/post_37.png" width="16" height="16">资料下载资料下载资料下载<a href="" class="goods_list_bt">点击下载</a>
+                </div>
+                
+                
+            </div>
+            
+            
+        </div>
+        
+        </div>
+        
+        
+    </div>
+    
+</div>
+<!--/cont-->
+
+</@layout>

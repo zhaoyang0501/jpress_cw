@@ -1,0 +1,59 @@
+<#macro paginate currentPage totalPage actionUrl urlParas="">
+	<#if (totalPage <= 0) || (currentPage > totalPage)><#return></#if>
+	<#local startPage = currentPage - 4>
+	<#if (startPage < 1)><#local startPage = 1></#if>
+	
+	<#local endPage = currentPage + 4>
+	<#if (endPage > totalPage)><#local endPage = totalPage></#if>
+	<style type="text/css">
+		.pagination{
+		    margin: 15px 8px 34px;
+		    overflow: hidden;
+		    text-align: center;
+		}
+		.previous,.next{	
+		     float: left;
+		    font-size: .3rem;
+		    line-height: 30px;
+		    padding: 5px 0;
+		    text-align: center;
+		    width: 50%;	    
+		   }
+   .pagination > .disabled > a, .pagination > .disabled > a:focus, .pagination > .disabled > a:hover, .pagination > .disabled > span, .pagination > .disabled > span:focus, .pagination > .disabled > span:hover {
+    background-color: #f9f9f9;
+    color: #ccd5db;
+    cursor: not-allowed;
+}
+.previous a,.next a{ 
+	    background: #ffffff none repeat scroll 0 0;
+    border-color: #e4eaec;
+    border-image: none;
+    border-style: solid;
+    border-width: 1px;
+    color: #4a4a4a;
+    display: block;
+    margin: 0 auto;
+    width: 60%;}
+	</style>
+	<div style="clear:both"></div>
+	 <ul class="pagination">
+			<#if (currentPage == 1)>
+				 <li  class=" previous disabled">
+                            <a href="#" data-dt-idx="0" tabindex="0">上页</a>
+                  </li>
+			<#else>
+				 <li  class=" previous">
+                            <a href="${actionUrl}#{currentPage - 1}${urlParas!}" data-dt-idx="0" tabindex="0">上页</a>
+                  </li>
+			</#if>
+			<#if (currentPage == totalPage)>
+				 <li class=" next disabled">
+                     <a href="#" data-dt-idx="2" tabindex="0">下页</a>
+                 </li>
+			<#else>
+			 	<li class=" next">
+                     <a href="${actionUrl}#{currentPage + 1}${urlParas!}" data-dt-idx="2" tabindex="0">下页</a>
+                 </li>
+			</#if>
+	</ul>
+</#macro>

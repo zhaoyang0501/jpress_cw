@@ -1,0 +1,120 @@
+<#include "/WEB-INF/admin/_inc/_layout.html"/> 
+
+<#macro script>
+	
+
+  function doSubmit(url){
+		
+	 	$(".form").ajaxSubmit({
+			type : "post", //提交方式  
+			dataType : "json", //数据类型  
+		beforeSubmit : function(){
+	            var sb =	sblank();
+            	if(false==sb){
+            		return false;
+            	}
+	            	
+	           //#################
+				},
+			success : function(data) { //提交成功的回调函数 
+				if(data.errorCode == 0){
+					if(url !=null && ''!=url){
+						location.href=url;
+					}else{
+						location.reload();
+					}
+				}else{
+					alert(data.message);
+				}
+			},
+			error : function() {
+				alert("信息提交错误");
+			}
+		});
+	 }
+	 
+	 function sblank(){
+	 	 var $input =$("input[name^='setUserType.']");
+		  for(var i=0;i<$input.length;i++){
+		    
+		     	if($input.eq(i).val().trim().length==0){	
+				       		alert("提交不能为空");
+	//			       console.log("提交不能为空");
+			 			return false;
+			 		
+				 }     
+		      
+		  }
+	 }
+
+</#macro>
+<#macro css>
+	.jp-top7{
+		display: block;
+	    margin-top: 7px;
+    }
+</#macro>
+
+<@layout active_id=p child_active_id=c>
+<section class="content-header">
+	<h1>
+		订单状态修改
+	</h1>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+
+	<form class="form" action="${CPATH}/admin/orders/orders_status?flag='0'&c=${c!}&p=${p!}"   method="post">
+	<div class="box box-solid">
+		<div class="box-header with-border">
+			<h3 class="box-title" > 订单状态修改</h3>
+		</div>
+		<!-- /.box-header -->
+		<div class="box-body no-padding">
+			<!-- Custom Tabs -->
+			<div class="nav-tabs-custom">
+				
+				<div class="tab-content">
+					<div class="tab-pane active form-horizontal" id="tab_1">
+		                <div class="form-group">
+		                  	 <label class="col-sm-3 control-label">订单状态</label>
+			                  	<div class="col-sm-8 jp-common-pad ">
+			                  		<input 	type="hidden" name="id" value=${id!}>
+			                  	
+									<#if status??>
+										<span class="jp-top7">
+											<#if  status=="0">
+												<input 	type="radio" name="status" <#if status=="0"> checked="checked" </#if> value="0">新单子
+												<input 	type="radio" name="status" <#if status=="1"> checked="checked" </#if> value="1">对接单子
+												<input 	type="radio" name="status" <#if status=="2"> checked="checked" </#if> value="2">付费单子
+											</#if>
+											<#if  status=="1">
+												<input 	type="radio" name="status" <#if status=="1"> checked="checked" </#if> value="1">对接单子
+												<input 	type="radio" name="status" <#if status=="2"> checked="checked" </#if> value="2">付费单子
+											</#if>
+										</span>
+									</#if>
+								</div>
+		                </div>
+		                
+		                <div class="form-group">
+				              <div class="col-sm-8  col-sm-offset-3">
+								 	<button type="button" class="modify-close btn btn-primary"  onclick="doSubmit('${CPATH}/admin/orders/orders_list?status=${status!}&c=${c!}&p=${p!}')">提交</button>	
+							 	</div>
+						 </div>
+	              </div>
+	              
+				</div>
+				<!-- /.tab-content -->
+			</div>
+			<!-- nav-tabs-custom -->
+		</div>
+	</div>
+    </form>
+		
+	<!-- /.row -->
+</section>
+<!-- /.content -->
+</@layout>

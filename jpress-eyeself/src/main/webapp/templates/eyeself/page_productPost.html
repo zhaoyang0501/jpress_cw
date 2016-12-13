@@ -1,0 +1,198 @@
+<#include "_inc/_layout.html"/> 
+<#macro script_import>
+<script src="${CTPATH}/assets/js/jquery.selectlist.js"></script>
+<script src="${CPATH}/static/tinymce/tinymce.min.js"></script>
+<script src="${CPATH}/static/layer/layer.js"></script>
+</#macro> 
+<#macro script>
+var data={
+    url:'',
+    alt:''
+};
+$(function(){
+		$('.edu').selectlist({
+			zIndex: 10,
+			width: 290,
+			height: 43
+		});		
+})
+
+function doSubmit(){
+	tinymce.activeEditor.uploadImages(function(success) {
+		tinymce.triggerSave();
+ 		doSave();
+	});
+}
+
+function doSave(){
+	$("#form").ajaxSubmit({
+		type : "post", 
+		dataType : "json", 
+		success : function(data) { 
+			if(data.errorCode == 0){
+				alert("发布成功！");
+				window.location.href=data.data;
+			}else{
+				alert("保存失败");
+			}
+		},
+		error : function() {
+			alert("网络错误");
+		}
+	});
+}
+
+
+function chooseImage(id){
+	layer.open({
+	    type: 2,
+	    title: '选择图片',
+	    shadeClose: true,
+	    shade: 0.8,
+	    area: ['90%', '90%'],
+	    content: '${CPATH}/attachment/list',
+	    end:function(){
+	    	$('#'+id).val(data.url);
+	    	$('#img_'+id).attr("src",data.url);
+	    }
+	}); 
+}
+
+tinymce.init({
+		mode : "textareas",
+        selector: '#textarea',
+        height: 500,
+        language: 'zh_CN',
+        menubar: false,
+        automatic_uploads: true,
+        paste_data_images: true,
+        convert_urls: false,
+        imagetools_toolbar: "rotateleft rotateright | flipv fliph | editimage imageoptions",
+        imagetools_proxy: '${CPATH}/admin/tinymce/image/proxy',
+        images_upload_url: '${CPATH}/admin/tinymce/image/upload',
+        wordcount_countregex: /[\u4e00-\u9fa5_a-zA-Z0-9]/g,
+		file_picker_callback: function(callback, value, meta) {
+		 	layer.open({
+			    type: 2,
+			    title: '选择图片',
+			    shadeClose: true,
+			    shade: 0.8,
+			    area: ['90%', '90%'],
+			    content: '${CPATH}/attachment/list',
+			    end:function(){
+			    	callback(data.url, {alt: data.alt});
+			    }
+			}); 
+		 },
+        plugins: [
+		    "advlist autolink autosave link image imagetools lists charmap print preview hr anchor pagebreak spellchecker",
+		    "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+		    "table contextmenu directionality emoticons template textcolor paste fullpage textcolor colorpicker textpattern"
+		  ],
+        toolbar1: '  bold italic underline strikethrough removeformat | blockquote hr  |  alignleft aligncenter alignright alignjustify | bullist numlist  |  outdent indent | forecolor backcolor | image |code   ',
+    });
+</#macro> 
+<@layout>
+<!--cont-->
+<div class="main">
+<div class="cont list bus_list">
+
+    <div class="goods_list_top">
+    当前位置：<a href="">首页</a>&nbsp;>&nbsp;<a href="">>产品</a>&nbsp;>&nbsp;<span>发布产品  </span></a>
+    </div>
+    
+    <div class="clear"></div>
+    
+    <div class="clear"></div>
+    <form action="${CPATH}/product/publish" method="post" id="form">
+    <div class="wb_addmain">
+    
+    	<div class="wb_addmain_t01">产品标题</div>
+    	<input type="text" class="wb_addmain_i01" name="content.title">
+        
+        <div class="wb_addmain_t01">产品描述</div>
+        <div class="clear"></div>
+        <div class="wb_addmain_t02">产品名称</div><input type="text" class="wb_addmain_i02" name="meta:product_name">
+        <div class="wb_addmain_t02">产品规格</div><input type="text" class="wb_addmain_i02" name="meta:product_specification">
+        <div class="wb_addmain_t02">市场价</div><input type="text" class="wb_addmain_i02" name="meta:market_prices">
+        <div class="wb_addmain_t02">提货价</div><input type="text" class="wb_addmain_i02" name="content.price">
+        <div class="wb_addmain_t02">生产厂家</div><input type="text" class="wb_addmain_i02" name="meta:factory">
+        <div class="wb_addmain_t02">机械分类</div><input type="text" class="wb_addmain_i02" name="meta:category">
+        <div class="wb_addmain_t02">批准文号</div><input type="text" class="wb_addmain_i02" name="meta:approval_number">
+        <div class="wb_addmain_t02">起订数量</div><input type="text" class="wb_addmain_i02" name="meta:order_quantities">
+        <div class="wb_addmain_t02">产品分类</div>
+        
+        <select id="edu" class="edu"  name="product_taxonomy">
+              <@jp.taxonomys module="product" type="category">
+	        	<#list taxonomys as taxonomy>
+	        	 	<option value="${taxonomy.id!}">${taxonomy.title!}</option>
+	        	</#list>
+	          </@jp.taxonomys>
+        </select>
+        <div class="wb_addmain_t02">产品数量</div><input type="text" class="wb_addmain_i02"  name="meta:product_count">
+        <div class="wb_addmain_t02">物流说明</div><input type="text" class="wb_addmain_i01"  name="meta:logistics_info">
+        
+        <div class="wb_addmain_t01">产品描述</div>
+        <div class="clear"></div>
+        <a href="javascript:;" class="wb_addmain_b034" onclick="chooseImage('content_thumbnail')">产品缩略图</a><div class="clear"></div>
+        <input type="hidden" name="content.thumbnail" id="content_thumbnail">
+        <img src="" id="img_content_thumbnail" style="max-width: 300px;margin-left: 40px;margin-top: 5px;" >
+        <div style="margin: 20px 40px 0 40px;">
+        	<textarea name="content.text"  id="textarea" style="margin-right: 50px;" cols="" rows="" class="wb_addmain_i03"></textarea>
+        </div>
+        <a  href="javascript:;" class="wb_addmain_b034" onclick="chooseImage('thumbnail1')">幻灯片1</a>
+        <input type="hidden" name="meta:thumbnail1" id="thumbnail1">
+        <img src="" id="img_thumbnail1" style="max-width: 300px;margin-left: 40px;margin-top: 5px;" ><div class="clear"></div>
+        
+        <a href="javascript:;" class="wb_addmain_b034" onclick="chooseImage('thumbnail2')">幻灯片2</a>
+        <input type="hidden" name="meta:thumbnail2" id="thumbnail2">
+        <img src="" id="img_thumbnail2" style="max-width: 300px;margin-left: 40px;margin-top: 5px;" ><div class="clear"></div>
+        
+        <a href="javascript:;" class="wb_addmain_b034" onclick="chooseImage('thumbnail3')">幻灯片3</a>
+         <input type="hidden" name="meta:thumbnail3" id="thumbnail3">
+        <img src="" id="img_thumbnail3" style="max-width: 300px;margin-left: 40px;margin-top: 5px;" ><div class="clear"></div>
+        
+        <a href="javascript:;" class="wb_addmain_b034" onclick="chooseImage('thumbnail4')">幻灯片4</a>
+         <input type="hidden" name="meta:thumbnail4" id="thumbnail4">
+        <img src="" id="img_thumbnail4" style="max-width: 300px;margin-left: 40px;margin-top: 5px;" ><div class="clear"></div>
+        
+        <a href="javascript:;" class="wb_addmain_b034" onclick="chooseImage('thumbnail5')">幻灯片5</a>
+         <input type="hidden" name="meta:thumbnail5" id="thumbnail5">
+        <img src="" id="img_thumbnail5" style="max-width: 300px;margin-left: 40px;margin-top: 5px;" ><div class="clear"></div>
+        
+        <div class="clear"></div>
+         <div class="wb_addmain_t01">规格参数</div>
+        <div class="clear"></div>
+        <div style="margin: 20px 40px 0 40px;">
+        	<textarea name="meta:product_cs"  id="textarea" style="margin-right: 50px;" cols="" rows="" class="wb_addmain_i03"></textarea>
+        </div>
+        <div class="clear"></div>
+         <div class="wb_addmain_t01">产品实拍</div>
+        <div class="clear"></div>
+        <div style="margin: 20px 40px 0 40px;">
+        	<textarea name="meta:product_sp"  id="textarea" style="margin-right: 50px;" cols="" rows="" class="wb_addmain_i03"></textarea>
+        </div>
+         <div class="clear"></div>
+         <div class="wb_addmain_t01">包装清单</div>
+        <div class="clear"></div>
+        <div style="margin: 20px 40px 0 40px;">
+        	<textarea name="meta:product_qd"  id="textarea" style="margin-right: 50px;" cols="" rows="" class="wb_addmain_i03"></textarea>
+        </div>
+         <div class="clear"></div>
+        
+        <div class="wb_addmain_t01">详细资料</div>
+        <div class="clear"></div>
+        <div class="wb_addmain_t02">公司名称</div><input type="text" class="wb_addmain_i02">
+        <div class="wb_addmain_t02">详细地址</div><input type="text" class="wb_addmain_i02">
+        <div class="wb_addmain_t02">联系人</div><input type="text" class="wb_addmain_i02">
+        <div class="wb_addmain_t02">联系电话</div><input type="text" class="wb_addmain_i02">
+        <div class="clear"></div>
+        
+        <a href="javascript:;" class="wb_addmain_b05" onclick="doSubmit()">确认提交</a> <div class="clear"></div>
+    </div>
+    </form>
+     <div class="clear"></div>
+</div>
+</div>
+<!--/cont-->
+</@layout>

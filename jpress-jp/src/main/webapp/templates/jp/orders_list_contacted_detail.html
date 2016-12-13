@@ -1,0 +1,235 @@
+<#include "/WEB-INF/admin/_inc/_layout.html"/> 
+<#macro css>
+	.jp-top7{
+		display: block;
+	    margin-top: 7px;
+    }
+</#macro>
+<@layout active_id=p child_active_id=c>
+<section class="content-header">
+	<h1>订单详细</h1>
+</section>
+<!-- Main content -->
+<section class="content" style="z-index: 9999">
+
+		<div class="row">
+			<!-- /.col -->
+			<div class="col-md-12">
+	
+	<div class="box box-solid">
+		<div class="box-header with-border">
+			<h3 class="box-title" >联系人信息</h3>
+		</div>
+		<div class="box-body no-padding">
+			<div class="nav-tabs-custom">
+				<div class="tab-content">
+					<div class="tab-pane active form-horizontal" >
+		                <div class="form-group">
+		                  	 	<label class="col-sm-3 control-label">联系人名称</label>
+			                  <div class="col-sm-8"><span class="jp-top7">${(ordersDetail.contactName)!}</span></div>
+		                </div>
+		                <div class="form-group">
+		                  <label  class="col-sm-3 control-label">联系手机</label>
+		                  <div class="col-sm-8"><span class="jp-top7">${(ordersDetail.mobile)!}</span></div>
+		                </div>
+		                <div class="form-group">
+		                  <label  class="col-sm-3 control-label">QQ或微信号</label>
+		                  <div class="col-sm-8"><span class="jp-top7">${(ordersDetail.link_tool)!}</span></div>
+		                </div>
+		                <div class="form-group">
+		                  <label class="col-sm-3 control-label">邮箱</label>
+		                  <div class="col-sm-8"><span class="jp-top7">${(ordersDetail.email)!}</span></div>
+		                </div>
+		                <div class="form-group">
+			                  <label  class="col-sm-3 control-label">需求描述</label>
+			                  <div class="col-sm-8"><span class="jp-top7">${(ordersDetail.content)!}</span></div>
+		                </div>
+		                </div>
+				</div>
+			</div>
+		</div>	
+	</div>
+		                
+		               
+	
+		
+		<div class="box box-solid">
+			<div class="box-header with-border">
+				<h3 class="box-title" >订单需求：${(ordersDetail.so_orderType)!}</h3>
+			</div>
+			<#if ecList?? >
+			<div class="box-body no-padding">
+				<div class="nav-tabs-custom">
+					<div class="tab-content">
+						<div class="tab-pane active form-horizontal" >
+						
+								<#list ecList as x>		
+					                <div class="form-group">
+						                  	<label class="col-sm-3 control-label">${(x.title)!}</label>
+						                  	<div class="col-sm-8"><span class="jp-top7">${(x.content)!}</span></div>
+					                </div>
+				                </#list>
+				          </div>
+				              
+					</div>
+				</div>
+			</div>	
+			</#if>
+		</div>
+		
+		
+		<#if cpi ??>
+		<div class="box box-solid">
+		<div class="box-header with-border">
+			<h3 class="box-title" >企业数据</h3>
+		</div>
+		<div class="box-body no-padding">
+			<div class="nav-tabs-custom">
+				<div class="tab-content">
+					<div class="tab-pane active form-horizontal" >
+		                <div class="form-group">
+		                  	 <label class="col-sm-3 control-label">企业名称</label>
+			                  <div class="col-sm-8"><span class="jp-top7">${(cpi.enterpriseName)!}</span></div>
+		                </div>
+
+		                <div class="form-group">
+		                  <label  class="col-sm-3 control-label">公司所在地</label>
+		                  <div class="col-sm-8"><span class="jp-top7">${(cpi.city)!}&nbsp;&nbsp;${(cpi.district)!}</span></div>
+		                </div>
+		                <div class="form-group">
+		                  <label class="col-sm-3 control-label">公司地址</label>
+		                   <div class="col-sm-8"><span class="jp-top7">${(cpi.address)!}</span></div>
+		                </div>
+		                <div class="form-group">
+			                  <label  class="col-sm-3 control-label">经营范围</label>
+			                  <div class="col-sm-8"><span class="jp-top7">${(cpi.bscope)!}</span></div>
+			                
+		                </div>
+		                <div class=""><img src="${CPATH}${(cpi.pic1)!}"></div>
+		                <div class=""><img src="${CPATH}${(cpi.pic2)!}"></div>
+		                <div class=""><img src="${CPATH}${(cpi.pic3)!}"></div>
+		                </div>
+				</div>
+			</div>
+		</div>	
+	</div>
+		</#if>
+		
+		
+				               <#if stocks??>
+							<#list stocks as x> 
+							<#if x.status=="1">
+<div class="box box-solid">
+		<div class="box-header with-border">
+			<h3 class="box-title" >法人数据</h3>
+		</div>
+		<div class="box-body no-padding">
+			<div class="nav-tabs-custom">
+				<div class="tab-content">
+					<div class="tab-pane active form-horizontal" >
+							<div class="form-group">
+				                  	<label class="col-sm-3 control-label">企业法人</label>
+				                  	<div class="col-sm-8"><span class="jp-top7">${(x.stockholder)!}</span></div>
+				                  	
+			                </div>
+							<div class="form-group">
+				                  	<label class="col-sm-3 control-label">法人身份证</label>
+				                  	<div class="col-sm-8"><span class="jp-top7">${(x.stockholderId)!}</span></div>
+			                </div>
+			                <input type="hidden" name="flag" value="1"/>
+			                <input type="hidden" name="stockId" value="${(x.id)!}"/>
+							<div class="form-group">
+				                  	<label class="col-sm-3 control-label">认缴比例</label>
+				                  	<div class="col-sm-8"><span class="jp-top7">${(x.stockRate)!}</span></div>
+			                </div>
+							<div class="form-group">
+				                  	<label class="col-sm-3 control-label">占股</label>
+				                  	<div class="col-sm-8"><span class="jp-top7">${(x.stockNum)!}</span></div>
+			                </div>
+			  		</div>
+				</div>
+			</div>
+		</div>	
+	</div>
+			  
+							<#else>
+	<div class="box box-solid">
+		<div class="box-header with-border">
+			<h3 class="box-title" >股东数据</h3>
+		</div>
+		<div class="box-body no-padding">
+			<div class="nav-tabs-custom">
+				<div class="tab-content">
+					<div class="tab-pane active form-horizontal" >				
+								<div class="form-group">
+				                  	<label class="col-sm-3 control-label">股东</label>
+				                  	<div class="col-sm-8"><span class="jp-top7">${(x.stockholder)!}</span></div>
+			                </div>
+							<div class="form-group">
+				                  	<label class="col-sm-3 control-label">股东身份证</label>
+				                  	<div class="col-sm-8"><span class="jp-top7">${(x.stockholderId)!}</span></div>
+			                </div>
+			                <input type="hidden" name="flag" value="0"/>
+			                <input type="hidden" name="stockId" value="${(x.id)!}"/>
+							<div class="form-group">
+				                  	<label class="col-sm-3 control-label">认缴比例</label>
+				                  	<div class="col-sm-8"><span class="jp-top7">${(x.stockRate)!}</span></div>
+			                </div>
+							<div class="form-group">
+				                  	<label class="col-sm-3 control-label">占股</label>
+				                  	<div class="col-sm-8"><span class="jp-top7">${(x.stockNum)!}</span></div>
+			                </div>
+						</div>
+				</div>
+			</div>
+		</div>	
+	</div>		
+								</#if>
+								
+							</#list> 
+		</#if>
+	         
+		 <@jp.user  module="orders_user"  id=(ordersDetail.user_id)!"0">
+		               <#if user??>
+									<div class="box box-solid">
+											<div class="box-header with-border">
+												<h3 class="box-title" >账号信息</h3>
+											</div>
+											<div class="box-body no-padding">
+												<div class="nav-tabs-custom">
+													<div class="tab-content">
+														<div class="tab-pane active form-horizontal" >
+																<div class="form-group">
+													                  	<label class="col-sm-3 control-label">用户账号</label>
+													                  	<div class="col-sm-8"><span class="jp-top7">${(user.username)!}</span></div>
+												                </div>
+																<div class="form-group">
+													                  	<label class="col-sm-3 control-label">用户公司名</label>
+													                  	<div class="col-sm-8"><span class="jp-top7">${(user.company)!}</span></div>
+												                </div>
+												               <div class="form-group">
+													                  	<label class="col-sm-3 control-label">用户类型</label>
+													                  	<div class="col-sm-8"><span class="jp-top7">${(user.role)!}</span></div>
+												                </div>
+																<div class="form-group">
+													                  	<label class="col-sm-3 control-label">用户邮箱</label>
+													                  	<div class="col-sm-8"> <span class="jp-top7">${(user.email)!}</span></div>
+												                </div>
+																<div class="form-group">
+													                  	<label class="col-sm-3 control-label">是否是企业法人</label>
+													                  	<div class="col-sm-8"><span class="jp-top7"> <#if (user.metadata('corporate'))?? && (user.metadata('corporate'))=="1">是<#else>否</#if></span></div>
+												                </div>
+												  		</div>
+													</div>
+												</div>
+											</div>	
+										</div> 
+							</#if>
+			</@jp.user>				
+	      
+			
+		</div>
+		<!-- /.row -->
+			</div>
+</section>
+</@layout>

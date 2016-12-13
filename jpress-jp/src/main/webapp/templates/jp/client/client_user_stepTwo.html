@@ -1,0 +1,111 @@
+<#include "_inc/_layout.html"/> 
+<#macro title>
+ <title>账户申请</title>
+</#macro>
+<#macro script_import>
+<script src="${CTPATH}/client/js/area.js"></script>
+</#macro>
+<#macro script>
+	<script type="text/javascript">
+	
+	_init_area();
+	
+function doSubmit(url){
+	if($("input[name='agree']")[0].checked==false){  //jQuery 转js对象
+		alert("请同意公司网络注册协议");
+		return false;
+	}
+	 	$("#form").ajaxSubmit({
+			type : "post", //提交方式  
+			dataType : "json", //数据类型  
+		beforeSubmit : function(){
+	         
+	           //#################
+				},
+			success : function(data) { //提交成功的回调函数 
+				if(data.errorCode == 0){
+					if(url !=null && ''!=url){
+						location.href=url;
+					}else{
+						location.reload();
+					}
+				}else{
+					alert(data.message);
+				}
+			},
+			error : function() {
+				alert("信息提交错误");
+			}
+		});
+	 }
+	
+</script>
+
+</#macro>
+<@layout active_id = p>
+<div class="nwrapper " style="font-size:.3rem">
+<div class="top">
+ <div class="zl_top">审核联系人</div>
+ 
+ <div class="zl_topmain zl_topmain2">
+ 	 <div class="zl_topmain_tiao"></div>
+     <div class="zl_topmain_box"><em></em><span>账户申请</span></div>
+     <div class="zl_topmain_box active"><em></em><span>验证信息提交</span></div>
+     <div class="zl_topmain_box"><em></em><span>提交成功</span></div>
+ </div>
+</div>
+<form id="form" action="${CPATH}/register/client_user_stepTwo" method="post">
+
+    <div class="aa_box aa_box_ac">
+        <span>公司名称：</span><input type="text" name="company">
+    </div>
+
+    <div class="aa_box aa_box_ac">
+        <span>是否属于法人/负责人：</span>
+        <input type="radio" name="corporate" value="1" />是 
+		<input type="radio" name="corporate" value="0" />否
+    </div>
+	<div class="it">
+		<div class="it_p"><i>公司所在地</i>
+	     	<select id="s_city" name="district" class="gs_seb"></select>
+	     	<select id="s_province" name="city" class="gs_seb"></select>
+	     	<select style="display:none" id="s_county" ></select>
+	     </div>
+		<div class="it_p"><i>公司地址</i><input class="address" type="text" name="address"  placeholder="请输入" /></div>
+	    <div class="it_p"><i>经营范围</i><input  class="bscope" type="text" name="bscope" /></div>
+	</div>
+	<div class="it_hx"></div>
+	
+     <div class="it">
+        <div class="it_p"><i>企业法人</i><input name="stockholder"  type="text" placeholder="请输入"></div>
+        <div class="it_p"><i>法人身份证</i><input name="stockholderId"  type="text" placeholder="请输入"></div>
+		<input type="hidden" name="flag" value="1"/>
+    </div>
+    <div class="it_hx"></div>
+    
+    <div class="it">
+    	<div class="it_p"><i>联系人</i><input name="contact"  type="text" placeholder="请输入"></div>
+        <div class="it_p"><i>联系电话</i><input name="pcontact"  type="text" placeholder="请输入"></div>
+        <div class="it_p"><i>联系地址</i><input name="addrcontact"  type="text" placeholder="请输入"></div>
+    </div>
+    <div class="it_hx"></div>
+    
+    <div class="aa_box aa_box_ac">
+        <span>平台需求：</span>
+        <input type="text" name="platformReq">
+    </div>
+
+
+    <div class="aa_box_bt">
+        <input type="radio" name="agree" value="我同意" />我同意《泉源会计》公司网络注册协议
+    </div>
+
+    <div class="it">
+        <div class="clear"></div>
+        <button  type="button" onclick="doSubmit('${CPATH}/register/client_user_regsuccess')" class="co_bt co_bt3">同意一下协议，提交注册</button>
+    </div>
+    <div class="zxzx"><img src="${CTPATH}/client/img/gszc_07.png">在线咨询 </div>
+    </form>
+       <#include "_inc/_footer.html"/> 
+</div>
+</@layout >
