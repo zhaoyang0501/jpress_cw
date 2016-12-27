@@ -20,7 +20,6 @@ import java.util.List;
 import com.jfinal.log.Log;
 import com.jfinal.plugin.IPlugin;
 
-import io.jpress.utils.ClassUtils;
 
 public class SearcherPlugin implements IPlugin {
 
@@ -40,18 +39,6 @@ public class SearcherPlugin implements IPlugin {
 
 	@Override
 	public boolean start() {
-		List<Class<ISearcher>> list = ClassUtils.scanSubClass(ISearcher.class, true);
-
-		if (list == null || list.isEmpty()) {
-			log.error("cant scan ISearcher implement class in class path.");
-			return true;
-		}
-
-		if (list.size() > 1) {
-			log.warn("there are too many searcher");
-		}
-
-		initSearcher(list.get(0));
 
 		return true;
 	}

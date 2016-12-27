@@ -1,13 +1,13 @@
 <section class="content-header">
 	<h1>
-		用户列表
+		我的企业用户（请绑定企业对应的会计）
 	</h1>
 </section>
 
 <!-- Main content -->
 <section class="content">
 	<div class="row content-row">
-		<form class="form-horizontal" style="float: right" action="${CPATH}/admin/tuser/user_list?m=${m!}&p=${p!}&c=${c!}&s=${s!}">
+		<form class="form-horizontal" style="float: right" action="${CPATH}/admin/myuser/user_list?m=${m!}&p=${p!}&c=${c!}&s=${s!}">
 			<div class="input-group input-group-sm">
 				<input id="post-search-input" class="form-control" type="search"  name="delock"  placeholder="搜索">&nbsp; 
 				<input id="search-submit" class="btn btn-default btn-sm" type="submit"value="搜索用户">
@@ -40,9 +40,6 @@
 							<div class="jp-flash-comment">
 								<p class="row-actions jp-cancel-pad">
 									<span class="approve"> <a class="vim-a" href="${CPATH}/admin/tuser/edit?id=${bean.id}&c=${c!}&p=${p!}">编辑</a></span>
-									
-									<span class="spam"> | <a class="vim-s vim-destructive" href="javascript:;" onclick="del('${bean.id}')">永久删除</a></span> 
-									<span class="spam"> | <a class="vim-s vim-destructive" href="${CPATH}/admin/data/user_contract?id=${bean.id}&c=${c!}&p=${p!}" >添加联系泉源</a></span> 
 									<span class="spam"> | <a class="vim-s vim-destructive" href="${CPATH}/admin/uploadData/content_data?userId=${bean.id}&c=${c!}&p=${p!}" >数据表单</a></span>
 									<span class="spam">|<a class="vim-s vim-destructive" href="${CPATH}/admin/progress/show_progress_item?userId=${bean.id}&c=${c!}&p=${p!}">添加进度</a></span> 
 								</p>

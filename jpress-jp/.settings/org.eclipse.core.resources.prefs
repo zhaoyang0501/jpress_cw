@@ -1,6 +1,11 @@
 eclipse.preferences.version=1
 encoding//src/main/java=UTF-8
 encoding//src/main/resources=UTF-8
+encoding//src/main/webapp/WEB-INF/admin/index.html=UTF-8
+encoding//src/main/webapp/WEB-INF/admin/user=UTF-8
+encoding//src/main/webapp/WEB-INF/admin/user/edit.html=UTF-8
+encoding//src/main/webapp/WEB-INF/admin/user/index.html=UTF-8
+encoding//src/main/webapp/WEB-INF/admin/user/user_list.html=UTF-8
 encoding//src/main/webapp/templates/jp/client/client_orders.html=UTF-8
 encoding//src/main/webapp/templates/jp/client/client_orders_contact.html=UTF-8
 encoding//src/main/webapp/templates/jp/client/client_recharge.html=UTF-8

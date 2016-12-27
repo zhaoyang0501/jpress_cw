@@ -60,7 +60,7 @@ public class WechatPayController extends JBaseController {
 
 	static Log log = Log.getLog(WechatPayController.class);
 //腾讯回调地址
-	private static String notify_url = "http://dh.jiajuboshi.com/wechat/pay/callback";
+	private static String notify_url = "http://www.qxqyjt.com//wechat/pay/callback";
 
 	public void index() {
 	//	render("/templates/jp/client/client_recharge.html");
@@ -70,14 +70,13 @@ public class WechatPayController extends JBaseController {
 	// 统一下单文档地址：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_1
 	@Before({UrlIntereptor.class,WechatGetOpenIdInterceptor.class,UserStatusInterceptor.class})
 	public void prepay() {
-
+		
 		String openId = CookieUtils.get(this, Consts.ATTR_WECHAT_OPENID);
 		String appid = PropKit.get("wechat_app_id").trim();
 		String partner = PropKit.get("wechat_partner").trim();
 		String paternerKey = PropKit.get("wechat_paterner_key").trim();
 
 		
-		 String amountString = getPara("amount");
 		 String tempShouldPay =  getPara("shouldPay");
 		 BigInteger setOrdersId = getParaToBigInteger("setOrdersId");
 		 BigInteger ordersEnterpriseId = getParaToBigInteger("ordersEnterpriseId");
@@ -90,15 +89,10 @@ public class WechatPayController extends JBaseController {
 			return;
 		}
 		
-		BigDecimal amount = new BigDecimal(amountString);
-		if (amount == null) {
-			renderAjaxResultForError("请输入金额");
-			return;
-		}
 		
 		PaymentRecords pay = new PaymentRecords();
 		if(ordersEnterpriseId==null){
-			pay.setAmount(amount);
+			pay.setAmount(new BigDecimal(tempShouldPay));
 			pay.setCreated(new Date());
 			pay.setSetOrdersId(setOrdersId);
 			pay.setRemark(remark);
@@ -107,7 +101,7 @@ public class WechatPayController extends JBaseController {
 			pay.saveOrUpdate();
 			
 		}else{
-			pay.setAmount(amount);
+			pay.setAmount(new BigDecimal(tempShouldPay));
 			pay.setCreated(new Date());
 //			pay.setSetOrdersId(setOrdersId);
 			pay.setOrdersEnterpriseId(ordersEnterpriseId);
@@ -116,7 +110,7 @@ public class WechatPayController extends JBaseController {
 			pay.setStatus(Consts.PAY_STATUS_PREPAY);
 			pay.saveOrUpdate();
 		}
-	
+		System.out.println("订单保存成功"+pay.getPrimaryKey());
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("appid", appid);
 		params.put("mch_id", partner);
@@ -124,7 +118,7 @@ public class WechatPayController extends JBaseController {
 //		params.put("attach", tempShouldPay);
 		params.put("out_trade_no", pay.getId().toString());//订单id
 //		params.put("total_fee", (Integer.parseInt(amountString) * 100) + "");
-		params.put("total_fee", amountString + ""); //一分钱
+		params.put("total_fee", tempShouldPay + ""); //一分钱
 
 		String ip = IpKit.getRealIp(getRequest());
 		ip = StrKit.isBlank(ip) ? "127.0.0.1" : ip;
@@ -143,11 +137,11 @@ public class WechatPayController extends JBaseController {
 
 
 
-
+		System.out.println("订单发送"+params);
 		String xmlResult = PaymentApi.pushOrder(params);//微信服务器返回值
 
 
-
+		System.out.println("订单返回"+xmlResult);
 
 		Map<String, String> result = PaymentKit.xmlToMap(xmlResult);
 
@@ -199,10 +193,9 @@ public class WechatPayController extends JBaseController {
 
 
 		String json = JsonKit.toJson(attrs);
-
+		System.out.println("下单成功！"+json);
 		renderJson(json);
 
-//		renderJson(new String[]{"message","errorCode","appId","timeStamp","nonceStr","package","signType","paySign","payId"});
 	}
 
 	public void checkStatus() {
@@ -218,10 +211,10 @@ public class WechatPayController extends JBaseController {
 	public void fverify() {
 		String verify = getPara("verify");
 		if (verify.equals("yes")) {
-			render("/templates/jp/client/clent_success.html");
+			render("/templates/jp/client/client_success.html");
 		} else {
 			
-			render("/templates/jp/client/clent_fail.html");
+			render("/templates/jp/client/client_fail.html");
 		}
 	}
 
@@ -267,6 +260,7 @@ public class WechatPayController extends JBaseController {
 						
 						//############################################33
 						OrdersEnterprise oet = OrdersEnterprise.DAO.findById(fr.getOrdersEnterpriseId());
+						
 						oet.setStatus(Consts.ORDERS_STATUS_PAY);
 						oet.saveOrUpdate();
 						//合同状态

@@ -13,8 +13,8 @@ import io.jpress.model.User;
 import io.jpress.model.query.UserQuery;
 import io.jpress.router.RouterMapping;
 import io.jpress.template.TemplateManager;
-@RouterMapping(url = "/admin/tuser", viewPath = "/WEB-INF/admin/user")
-public class _JUserController extends _UserController{
+@RouterMapping(url = "/admin/suser", viewPath = "/WEB-INF/admin/suser")
+public class _JSUserController extends _UserController{
 	
 	public void user_list(){
 		String delock = getPara("delock");
@@ -22,7 +22,7 @@ public class _JUserController extends _UserController{
 		setAttr("adminCount", UserQuery.me().findAdminCount());
 		
 		
-		Page<User> page = Tuser.TUSER.paginateUser(getPageNumber(), getPageSize(),delock);
+		Page<User> page = Tuser.TUSER.paginateAdmin(getPageNumber(), getPageSize(),delock);
 		setAttr("page", page);
 		
 		String templateHtml = "admin_user_index.html";
@@ -45,7 +45,7 @@ public class _JUserController extends _UserController{
 		setAttr("userCount", UserQuery.me().findCount());
 		setAttr("adminCount", UserQuery.me().findAdminCount());
 
-		Page<User> page =  Tuser.TUSER.paginateUser(getPageNumber(), getPageSize(),"");
+		Page<User> page =  Tuser.TUSER.paginateAdmin(getPageNumber(), getPageSize(),"");
 		setAttr("page", page);
 
 		String templateHtml = "admin_user_index.html";

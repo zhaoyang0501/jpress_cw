@@ -1,0 +1,97 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+	<h1>个人资料</h1>
+</section>
+<!-- Main content -->
+<section class="content">
+	<form action="${CPATH}/admin/tuser/save" method="post" id="form" enctype="multipart/form-data">
+	<input type="hidden" name="user.id" value="${(user.id)!}">
+	<div class="col-xs-12 ">
+		<div class="row">
+			<h4 class="jp-set-pad jp-set-title">姓名</h4>
+			<ul class="list-unstyled">
+			<#if (user.username)??>
+			<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">登录账号</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+							<input class="form-control input-md" type="text" name="user.username" value="${(user.username)!}"/>
+						</div>
+					</div>
+					<div class="clr"></div>
+			</li>
+			<#else>
+			<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">登录账号</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+							<input class="form-control input-md" type="text" name="user.username" value="${(user.username)!}"/>
+						</div>
+					</div>
+					<div class="clr"></div>
+			</li>
+			<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">电话</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+							<input class="form-control input-md" type="text" name="user.mobile" value="${(user.mobile)!}"/>
+						</div>
+					</div>
+					<div class="clr"></div>
+			</li>
+			<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">姓名</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+							<input class="form-control input-md" type="text" name="user.company" value="${(user.company)!}">
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+			</#if>
+			<#if trole?? && "administrator"==trole>
+			<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">用户类型</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+						 <select id="selectType" name="user.role" class="gs_seb gs_seb2 form-control input-md">
+				            	<option <#if (user.role)?? &&  (user.role)=="会计经理"> selected = "selected"</#if> value="会计经理">会计经理</option>
+				            	<option <#if (user.role)?? &&  (user.role)=="外勤经理"> selected = "selected"</#if> value="外勤经理">外勤经理</option>
+				            	<option <#if (user.role)?? &&  (user.role)=="会计经理"> selected = "selected"</#if> value="会计经理">会计经理</option>
+				            	<option <#if (user.role)?? &&  (user.role)=="外勤员"> selected = "selected"</#if> value="外勤员">外勤员</option>
+				            	<option <#if (user.role)?? &&  (user.role)=="内务经理"> selected = "selected"</#if> value="内务经理">内务经理</option>
+				            	<option <#if (user.role)?? &&  (user.role)=="代理部经理"> selected = "selected"</#if> value="代理部经理">代理部经理</option>
+				        </select>
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				<li class="jp-set-pad">
+					<div class="col-sm-3 jp-common-pad  jp-set-info">设置密码</div>
+					<div class="col-sm-9 jp-common-pad ">
+						<div class="col-sm-6  ">
+							<input class="form-control input-md" type="password" name="user.password"  value="${(user.password)!}"/>
+						</div>
+					</div>
+					<div class="clr"></div>
+				</li>
+				<#else>
+				
+				</#if>
+			
+				
+			</ul>
+			
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-12">
+			<button type="button" onclick="doSubmit()" class="btn btn-primary">保存更改</button>
+		</div>
+		</div>
+	</form>
+</section>
+
+
+

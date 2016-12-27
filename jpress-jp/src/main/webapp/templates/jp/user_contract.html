@@ -1,7 +1,13 @@
 <#include "/WEB-INF/admin/_inc/_layout.html"/> 
-
 <#macro script>
-
+$(function(){
+	var num = location.href.lastIndexOf("/");
+	$("select[name='userContract.aid']").val(${(uc.aid)!});
+	$("select[name='userContract.sid']").val(${(uc.sid)!});
+	
+	  $("select[name='userContract.sid']").select2();
+	  $("select[name='userContract.aid']").select2();
+})
   function doSubmit(url){
 		
 	 	$(".form").ajaxSubmit({
@@ -56,12 +62,36 @@
 				<div class="tab-content">
 					<div class="tab-pane active form-horizontal" id="tab_1">
 		                <div class="form-group">
-		                  	 <label class="col-sm-3 control-label">会计姓名</label>
+		                  	 <label class="col-sm-3 control-label">绑定的会计</label>
 			                  <div class="col-sm-8">
-			       
-			                   	 <input class="form-control"    type="text" name="userContract.accountant"  value="${(uc.accountant)!}"/>
+			       				
+			       				<select name='userContract.aid' class="form-control">
+			       					<option></option>
+			       						<#list users1 as user>
+										  
+										  <option value="${user.id}">${user.company!}(${user.username})</option>
+										</#list>
+			       				</select>
+			                   <!-- 	 <input class="form-control"    type="text" name="userContract.accountant"  value="${(uc.accountant)!}"/> -->
 			                  </div>
 		                </div>
+		                
+		                    <div class="form-group">
+		                  	 <label class="col-sm-3 control-label">绑定的外勤</label>
+			                  <div class="col-sm-8">
+			       				
+			       				<select name='userContract.sid' class="form-control">
+			       					<option></option>
+			       						<#list users2 as user>
+										  
+										  <option value="${user.id}">${user.company!}(${user.username})</option>
+										</#list>
+			       				</select>
+			                   <!-- 	 <input class="form-control"    type="text" name="userContract.accountant"  value="${(uc.accountant)!}"/> -->
+			                  </div>
+		                </div>
+		                
+		                <!--
 		                <div class="form-group">
 		                  <label  class="col-sm-3 control-label">会计电话</label>
 		                  <div class="col-sm-8">
@@ -80,6 +110,7 @@
 			                    	<input class="form-control" type="text" name="userContract.service_mobile" value="${(uc.service_mobile)!}"/>
 			                  </div>
 		                </div>
+		                  -->
 		               <div class="form-group">
 				               <div class="col-sm-8 col-sm-offset-3">
 								 		<button type="button" class="modify-close btn btn-primary"  onclick="doSubmit('${CPATH}/admin/user?c=${c!}&p=${p!}')">提交</button>	

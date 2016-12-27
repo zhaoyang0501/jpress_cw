@@ -1,5 +1,7 @@
 package io.jpress.jp.admin.controller;
 
+import java.math.BigInteger;
+
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
 import com.jfinal.plugin.activerecord.Page;
@@ -13,16 +15,16 @@ import io.jpress.model.User;
 import io.jpress.model.query.UserQuery;
 import io.jpress.router.RouterMapping;
 import io.jpress.template.TemplateManager;
-@RouterMapping(url = "/admin/tuser", viewPath = "/WEB-INF/admin/user")
-public class _JUserController extends _UserController{
+@RouterMapping(url = "/admin/myuser", viewPath = "/WEB-INF/admin/myuser")
+public class _JMUserController extends _UserController{
 	
 	public void user_list(){
 		String delock = getPara("delock");
 		setAttr("userCount", UserQuery.me().findCount());
 		setAttr("adminCount", UserQuery.me().findAdminCount());
+		User user  =this.getAttr("USER");
 		
-		
-		Page<User> page = Tuser.TUSER.paginateUser(getPageNumber(), getPageSize(),delock);
+		Page<User> page = Tuser.TUSER.paginateMyuser(getPageNumber(), getPageSize(),delock,user.getId());
 		setAttr("page", page);
 		
 		String templateHtml = "admin_user_index.html";
@@ -44,8 +46,8 @@ public class _JUserController extends _UserController{
 	public void index() {
 		setAttr("userCount", UserQuery.me().findCount());
 		setAttr("adminCount", UserQuery.me().findAdminCount());
-
-		Page<User> page =  Tuser.TUSER.paginateUser(getPageNumber(), getPageSize(),"");
+		User user  =this.getAttr("USER");
+		Page<User> page =  Tuser.TUSER.paginateMyuser(getPageNumber(), getPageSize(),"",user.getId());
 		setAttr("page", page);
 
 		String templateHtml = "admin_user_index.html";

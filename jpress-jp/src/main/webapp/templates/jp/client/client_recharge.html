@@ -8,6 +8,13 @@
 <#macro script>
 <script type="text/javascript">
 
+$(document).ready(function(e) {
+    $(".pd_li_a").click(function(){
+		$(".pd_li").removeClass("active");
+		$(this).parent().addClass("active");
+	});
+
+});
 
 
 var isConfiged = false;
@@ -17,7 +24,7 @@ var isConfiged = false;
 
 		if(!isConfiged){
 			wx.config({
-				debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+				debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
 				appId: appId, // 必填，公众号的唯一标识
 				timestamp: timeStamp, // 必填，生成签名的时间戳
 				nonceStr: nonceStr, // 必填，生成签名的随机串
@@ -39,12 +46,8 @@ var isConfiged = false;
 				signType: signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
 				paySign: paySign, // 支付签名
 				success: function (res) {
-					if(res.err_msg == "get_brand_wcpay_request：ok" ) {
-//	          	 // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
-//				//  location.href="${CPATH}/wechat/pay/checkStatus?id="+$payId ;
-						var reqNO = 1;
-						checkStatus($payId,reqNO);
-					}
+					//alert("wx.chooseWXPay"+res);
+					checkStatus($payId,1);
 				}
 			});
 		});
@@ -60,67 +63,16 @@ var isConfiged = false;
 	//第三步：在onBridgeReady的回调里去检测是否成功，检测url：checkStatus
 	//第四步：成功--->>
 
-	function money($money){
-		if($("#money").val().length==0){
-			 alert("金额不为空");
-			return false;   
-	    }else{
-	   	 	var re =/^[0-9]*$/;
-	   	  	if(!re.test($money)){
-		    //	$(".money").after("<p class='infomeg'>请输入正确金额</p>");
-		    alert("请输入正确金额");
-		    	return false;  
-		  	}
-	    }
-	} 
 
-	/*
-	$("#recharge").click(function(){
-	  var $money=$("#money").val();
-	  $.ajax({
-	        type: "POST",
-	        url:"${CPATH}/wechat/pay/prepay",
-            dataType: "json",
-            data:{"amount":$money},
-           	beforeSend:function(){
-            	$(".infomeg").remove();
-            	var m = money($money);
-			   	if(false == m){
-			   		return false;
-			   	}
-			},
-            success: function (data) {
-            	if(data.errorCode==0){
-		           $appId =data.appId;
-		           $timeStamp=data.timeStamp;
-		           $nonceStr=data.nonceStr;
-		           $package=data.package;
-		           $signType=data.signType;
-		           $paySign=data.paySign;
-		           $payId=data.payId;
-		           onBridgeReady($appId,$timeStamp,$nonceStr,$package,$signType,$paySign,$payId);
-	            }else{
-	             $.alert("提交不成功，请稍后重试","提示");
-	            }
-                
-            },
-            error: function (data) {
-             	$.alert("网络慢请稍后重试");
-            }
-	    });	
-	})
-*/
-
-	function doSubmit(){
-	 	$("#form").ajaxSubmit({
-			type : "post", //提交方式  
-			dataType : "json", //数据类型  
-			beforeSubmit : function(){
-				 var $money=parseInt($("#money").val());
-	        	var m = money($money);
-			   	if(false == m){return false;	}
-			},
-			success : function(data) { //提交成功的回调函数 
+	function pre_order(shouldPay,ordersEnterpriseId,remark,setOrdersId){
+		$.ajax({
+			
+			type: "POST",
+			url:"${CPATH}/wechat/pay/prepay",
+      	 	dataType: "json",
+      	 	data:{"shouldPay":shouldPay,"ordersEnterpriseId":ordersEnterpriseId,"remark":remark,"setOrdersId":setOrdersId},
+			success : function(data) {
+				//alert("success"+data);
 				if(data.errorCode==0){
 			           $appId =data.appId;
 			           $timeStamp=data.timeStamp;
@@ -134,12 +86,15 @@ var isConfiged = false;
 		             alert("提交不成功，请稍后重试","提示");
 		            }
 			},
-			error : function() {
-				alert("网络慢请稍后重试");
-			}
-		});
-}
+     	 })
+	}
 	
+	function submit_order(){
+		var money=$("#money").val();
+		var remark=$("#remark").val();
+		var setOrdersId=$("select[name='setOrdersId']").val();
+		pre_order(money,'',remark,setOrdersId);
+	}
 	function checkStatus($payId,reqNO){
 		$.ajax({
       	 	type: "POST",
@@ -147,6 +102,7 @@ var isConfiged = false;
       	 	dataType: "json",
       	 	data:{"id":$payId},
       	 	success: function (data) {
+      	 		//alert("checkStatus-->"+data);
       	 		if(data.errorCode==0){
       	 			location.href="${CPATH}/wechat/pay/fverify?verify=yes"
       	 		}else{
@@ -175,6 +131,62 @@ var isConfiged = false;
 
 <@layout>
 <div class="nwrapper ">
+ <style>
+.pd_tc{ display:none; margin:.5rem 0 0;}
+.pd_li{ width:100%; height:auto; display:block; float:left; margin:.5rem 0 0;}
+.pd_li_a{ width:80%; height:auto; display:block; float:left; margin:0 5% 0; font-size:.26rem;background: #00b9fe; padding:.3rem 5%; color:#ffffff; line-height:.4rem; background:url(/templates/jp/client/img/sds_03_01.png) no-repeat #00b9fe; background-position:6.3rem center; background-size:.3rem;}
+.it a{ width: auto; height: .88rem; display: table; margin: .35rem auto .4rem; padding: 0 .8rem;  border:1px solid #00b9fe; border-radius: .1rem; background: none; font-size: .34rem; color: #00b9fe;    font-family: "Helvetica Neue", "Hiragino Sans GB", "Segoe UI", "Microsoft Yahei", "微软雅黑", Tahoma, Arial, STHeiti, sans-serif;}
+.it a.co_bt{ background: #00b9fe; width: 5rem; margin-top: 2rem; color: #ffffff;line-height: .88rem;text-align: center;}
+.pd_li.active .pd_li_a{background:url(./img/sds_03_02.png) no-repeat #00b9fe;background-position:6.3rem center; background-size:.3rem; }
+.pd_li.active .pd_tc{ display:block;}
+</style>
+
+<#if contracts ??>
+       <#list contracts as contract>
+	             <div class="pd_li"><div class="pd_li_a">催缴：${(contract.set_orders_orderType)!}${(contract.month_should_pay)!}(共计：${(contract.should_pay)!}元)</div>
+					<div class="pd_tc">
+					    <div class="pd">
+					        <div class="pd_top">
+					           合同签订日期：${(contract.contract_date)!}<br/>
+						    合同金额：${(contract.contract_amount)!}元<br/>
+						    已缴金额：${(balance.amount)!}元<br/>
+						    已缴月份：${(contract.month_balance)!}<br/>
+						    应缴金额：${(contract.should_pay)!}元<br/>
+						    应缴月份：${(contract.month_should_pay)!}<br/>
+						    服务类型：${(contract.set_orders_orderType)!}<br/>
+					        </div>
+					    </div>
+					    <div class="it">
+					        <span class="jbr_top jbr_top2">缴费</span>
+					        <div class="it_p"><i>备注信息</i><input name='remark' type="text" class="co_l"/></div>
+					        <div class="clear"></div>
+								 <button  class="co_bt" style="margin-top:20px;"  onclick="pre_order('${(contract.should_pay)!}','${(contract.orders_enterprise_id)!}','','')"  >付款</button>
+					    </div>
+					</div>
+					</div>
+       </#list>
+ </#if>
+ 
+  <#if setOrders??>
+    <div class="it">
+        <span class="jbr_top jbr_top2">自行付款</span>
+        <#if setOrders??>
+	        <div class="it_p">
+		        <select name="setOrdersId" class="gs_seb gs_seb2">
+		        	<#list setOrders as x>
+		           		 <option value = "${(x.id)!}">${(x.orderType)!}</option>
+		            </#list>
+		        </select>
+	        </div>
+        </#if>
+        <div class="it_p"><i>付款金额</i><input value="" id="money" name ="amount" class="co_l" placeholder="请输入金额"></div>
+        <div class="it_p"><i>备注信息</i><input name ="remark" class="co_l" placeholder="请输入备注信息"></div>
+        <div class="clear"></div>
+       	<button  class="co_bt" style="margin-top:20px;"  onclick="submit_order()"  >付款</button>
+			
+    </div>
+ </#if>
+<!-- - 
 	<form id="form" action="${CPATH}/wechat/pay/prepay"   method="post" >
 	<#if contract??>
     <div class="pd">
@@ -193,7 +205,6 @@ var isConfiged = false;
         </div>
 	</#if>
 
-
     <div class="it">
         <span class="jbr_top jbr_top2">缴费催送</span>
         <#if setOrders??>
@@ -205,7 +216,7 @@ var isConfiged = false;
 		        </select>
 	        </div>
         </#if>
-        <div class="it_p"><i>付款金额</i><input id="money" name ="amount" class="co_l" placeholder="请输入金额"></div>
+        <div class="it_p"><i>付款金额</i><input readonly="readonly" value="" id="money" name ="amount" class="co_l" placeholder="请输入金额"></div>
         <div class="it_p"><i>备注信息</i><input name ="remark" class="co_l" placeholder="请输入备注信息"></div>
         <div class="clear"></div>
         <button  id="recharge" type="button"  onclick="doSubmit()"  class="co_bt">付款</button>
@@ -213,6 +224,7 @@ var isConfiged = false;
     </div>
 
 </form>
+-->
  <#include "_inc/_footer.html"/> 
 </div>
 </@layout>

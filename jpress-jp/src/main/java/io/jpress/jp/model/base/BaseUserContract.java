@@ -135,10 +135,24 @@ public abstract class BaseUserContract<M extends BaseUserContract<M>> extends JM
 		set("userId", userId);
 	}
 
+	public Integer getAid() {
+		return get("aid");
+	}
+	public void setAid(Integer aid) {
+		set("aid", aid);
+	}
+
+
+	public Integer getSid() {
+		return  get("sid");
+	}
+	
+	public void setSid(Integer sid) {
+		set("sid", sid);
+	}
 	public java.math.BigInteger getUserId() {
 		return get("userId");
 	}
-
 	public void setCreated(java.util.Date created) {
 		set("created", created);
 	}

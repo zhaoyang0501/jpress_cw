@@ -82,6 +82,9 @@ public class UserQuery extends JBaseQuery {
 	public long findAdminCount() {
 		return DAO.doFindCount(" role = ? ", "administrator");
 	}
+	public long findNotAdminCount() {
+		return DAO.doFindCount(" role = ? ", "小规模纳税人");
+	}
 
 	public User findById(final BigInteger userId) {
 		return DAO.getCache(userId, new IDataLoader() {

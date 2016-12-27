@@ -62,7 +62,19 @@ public class OrdersEnterprise extends BaseOrdersEnterprise<OrdersEnterprise> {
 		String sql = "select * from `orders_enterprise` where userId = ? and status = ?";
 		return findFirst(sql,userId, status);
 	}
-
+	
+	public List<OrdersEnterprise> findOrders(BigInteger userId ,String status){
+		String sql = "select * from `orders_enterprise` where userId = ? and status = ?";
+		return find(sql,userId, status);
+	}
+	/**
+	 * 是否写有合同
+	 */
+	public List<OrdersEnterprise> findAllOrdersEnterpriseByStatus(BigInteger userId ,String status){
+		String sql = "select * from `orders_enterprise` where userId = ? and status = ?";
+		return find(sql,userId, status);
+	}
+	
 	/**
 	 * 找订单类
 	 */

@@ -1,6 +1,7 @@
 package io.jpress.jp.model;
 
 
+import java.math.BigInteger;
 import java.util.List;
 
 import com.jfinal.plugin.activerecord.Page;
@@ -25,9 +26,32 @@ public class Tuser {
 		
 	}
 	
+	public Page<User> paginateUser(int pageNumber, int pageSize,String delock){
+		String sql=" select * ";
+		StringBuilder fromBuilder=new StringBuilder(" from `user`");
+		fromBuilder.append(" where username like ? and (role='小规模纳税人' or role='一般纳税人' )  ORDER BY created DESC");
+		return DAO.paginate(pageNumber, pageSize,sql,fromBuilder.toString(), "%"+delock+"%");
+		
+	}
+	
+	public Page<User> paginateMyuser(int pageNumber, int pageSize,String delock,BigInteger userid){
+		String sql=" select * ";
+		StringBuilder fromBuilder=new StringBuilder(" from `user`");
+		fromBuilder.append(" where username like ? and (role='小规模纳税人' or role='一般纳税人' ) and EXISTS (select 1 FROM user_contract t2 where t2.userid=user.id and t2.aid=? )  ORDER BY created DESC");
+		return DAO.paginate(pageNumber, pageSize,sql,fromBuilder.toString(), "%"+delock+"%",userid);
+		
+	}
+	
+	public Page<User> paginateAdmin(int pageNumber, int pageSize,String delock){
+		String sql=" select * ";
+		StringBuilder fromBuilder=new StringBuilder(" from `user`");
+		fromBuilder.append(" where username like ? and role!='小规模纳税人' and role!='一般纳税人'   ORDER BY created DESC");
+		return DAO.paginate(pageNumber, pageSize,sql,fromBuilder.toString(), "%"+delock+"%");
+		
+	}
 	public List<User> findRoleById(String role){
 		String sql="select * from `user` where role = ? ";
-		return DAO.find(sql);
+		return DAO.find(sql, role);
 	}
 	public List<User> findList(){
 		String sql="select * from `user` ";

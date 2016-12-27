@@ -19,7 +19,10 @@ import io.jpress.jp.model.SetEnterpriseChange;
 import io.jpress.jp.model.SetOrders;
 import io.jpress.jp.model.SetProgress;
 import io.jpress.jp.model.Statistics;
+import io.jpress.jp.model.Tuser;
 import io.jpress.jp.model.UserContract;
+import io.jpress.model.User;
+import io.jpress.model.query.UserQuery;
 import io.jpress.router.RouterMapping;
 import io.jpress.utils.AttachmentUtils;
 import io.jpress.utils.StringUtils;
@@ -335,24 +338,36 @@ public class _SetDataController extends JBaseController {
 	@Before(JaddContractInterceptor.class)
 	public void user_contract(){
 		BigInteger userId =getParaToBigInteger("id");
+		List<User> lists1 = Tuser.TUSER.findRoleById("会计经理");
+		List<User> lists2 = Tuser.TUSER.findRoleById("外勤经理");
+		setAttr("users1", lists1);
+		setAttr("users2", lists2);
 		UserContract uct = getModel(UserContract.class);
-		if(uct.getAccountant()!=null){
+		
+		if(uct.getAid()!=null){
 			UserContract uc = UserContract.DAO.findByUserId(userId);
+			User auser= UserQuery.me().findById(BigInteger.valueOf(uct.getAid()));
+			User suser= UserQuery.me().findById(BigInteger.valueOf(uct.getSid()));
 			if(uc==null){
 				UserContract userContract = new UserContract();
 				userContract.setUserId(userId);
-				userContract.setAccountant(uct.getAccountant());
-				userContract.setAccountantMobile(uct.getAccountantMobile());
-				userContract.setService(uct.getService());
-				userContract.setServiceMobile(uct.getServiceMobile());
+				userContract.setSid(uct.getSid());
+				userContract.setAid(uct.getAid());
+				userContract.setAccountant(auser.getCompany());
+				userContract.setAccountantMobile(auser.getUsername());
+				userContract.setService(suser.getCompany());
+				userContract.setServiceMobile(suser.getUsername());
+				
 				userContract.setCreated(new Date());
 				userContract.saveOrUpdate();
 				renderAjaxResultForSuccess();
 			}else{
-				uc.setAccountant(uct.getAccountant());
-				uc.setAccountantMobile(uct.getAccountantMobile());
-				uc.setService(uct.getService());
-				uc.setServiceMobile(uct.getServiceMobile());
+				uc.setSid(uct.getSid());
+				uc.setAid(uct.getAid());
+				uc.setAccountant(auser.getCompany());
+				uc.setAccountantMobile(auser.getUsername());
+				uc.setService(suser.getCompany());
+				uc.setServiceMobile(suser.getUsername());
 				uc.saveOrUpdate();
 				renderAjaxResultForSuccess();
 			}

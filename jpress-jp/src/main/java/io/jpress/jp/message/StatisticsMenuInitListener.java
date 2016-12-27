@@ -38,6 +38,7 @@ public class StatisticsMenuInitListener implements MessageListener {
 		menuMnager.addMenuGroup(0, createWechatMenuGroup());
 		menuMnager.addMenuGroup(1, createOrdersMenuGroup());
 		menuMnager.addMenuGroup(3, createUserMenuGroup());
+		menuMnager.addMenuGroup(4, createSysUserMenuGroup());
 //		menuMnager.addMenuGroup(MenuGroup.createBlockGroup()); //加空白条
 		
 		
@@ -52,20 +53,31 @@ public class StatisticsMenuInitListener implements MessageListener {
 	}
 
 	private MenuGroup createUserMenuGroup(){
-		MenuGroup group = new MenuGroup("tuser", "fa fa-user", "用户");
+		MenuGroup group = new MenuGroup("tuser", "fa fa-user", "企业用户");
 		{
-			group.addMenuItem(new MenuItem("tu", "/admin/tuser/alluser", "所有用户"));
-			group.addMenuItem(new MenuItem("tp", "/admin/tuser/edit", "添加用户"));
+			group.addMenuItem(new MenuItem("tu", "/admin/tuser/alluser", "企业用户管理"));
+			group.addMenuItem(new MenuItem("tu", "/admin/myuser/alluser", "我的企业用户"));
+			group.addMenuItem(new MenuItem("tp", "/admin/tuser/edit", "添加企业用户"));
 		}
 		return group;
 	}
+	
+	private MenuGroup createSysUserMenuGroup(){
+		MenuGroup group = new MenuGroup("suser", "fa fa-user", "泉源员工管理");
+		{
+			group.addMenuItem(new MenuItem("tu", "/admin/suser/alluser", "员工管理"));
+			group.addMenuItem(new MenuItem("tp", "/admin/suser/edit", "添加员工"));
+		}
+		return group;
+	}
+	
 	private MenuGroup createOrdersMenuGroup(){
 		MenuGroup group = new MenuGroup("orders", "fa fa-file-text-o", "订单状态详情");
 		{
 //			group.addMenuItem(new MenuItem("or", "/admin/orders/orders_list?status=0", "新单子"));
-			group.addMenuItem(new MenuItem("oc", "/admin/orders/orders_list?status=1", "新单子"));
-			group.addMenuItem(new MenuItem("op", "/admin/orders/orders_list?status=2", "付费单子"));
-			group.addMenuItem(new MenuItem("oa", "/admin/orders/orders_vol_list", "自行付费单子"));
+			group.addMenuItem(new MenuItem("oc", "/admin/orders/orders_list?status=1", "新订单"));
+			group.addMenuItem(new MenuItem("op", "/admin/orders/orders_list?status=2", "付费订单"));
+			group.addMenuItem(new MenuItem("oa", "/admin/orders/orders_vol_list", "自行付费订单"));
 			
 		}
 		return group;

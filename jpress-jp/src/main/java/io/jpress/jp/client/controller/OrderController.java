@@ -4,16 +4,20 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import com.jfinal.aop.Before;
+import com.jfinal.log.Log;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.IAtom;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.upload.UploadFile;
 import com.sun.mail.imap.protocol.ID;
 
+import freemarker.template.utility.CollectionUtils;
+import io.jpress.admin.controller._AttachmentController;
 import io.jpress.core.JBaseController;
 import io.jpress.jp.Consts;
 import io.jpress.jp.interceptor.UrlIntereptor;
@@ -41,6 +45,8 @@ import io.jpress.utils.StringUtils;
 @Before({UrlIntereptor.class,WechatGetOpenIdInterceptor.class,UserStatusInterceptor.class})
 @RouterMapping(url = "/orders", viewPath = "/templates/jp/client")
 public class OrderController extends JBaseController{
+	
+	private static final Log log = Log.getLog(OrderController.class);
 	/**
 	 * 展现列表
 	 */
@@ -308,37 +314,44 @@ public class OrderController extends JBaseController{
 	 */
 	public void client_recharge(){
 		
-//		String openId = "c3b36939-9814-4304-ba50-73401e997add"; 
 		String openId = CookieUtils.get(this, Consts.ATTR_WECHAT_OPENID);
 		final User user = UserQuery.me().findFirstFromMetadata("openId", openId);
 		if(user==null){return;}
-//		String ordersEnterpriseStatus = getPara("ordersEnterpriseStatus"); //单子状态
-//		String contractStatus = getPara("ordersEnterpriseStatus");//合同状态
 		
 		final String tempAmount =  getPara("amount");
+		log.info("client_recharge>"+tempAmount);
 		final String tempShouldPay =  getPara("shouldPay");
 		final BigInteger setOrdersId = getParaToBigInteger("setOrdersId");
 		final BigInteger ordersEnterpriseId = getParaToBigInteger("ordersEnterpriseId");
 		final String remark = getPara("remark");
 		
 		if(StringUtils.isBlank(tempAmount)){//进入合同页
-			OrdersEnterprise oe = OrdersEnterprise.DAO.findOrdersEnterpriseByStatus(user.getId(),Consts.ORDERS_STATUS_CONTACTED);//判断是否写合同
+			List<OrdersEnterprise> oe = OrdersEnterprise.DAO.findOrders(user.getId(),Consts.ORDERS_STATUS_CONTACTED);//判断是否写合同
+			System.out.println("总共查出合同多少条-->"+oe.size());
 			if(oe==null){return;}
-			Contract contract = Contract.DAO.findContractByOIdwithSId(oe.getId());
-			if(contract!=null){
-				BigDecimal integral=contract.getContractAmount().multiply(new BigDecimal("0.1"));
-				Balance balance = Balance.DAO.findBalanceByUserId(user.getId());
-				
-				setAttr("contract", contract);
-				setAttr("integral", integral);
-				setAttr("balance", balance);
-				
-			}else{
+			
+			List<Contract> contracts = new ArrayList<Contract>();
+			for(OrdersEnterprise bean:oe){
+				Contract contract = Contract.DAO.findContractByOIdwithSId(bean.getId());
+				if(contract!=null)
+					contracts.add(contract);
+			}
+			/**税分余下额*/
+			//BigDecimal integral=contract.getContractAmount().multiply(new BigDecimal("0.1"));
+			Balance balance = Balance.DAO.findBalanceByUserId(user.getId());
+			
+			setAttr("contracts", contracts);
+			setAttr("integral", 0);
+			setAttr("balance", balance);
+			
+			if(contracts.size()==0){
 				List<SetOrders> setOrders = SetOrders.DAO.findAllSetOrders();
 				setAttr("setOrders", setOrders);
 			}
 			
+			
 		}else{
+			System.out.println("处理else");
 			Db.tx(new IAtom() {
 				
 				@Override
