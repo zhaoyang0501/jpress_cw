@@ -45,19 +45,38 @@ $(document).ready(function(e) {
 <@layout active_id = p>
 <div class="nwrapper tp_nw">
 <form  id="form" action="${CPATH}/account/client_detailtax" method="post">
+
+<link rel="stylesheet" type="text/css" href="/templates/jp/client/css/jquery.monthpicker.css?v1.02"> 
+<script src="/templates/jp/client/js/jquery.monthpicker.js"></script> 
+<style>.monthpicker .years select {padding-right: 20px;margin-left: 10px;}.tp_top_box2{ margin-left:.5rem;}</style>
+
     <div class="tp_top">
+    <!--
     	<div class="tp_top_box" id="start">
             <span>${mdate!"选择时间"}</span>
             <input type="month" name="mdate" id="start_input"/>
             <img src="${CTPATH}/client/img/ns_03.png">
     	</div>
-        
         <div class="tp_top_box" id="end">
             <span>${mdate1!"选择时间"}</span>
             <input type="month" name="mdate1" id="end_input"/>
             <img src="${CTPATH}/client/img/ns_03.png">
-    	</div>
-    	<i><input type="submit" value="确定" style="padding: 0rem; margin: 0rem 0px;font-size:.3rem;background: #00b9fe ;"></i>
+    	</div>-->
+        
+        <div class="tp_top_box tp_top_box1" id="start">
+            <span>${mdate!"选择时间"}</span>
+			<input name="mdate"  type="text" class="input monthly1" id="start_input" readonly > 
+            <img src="/templates/jp/client/img/ns_03.png">
+        </div>
+        
+        <div class="tp_top_box tp_top_box2" id="end">
+          <span>${mdate1!"选择时间"}</span>
+			<input type="text" name="mdate1" class="input monthly2" id="end_input" readonly > 
+            <img src="/templates/jp/client/img/ns_03.png">
+        </div>
+        
+        
+    	<i><input type="submit" value="确定" style="padding: 0rem; margin: 0rem 0px;font-size:.3rem;background: #00b9fe ; display:none;"></i>
     </div>
     
     </form>
@@ -94,6 +113,36 @@ $(document).ready(function(e) {
             </#list>
 		</#if>
     </div>
+    
+<script type="text/javascript">
+$(function(){ 
+    $('.monthly1').monthpicker({ 
+        years: [2017,2016,2015, 2014, 2013, 2012, 2011], 
+        topOffset: 6,
+		
+    }) 
+	
+	$('.monthly2').monthpicker({ 
+        years: [2017,2016,2015, 2014, 2013, 2012, 2011], 
+        topOffset: 6,
+		onMonthSelect: function(m, y) { 
+			console.log('Month: ' + m + ', year: ' + y); 
+			$("form").submit();
+		} 
+    }) 
+	
+	 $('.monthly1').click(function(){
+		 $(".tp_top_box2 span").css("display","none");
+		$(this).css("opacity","1"); 
+	})
+	
+	$('.monthly2').click(function(){
+		 $(".tp_top_box2 span").css("display","none");
+		$(this).css("opacity","1"); 
+	})
+	
+}); 
+</script>
 
   <#include "_inc/_footer.html"/> 
 

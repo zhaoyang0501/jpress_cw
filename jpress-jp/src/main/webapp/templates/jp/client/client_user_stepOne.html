@@ -36,16 +36,36 @@
 
 <@layout active_id = p>
 <div class="nwrapper ">
+<style>.yzm_box{ width: 50%;  height: .8rem; line-height:.8rem; display: block; float: right; line-height: .1rem;}
+.yzm_box img {
+    width: 100%;
+    margin: .1rem auto;
+    height: .8rem;
+    display: block;
+    float: none;
+}
 
+select{ border:0; background:none;}
+.aa_box p input {
+    width: 100%;
+    border: 0;
+    height: .4rem;
+    margin: .3rem 0;
+}
+.aa_box_yzm p input {
+    width: 40%;
+    border-right: 1px solid #cdced9;
+    height: .4rem;
+    margin: .3rem 0;    line-height: .4rem;
+}
+.aa_box{ overflow:hidden; line-height: normal;}
+.aa_box p{line-height: normal;}
+.aa_box p select{border:0; background-image: url("http://www.qxqyjt.com/templates/jp/client/img/sds_03.png");background-repeat: no-repeat;background-position: center right; background-size: .33rem;-webkit-appearance: none;}
+</style>
 <div class="top">
  <div class="zl_top">账户注册</div>
  
- <div class="zl_topmain zl_topmain2">
- 	 <div class="zl_topmain_tiao"></div>
-     <div class="zl_topmain_box active"><em></em><span>账户申请</span></div>
-     <div class="zl_topmain_box"><em></em><span>验证信息提交</span></div>
-     <div class="zl_topmain_box"><em></em><span>提交成功</span></div>
- </div>
+
 </div>
 <form id="form" action="${CPATH}/register/client_user_stepOne" method="post">
     <div class="aa_box">

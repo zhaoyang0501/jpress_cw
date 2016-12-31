@@ -2,7 +2,7 @@
 <@layout active_id=p child_active_id=c>
 <section class="content-header">
 	<h1>
-		<#if status?? && status=='0'>新单子<#elseif  status?? && status=='1'>对接单子<#else>付费单子</#if>
+		<#if status?? && status=='0'>新订单<#elseif  status?? && status=='1'>对接订单<#else>付费订单</#if>
 	</h1>
 </section>
 
@@ -74,7 +74,7 @@
 								<td>
 									<span>
 										<a href="${CPATH}/admin/orders/<#if status=='0'>orders_list_new_detail<#elseif status=='1'>orders_list_contacted_detail<#else>orders_list_pay_detail</#if>?id=${(x.orders_enterprise_id)!}&c=${c!}&p=${p!}">
-											 单子详情
+											 订单详情
 										</a>
 									</span>
 									<span>

@@ -5,10 +5,27 @@
 <@layout active_id = p>
 <div class="nwrapper index_main">
 <form action="${CPATH}/account/client_comAccount?p=${p!}"   method="post">
+
+<link rel="stylesheet" type="text/css" href="/templates/jp/client/css/jquery.monthpicker.css?v1.02"> 
+<script src="/templates/jp/client/js/jquery.monthpicker.js"></script> 
+<style>.monthpicker .years select {padding-right: 20px;margin-left: 10px;}</style>
     <div class="index_top">
 	    <a href="#" class="ac_tl">${company!}</a>
-		<input style="float: left; margin: 0.49rem 0.2rem;padding: 0.12rem;width: 2.5rem;border-radius: 0.1rem;" type="month" name="mdate" id="start_input">
-	    <input style="float: left; padding: 0.15rem; margin: 0.5rem 0px;font-size:.3rem;background: #00b9fe ;" value="发送" type="submit">  
+        
+         <div class="tp_top_box tp_top_box2" id="start">
+            <span>选择时间</span>
+            
+
+			<input type="text" class="input monthly" id="start_input" readonly > 
+
+            <!--<input type="date" name="user_date" id="start_input">-->
+            <img src="/templates/jp/client/img/ns_03.png">
+        </div>
+        
+       
+        
+		<!--<input style="float: left; margin: 0.49rem 0.2rem;padding: 0.12rem;width: 2.5rem;border-radius: 0.1rem;" type="month" name="mdate" id="start_input"> -->
+	    <input style="float: left; padding: 0.15rem; margin: 0.5rem 0px;font-size:.3rem;background: #00b9fe ; display:none;" value="发送" type="submit"> 
     </div>
  </form>   
 <div class="ac_box">
@@ -23,19 +40,19 @@
     <div class="ac_box_c">
         <span>${x.subName!}</span>
         
-        <#if x.subCode=="2202">
-          			<#if x.fourc ?? && x.fourc !="0">
-          				<span>${(x.fourc)!}</span>
-          			<#else>
-          				<span style="color:red">${(x.fourd)!}</span>
-          			</#if>
-        <#else>
-	            <#if x.fourd ??  && x.fourd !="0">
-	            	<span>${(x.fourd)!}</span>
-	            <#else>
-	            	<span style="color:red">${(x.fourc)!}</span>
-	            </#if>
-         </#if>
+      <#if x.subCode=="2202"|| x.subCode=="1122">
+		            			<#if x.fourc ?? && x.fourc !="" && x.fourc!='0'>
+		            				<span>${(x.fourd)!}</span>
+		            			<#else>
+		            				<span style="color:red">-${(x.fourc)!}</span>
+		            			</#if>
+				        <#else>
+					            <#if x.fourd ??  && x.fourd !="">
+					            	<span>${(x.fourd)!}</span>
+					            <#else>
+					            	<span style="color:red">${(x.fourc)!}</span>
+					            </#if>
+		           		 </#if>
          <span style="color:red">
         <#if x.fourd ?? && x.fourd !="0">
            	<#if ((x.fourd)?number) gte 100000>
@@ -52,7 +69,23 @@
     </#list>
 	   </#if>   
 </div>
-
+<script type="text/javascript">
+$(function(){ 
+    $('.monthly').monthpicker({ 
+        years: [2017,2016,2015, 2014, 2013, 2012, 2011], 
+        topOffset: 6,
+		onMonthSelect: function(m, y) { 
+		console.log('Month: ' + m + ', year: ' + y); 
+		$("form").submit();
+		} 
+    }) 
+	
+	 $('.monthly').click(function(){
+		 $(".index_top span").css("display","none");
+		$(this).css("opacity","1"); 
+	})
+}); 
+</script>
   <#include "_inc/_footer.html"/> 
 
 </div>

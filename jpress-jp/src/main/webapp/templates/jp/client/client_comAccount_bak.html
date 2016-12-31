@@ -53,11 +53,11 @@
 	       		<tr >
 		            <td ><span>${x.subName!}</span></td>
 		            <td >
-		            	<#if x.subCode=="2202">
-		            			<#if x.fourc ?? && x.fourc !="">
+		            	<#if x.subCode=="2202"|| x.subCode=="1122">
+		            			<#if x.fourc ?? && x.fourc !="" &&(x.fourc>0)>
 		            				<span>${(x.fourc)!}</span>
 		            			<#else>
-		            				<span style="color:red">${(x.fourd)!}</span>
+		            				<span style="color:red">-${(x.fourd)!}</span>
 		            			</#if>
 				        <#else>
 					            <#if x.fourd ??  && x.fourd !="">

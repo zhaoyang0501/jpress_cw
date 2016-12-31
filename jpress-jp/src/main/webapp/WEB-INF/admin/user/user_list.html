@@ -21,13 +21,21 @@ function restore(id){
 }
 
 function del(id){
-	$.get("${CPATH}/admin/user/delete?ucode=${ucode}&id="+id, function(data){
-		if(data.errorCode > 0){
-			toastr.error(data.message,'操作失败');
-		}else{
-			location.reload();
-		}
-	});
+	
+	if(window.confirm('你确定要删除吗？')){
+                $.get("${CPATH}/admin/user/delete?ucode=${ucode}&id="+id, function(data){
+						if(data.errorCode > 0){
+							toastr.error(data.message,'操作失败');
+						}else{
+							location.reload();
+						}
+					});
+					return true;
+              }else{
+                 return false;
+             }
+	
+	
 }
 </#macro> 
 <@layout active_id=p child_active_id=c>

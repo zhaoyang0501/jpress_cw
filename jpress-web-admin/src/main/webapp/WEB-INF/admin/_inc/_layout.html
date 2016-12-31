@@ -149,6 +149,13 @@ function initToast(){
 			}
 	
 }
+$(document).ready(function(){
+	 //jpress-jp/admin/tuser/alluser?p=tuser&c=tu
+		if('${USER.nickname!USER.username}'!='admin'){
+			$("a[href='/jpress-jp/admin/tuser/alluser?p=tuser&c=tu']").parent().remove();
+		}
+	});
+
 </script>
 </body>
 </html>
